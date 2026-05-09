@@ -15,8 +15,6 @@
                         primary: "#005B9A", 
                         "primary-dark": "#004575",
                         "surface": "#FFFFFF",
-                        "text-main": "#1E293B",
-                        "text-sub": "#64748B",
                     }
                 },
             },
@@ -25,66 +23,71 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: #007bc4; /* Color sólido azul de fondo según imagen 1 */
+            background-color: #007bc4; /* Azul sólido de fondo según imagen 1 */
             margin: 0;
-            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
-        .login-card {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        }
-        input:focus {
-            ring: 2px solid rgba(0, 91, 154, 0.2);
+        .card-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 antialiased">
-    
-    <div class="w-full max-w-[440px] bg-surface rounded-[20px] login-card overflow-hidden">
-        <div class="p-10">
+<body class="p-4 antialiased">
+
+    <div class="w-full max-w-[420px] bg-surface rounded-[24px] card-shadow overflow-hidden">
+        <div class="p-8 sm:p-10">
+            <!-- Logo y Encabezado -->
             <div class="flex flex-col items-center mb-8">
-                <img src="https://i.ibb.co/C3wh0NmV/hq720.jpg" alt="Logo ICES" class="mb-2 object-contain" style="height: 100px;"> 
-                <h1 class="text-[28px] font-bold text-[#1a2b4b] mt-4">Bienvenido</h1>
-                <p class="text-[16px] text-[#718096]">Portal de Educación Profesional</p>
+                <img src="https://i.ibb.co/C3wh0NmV/hq720.jpg" alt="Logo ICEST" class="h-24 mb-4 object-contain"> 
+                <h1 class="text-2xl font-bold text-[#1a2b4b]">Bienvenido</h1>
+                <p class="text-slate-500 text-sm mt-1">Portal de Educación Profesional</p>
             </div>
             
-            <form id="loginForm" class="space-y-6">
-                <div class="space-y-2">
-                    <label class="text-[15px] font-semibold text-slate-700" for="username">Usuario</label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">person_outline</span>
+            <form id="loginForm" class="space-y-5">
+                <!-- Input Usuario -->
+                <div class="space-y-1">
+                    <label class="text-sm font-semibold text-slate-700 ml-1">Usuario</label>
+                    <div class="relative group">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">person</span>
                         <input required id="username" name="username" placeholder="ID" type="text"
-                            class="block w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-text-main placeholder-slate-400 focus:border-primary focus:ring-0 transition-all outline-none">
+                            class="block w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
                     </div>
                 </div>
                 
-                <div class="space-y-2">
-                    <label class="text-[15px] font-semibold text-slate-700" for="password">Contraseña</label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">lock_open</span>
+                <!-- Input Contraseña -->
+                <div class="space-y-1">
+                    <label class="text-sm font-semibold text-slate-700 ml-1">Contraseña</label>
+                    <div class="relative group">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">lock</span>
                         <input required id="password" name="password" placeholder="••••••••" type="password"
-                            class="block w-full pl-12 pr-12 py-3.5 bg-white border border-slate-200 rounded-xl text-text-main placeholder-slate-400 focus:border-primary focus:ring-0 transition-all outline-none">
+                            class="block w-full pl-12 pr-12 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
                         <button type="button" onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined" id="toggleIcon">visibility_off</span>
+                            <span class="material-symbols-outlined text-xl" id="toggleIcon">visibility_off</span>
                         </button>
                     </div>
                 </div>
                 
                 <div class="flex justify-end">
-                    <a class="text-[14px] font-semibold text-primary hover:underline" href="#">¿Olvidaste tu contraseña?</a>
+                    <a class="text-sm font-semibold text-primary hover:underline" href="#">¿Olvidaste tu contraseña?</a>
                 </div>
 
-                <div id="alertMessage" class="hidden py-3 px-4 bg-red-50 border border-red-100 text-red-600 text-sm font-medium rounded-xl text-center">
-                    Verifica tu ID o contraseña
+                <!-- Alerta de Error -->
+                <div id="alertMessage" class="hidden py-3 px-4 bg-red-50 border border-red-100 text-red-600 text-xs font-bold rounded-lg text-center">
+                    ID o contraseña incorrectos
                 </div>
                 
+                <!-- Botón de Envío -->
                 <button id="submitBtn" type="submit"
-                    class="w-full py-4 px-4 rounded-xl text-[16px] font-bold text-white bg-primary hover:bg-primary-dark shadow-md transition-all active:scale-[0.98]">
+                    class="w-full py-4 px-4 rounded-xl text-white font-bold bg-primary hover:bg-primary-dark transition-all active:scale-[0.97] shadow-lg shadow-primary/20">
                     Iniciar Sesión
                 </button>
             </form>
             
-            <div class="mt-8 pt-6 border-t border-slate-50 text-center">
-                <p class="text-[14px] text-text-sub">
+            <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+                <p class="text-sm text-slate-500">
                     ¿Necesitas ayuda? 
                     <a class="font-bold text-primary hover:underline ml-1" href="#">Contactar Soporte</a>
                 </p>
@@ -92,59 +95,58 @@
         </div>
     </div>
     
-    <div class="mt-8 text-center px-4">
-        <p class="text-[11px] font-bold tracking-tighter text-white opacity-80 uppercase">
+    <!-- Footer con Copyright -->
+    <div class="fixed bottom-6 text-center w-full left-0 px-4">
+        <p class="text-[10px] font-bold tracking-widest text-white/90 uppercase">
             © 2024 ICES MÉXICO. TODOS LOS DERECHOS RESERVADOS.
         </p>
     </div>
 
     <script>
         function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('toggleIcon');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.textContent = 'visibility';
+            const pass = document.getElementById('password');
+            const icon = document.getElementById('toggleIcon');
+            if (pass.type === 'password') {
+                pass.type = 'text';
+                icon.textContent = 'visibility';
             } else {
-                passwordInput.type = 'password';
-                toggleIcon.textContent = 'visibility_off';
+                pass.type = 'password';
+                icon.textContent = 'visibility_off';
             }
         }
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const alert = document.getElementById('alertMessage');
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
 
-            const submitBtn = document.getElementById('submitBtn');
-            const alertMessage = document.getElementById('alertMessage');
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            alertMessage.classList.add('hidden');
-            submitBtn.innerText = 'Verificando...';
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = "0.7";
+            alert.classList.add('hidden');
+            btn.innerText = 'Verificando...';
+            btn.disabled = true;
+            btn.classList.add('opacity-70');
 
             google.script.run
-                .withSuccessHandler(function(esValido) {
-                    if (esValido) {
-                        // Redirección al tener éxito
+                .withSuccessHandler(function(permitido) {
+                    if (permitido) {
                         window.top.location.href = 'https://www.youtube.com';
                     } else {
-                        alertMessage.classList.remove('hidden');
-                        restaurarBoton();
+                        alert.classList.remove('hidden');
+                        resetBtn();
                     }
                 })
-                .withFailureHandler(function(error) {
-                    alertMessage.innerText = "Error de conexión.";
-                    alertMessage.classList.remove('hidden');
-                    restaurarBoton();
+                .withFailureHandler(function() {
+                    alert.innerText = "Error de conexión con el servidor.";
+                    alert.classList.remove('hidden');
+                    resetBtn();
                 })
-                .verificarCredenciales(username, password);
+                .verificarCredenciales(user, pass);
                 
-            function restaurarBoton() {
-                submitBtn.innerText = 'Iniciar Sesión';
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = "1";
+            function resetBtn() {
+                btn.innerText = 'Iniciar Sesión';
+                btn.disabled = false;
+                btn.classList.remove('opacity-70');
             }
         });
     </script>
