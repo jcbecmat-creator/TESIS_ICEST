@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Portal Educativo - ICES</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -14,7 +14,7 @@
                     colors: {
                         primary: "#005B9A", 
                         "primary-dark": "#004575",
-                        "surface": "#FFFFFF",
+                        "ice-blue": "#007bc4",
                     }
                 },
             },
@@ -23,37 +23,38 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #007bc4; /* Azul sólido de fondo según imagen 1 */
+            background-color: #007bc4; /* Color de fondo según imagen 1 */
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
         }
-        .card-shadow {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        .login-card {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-radius: 24px;
         }
     </style>
 </head>
 <body class="p-4 antialiased">
 
-    <div class="w-full max-w-[420px] bg-surface rounded-[24px] card-shadow overflow-hidden">
+    <div class="w-full max-w-[420px] bg-white login-card overflow-hidden">
         <div class="p-8 sm:p-10">
-            <!-- Logo y Encabezado -->
-            <div class="flex flex-col items-center mb-8">
+            <!-- Logo ICEST -->
+            <div class="flex flex-col items-center mb-10">
                 <img src="https://i.ibb.co/C3wh0NmV/hq720.jpg" alt="Logo ICEST" class="h-24 mb-4 object-contain"> 
-                <h1 class="text-2xl font-bold text-[#1a2b4b]">Bienvenido</h1>
-                <p class="text-slate-500 text-sm mt-1">Portal de Educación Profesional</p>
+                <h1 class="text-3xl font-bold text-[#1a2b4b]">Bienvenido</h1>
+                <p class="text-slate-500 text-base mt-1 text-center">Portal de Educación Profesional</p>
             </div>
             
-            <form id="loginForm" class="space-y-5">
+            <form id="loginForm" class="space-y-6">
                 <!-- Input Usuario -->
                 <div class="space-y-1">
                     <label class="text-sm font-semibold text-slate-700 ml-1">Usuario</label>
                     <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">person</span>
-                        <input required id="username" name="username" placeholder="ID" type="text"
-                            class="block w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">person</span>
+                        <input required id="username" placeholder="ID" type="text"
+                            class="block w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
                     </div>
                 </div>
                 
@@ -61,11 +62,11 @@
                 <div class="space-y-1">
                     <label class="text-sm font-semibold text-slate-700 ml-1">Contraseña</label>
                     <div class="relative group">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">lock</span>
-                        <input required id="password" name="password" placeholder="••••••••" type="password"
-                            class="block w-full pl-12 pr-12 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">lock</span>
+                        <input required id="password" placeholder="••••••••" type="password"
+                            class="block w-full pl-12 pr-12 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
                         <button type="button" onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined text-xl" id="toggleIcon">visibility_off</span>
+                            <span class="material-symbols-outlined" id="toggleIcon">visibility_off</span>
                         </button>
                     </div>
                 </div>
@@ -74,19 +75,19 @@
                     <a class="text-sm font-semibold text-primary hover:underline" href="#">¿Olvidaste tu contraseña?</a>
                 </div>
 
-                <!-- Alerta de Error -->
-                <div id="alertMessage" class="hidden py-3 px-4 bg-red-50 border border-red-100 text-red-600 text-xs font-bold rounded-lg text-center">
+                <!-- Alerta dinámica -->
+                <div id="alertMessage" class="hidden py-3 px-4 bg-red-50 border border-red-100 text-red-600 text-sm font-medium rounded-xl text-center">
                     ID o contraseña incorrectos
                 </div>
                 
-                <!-- Botón de Envío -->
+                <!-- Botón Login -->
                 <button id="submitBtn" type="submit"
-                    class="w-full py-4 px-4 rounded-xl text-white font-bold bg-primary hover:bg-primary-dark transition-all active:scale-[0.97] shadow-lg shadow-primary/20">
+                    class="w-full py-4 px-4 rounded-xl text-white text-lg font-bold bg-primary hover:bg-primary-dark transition-all active:scale-[0.98] shadow-lg shadow-primary/20">
                     Iniciar Sesión
                 </button>
             </form>
             
-            <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+            <div class="mt-10 pt-6 border-t border-slate-50 text-center">
                 <p class="text-sm text-slate-500">
                     ¿Necesitas ayuda? 
                     <a class="font-bold text-primary hover:underline ml-1" href="#">Contactar Soporte</a>
@@ -95,9 +96,9 @@
         </div>
     </div>
     
-    <!-- Footer con Copyright -->
+    <!-- Footer Copyright -->
     <div class="fixed bottom-6 text-center w-full left-0 px-4">
-        <p class="text-[10px] font-bold tracking-widest text-white/90 uppercase">
+        <p class="text-[10px] font-bold tracking-[0.2em] text-white/90 uppercase">
             © 2024 ICES MÉXICO. TODOS LOS DERECHOS RESERVADOS.
         </p>
     </div>
@@ -125,19 +126,26 @@
             alert.classList.add('hidden');
             btn.innerText = 'Verificando...';
             btn.disabled = true;
-            btn.classList.add('opacity-70');
+
+            // =========================================================================
+            // LEYENDA: EXPLICACIÓN DE LA URL
+            // Si este archivo Index.html está DENTRO de Google Apps Script,
+            // no necesitas pegar la URL aquí, el comando 'google.script.run' 
+            // ya sabe a dónde ir automáticamente.
+            // =========================================================================
 
             google.script.run
-                .withSuccessHandler(function(permitido) {
-                    if (permitido) {
-                        window.top.location.href = 'https://www.youtube.com';
+                .withSuccessHandler(function(acceso) {
+                    if (acceso) {
+                        // AQUÍ PUEDES CAMBIAR YOUTUBE POR LA PÁGINA PRINCIPAL DE TU APP
+                        window.top.location.href = 'https://script.google.com/macros/s/AKfycbyX31VLe3iskH1V3e2f1PXVq7SV_cnHPM9E-2xNT75vSEUOfPtTOGtrEI_suBrwgVI/exec'; 
                     } else {
                         alert.classList.remove('hidden');
                         resetBtn();
                     }
                 })
                 .withFailureHandler(function() {
-                    alert.innerText = "Error de conexión con el servidor.";
+                    alert.innerText = "Error técnico. Revisa la consola o permisos.";
                     alert.classList.remove('hidden');
                     resetBtn();
                 })
@@ -146,7 +154,6 @@
             function resetBtn() {
                 btn.innerText = 'Iniciar Sesión';
                 btn.disabled = false;
-                btn.classList.remove('opacity-70');
             }
         });
     </script>
