@@ -1,0 +1,53 @@
+<section id="nuevo-ingreso">
+    <h3 class="mb-4 text-secondary">Registro de Nuevo Paciente</h3>
+    <div class="card card-custom p-4">
+        <form id="formNuevoIngreso">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label>Nombre Completo</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <label>Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <label>Sexo</label>
+                    <select class="form-select" id="selectSexo">
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>CURP</label>
+                    <input type="text" class="form-control text-uppercase" required>
+                </div>
+                <div class="col-md-6">
+                    <label>Dirección</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="col-md-6" id="divEmbarazo" style="display:none;">
+                    <label>¿Posibilidad de Embarazo?</label>
+                    <select class="form-select">
+                        <option>No</option>
+                        <option>Sí</option>
+                        <option>No estoy segura</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Selfie del Paciente</label>
+                    <input type="file" class="form-control" accept="image/*" required>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <button type="button" class="btn btn-theme" onclick="generarFolio()"><i class="fas fa-id-card"></i> Generar ID</button>
+            </div>
+        </form>
+
+        <div id="resultadoID" class="text-center mt-4" style="display:none;">
+            <h4 class="text-secondary">Su ID asignado es:</h4>
+            <h1 style="color: var(--main-theme); font-weight: bold;" id="displayNuevoID">ICEST-00000</h1>
+            <button class="btn btn-theme mt-2" onclick="irANuevoEstudio()">Ir a Nuevo Estudio</button>
+        </div>
+    </div>
+</section>
