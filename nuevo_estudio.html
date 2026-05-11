@@ -1,0 +1,33 @@
+<section id="nuevo-estudio">
+    <h3 class="mb-4 text-secondary">Cuestionario de Triaje</h3>
+    <div class="card card-custom p-4">
+        <div class="alert alert-info border-0" style="background-color: rgba(129, 208, 220, 0.2); color: #008fa1;">
+            Seleccione la zona afectada y responda las preguntas para que la IA determine el estudio.
+        </div>
+        
+        <label>¿Qué parte del cuerpo se lesionó?</label>
+        <select class="form-select w-50 mb-3">
+            <option>Muñeca / Mano (Ruta C)</option>
+            <option>Tobillo / Pie (Ruta A)</option>
+            <option>Cráneo (Ruta G)</option>
+        </select>
+        
+        <button class="btn btn-theme" onclick="procesarIA()">Procesar por IA</button>
+
+        <div id="solicitudGenerada" class="mt-4 p-3 border rounded" style="display:none; background-color: #f9f9f9;">
+            <div class="d-flex align-items-center mb-3">
+                <img src="foto_paciente.jpg" class="circulo-completo me-3" alt="Selfie">
+                <div>
+                    <h5 class="mb-0">ID: ICEST-115</h5>
+                    <small class="text-muted">María Aguilar</small>
+                </div>
+            </div>
+            <h6><i class="fas fa-file-medical" style="color: var(--main-theme);"></i> Orden Sugerida: <b>Muñeca (PA y Lateral)</b></h6>
+            <ul class="list-unstyled small mt-2">
+                <li><b>DFRI:</b> 100 cm (40 pulg)</li>
+                <li><b>Técnica:</b> 55-65 kV | 2 - 2.5 mAs | Foco Fino</li>
+                <li><b>Diagnóstico Probable IA:</b> Sospecha de fractura distal de radio.</li>
+            </ul>
+        </div>
+    </div>
+</section>
