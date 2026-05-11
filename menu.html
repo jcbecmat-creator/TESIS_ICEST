@@ -1,0 +1,46 @@
+<style>
+    :root {
+        --main-theme: #81D0DC;
+        --main-hover: #6ebcc8;
+        --bg-light: #f8f9fa;
+    }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-light); }
+    .navbar-custom { background-color: var(--main-theme); }
+    .navbar-custom .navbar-brand, .navbar-custom .nav-link { color: white !important; font-weight: 500; }
+    .btn-theme { background-color: var(--main-theme); color: white; border: none; border-radius: 25px; padding: 8px 20px; }
+    .btn-theme:hover { background-color: var(--main-hover); color: white; }
+    .circulo-completo { border-radius: 50%; width: 45px; height: 45px; object-fit: cover; border: 2px solid var(--main-theme); }
+    .card-custom { border: none; border-top: 4px solid var(--main-theme); box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-radius: 12px; }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-custom shadow-sm sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><i class="fas fa-x-ray circulo-completo bg-white text-center" style="color:#81D0DC; line-height: 40px;"></i> ICEST-Triage</a>
+        <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Pacientes</a>
+                    <ul class="dropdown-menu border-0 shadow">
+                        <li><a class="dropdown-item" href="#nuevo-ingreso">Nuevo Ingreso</a></li>
+                        <li><a class="dropdown-item" href="#nuevo-estudio">Nuevo Estudio</a></li>
+                        <li><a class="dropdown-item" href="#id-busqueda">ID - Búsqueda</a></li>
+                        <li><a class="dropdown-item" href="#mi-expediente">Mi Expediente</a></li>
+                        <li><a class="dropdown-item" href="#mis-estudios">Mis Estudios</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Radiólogos</a>
+                    <ul class="dropdown-menu border-0 shadow">
+                        <li><a class="dropdown-item" href="#expedientes-rad">Expedientes</a></li>
+                        <li><a class="dropdown-item" href="#estudios-rad">Estudios</a></li>
+                        <li><a class="dropdown-item" href="#proyecciones">Proyecciones (CSV)</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
