@@ -2,31 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
+        :root { --icest-blue: #005B9A; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
         body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
         .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
-        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .slide-title { font-size: 32px; font-family: 'Poppins'; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .highlight-numbers-layout { display: flex; gap: 30px; margin-bottom: 40px; }
+        .number-box { flex: 1; text-align: center; background: var(--bg-light); padding: 30px; border-radius: 12px; }
+        .number-box .number { font-size: 70px; font-weight: 700; color: var(--icest-blue); font-family: 'Poppins'; line-height: 1; }
+        .number-box .label { font-weight: 700; font-size: 16px; color: var(--loreto-cyan); margin-top: 10px; }
+        
+        /* MAGIA PARA CELULARES */
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .slide-card { padding: 25px 20px; }
+            .slide-title { font-size: 24px; margin-bottom: 20px; }
+            .highlight-numbers-layout { flex-direction: column; gap: 15px; }
+            .number-box .number { font-size: 48px; }
+        }
     </style>
 </head>
 <body>
     <div class="slide-card">
         <h2 class="slide-title">Dashboard Operativo</h2>
-        <div style="display: flex; gap: 30px; margin-bottom: 40px;">
-            <div style="flex: 1; text-align: center; background: var(--bg-light); padding: 30px; border-radius: 12px;">
-                <div style="font-size: 70px; font-weight: 700; color: var(--icest-blue); font-family: 'Poppins'; line-height: 1;">1,245</div>
-                <div style="font-weight: 700; font-size: 16px; color: var(--loreto-cyan);">Estudios Totales</div>
+        <div class="highlight-numbers-layout">
+            <div class="number-box">
+                <div class="number">1,245</div>
+                <div class="label">Estudios Totales</div>
             </div>
-            <div style="flex: 1; text-align: center; background: var(--bg-light); padding: 30px; border-radius: 12px;">
-                <div style="font-size: 70px; font-weight: 700; color: var(--icest-blue); font-family: 'Poppins'; line-height: 1;">850</div>
-                <div style="font-weight: 700; font-size: 16px; color: var(--loreto-cyan);">Pacientes Registrados</div>
+            <div class="number-box">
+                <div class="number">850</div>
+                <div class="label">Pacientes Registrados</div>
             </div>
-            <div style="flex: 1; text-align: center; background: var(--bg-light); padding: 30px; border-radius: 12px;">
-                <div style="font-size: 70px; font-weight: 700; color: #eab308; font-family: 'Poppins'; line-height: 1;">320</div>
-                <div style="font-weight: 700; font-size: 16px; color: var(--loreto-cyan);">Patologías IA</div>
+            <div class="number-box">
+                <div class="number" style="color: #eab308;">320</div>
+                <div class="label">Patologías IA</div>
             </div>
         </div>
     </div>
