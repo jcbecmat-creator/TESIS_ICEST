@@ -25,10 +25,6 @@
             font-family: 'Inter', sans-serif;
             background-color: #007bc4;
             margin: 0;
-            /* Cambiamos a flex-col para controlar el footer perfectamente */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
         .login-card {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
@@ -36,10 +32,11 @@
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased flex flex-col items-center justify-center min-h-screen p-4">
 
-    <div class="flex-1 flex items-center justify-center p-4">
-        <div class="w-full max-w-[400px] bg-white login-card overflow-hidden">
+    <div class="w-full max-w-[400px] flex flex-col items-center">
+        
+        <div class="w-full bg-white login-card overflow-hidden">
             <div class="p-6 sm:p-8">
                 <div class="flex flex-col items-center mb-6">
                     <img src="https://i.ibb.co/C3wh0NmV/hq720.jpg" alt="Logo ICEST" class="h-20 mb-3 object-contain"> 
@@ -91,12 +88,13 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="w-full text-center pb-4 pt-2">
-        <p class="text-[10px] font-bold tracking-[0.1em] text-white/90 uppercase">
-            © 2026 ICEST MÉXICO. TODOS LOS DERECHOS RESERVADOS.
-        </p>
+
+        <div class="w-full text-center mt-4">
+            <p class="text-[10px] font-bold tracking-[0.1em] text-white/90 uppercase">
+                © 2026 ICEST MÉXICO. TODOS LOS DERECHOS RESERVADOS.
+            </p>
+        </div>
+
     </div>
 
     <script>
@@ -124,22 +122,39 @@
             btn.innerText = 'Verificando...';
             btn.disabled = true;
 
+            // URL proporcionada
             const urlGAS = "https://script.google.com/macros/s/AKfycbzKt5qEd2eXYqKt9hLlNNxN7_LEKJVmShW1mD6ogZrNDC02hqSQBZdTHrzd-i_HfKs/exec";
             const urlConDatos = `${urlGAS}?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`;
 
             try {
-                const respuesta = await fetch(urlConDatos);
-                const datos = await respuesta.json();
+                // Fetch fortificado con redirect: 'follow'
+                const respuesta = await fetch(urlConDatos, {
+                    method: 'GET',
+                    redirect: 'follow'
+                });
 
-                if (datos.acceso === true) {
-                    window.location.href = 'menu.html';
-                } else {
-                    alert.innerText = "ID o contraseña incorrectos";
+                // Leemos como texto primero para evitar fallos si Google devuelve HTML
+                const texto = await respuesta.text();
+
+                try {
+                    const datos = JSON.parse(texto);
+                    if (datos.acceso === true) {
+                        window.location.href = 'menu.html';
+                    } else {
+                        alert.innerText = "ID o contraseña incorrectos";
+                        alert.classList.remove('hidden');
+                        resetBtn();
+                    }
+                } catch (parseError) {
+                    // Si llega aquí, Google Apps Script no devolvió un JSON.
+                    console.error("Respuesta inesperada de Google:", texto);
+                    alert.innerText = "Error en servidor. Revise configuración en Google.";
                     alert.classList.remove('hidden');
                     resetBtn();
                 }
 
             } catch (error) {
+                // Falla de red (micro-corte, navegador bloqueando CORS, etc)
                 console.error("Detalle del error:", error);
                 alert.innerText = "Error de red. Verifique su conexión.";
                 alert.classList.remove('hidden');
