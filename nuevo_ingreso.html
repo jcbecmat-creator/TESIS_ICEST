@@ -6,186 +6,154 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root { 
-            --icest-blue: #005B9A; 
-            --icest-dark: #003f6b; 
-            --loreto-cyan: #81D0DC; 
-            --bg-light: #f8fafc; 
-            --text-main: #1e293b; 
-            --text-muted: #64748b; 
-        }
-        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
-        h3 { font-family: 'Poppins'; color: var(--icest-blue); margin-bottom: 15px; }
-        
-        .slide-card { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
-        .slide-title { font-size: 30px; font-family: 'Poppins'; margin-bottom: 25px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
-        
-        /* Controles de Formulario */
-        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Lato'; background-color: var(--bg-light); font-size: 14px; box-sizing: border-box; }
-        .form-control:focus { border-color: var(--loreto-cyan); outline: none; background-color: white; box-shadow: 0 0 0 3px rgba(129, 208, 220, 0.2); }
-        .form-label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-muted); text-align: left; }
-        
-        /* Botones */
-        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; margin-top: 20px; width: 100%; font-size: 16px; }
-        .btn-primary:hover { background-color: var(--icest-dark); transform: translateY(-2px); }
-        .btn-clear { background-color: #cbd5e1; color: var(--icest-dark); border: none; padding: 8px 15px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .btn-clear:hover { background-color: #94a3b8; }
-
-        /* SISTEMA DE FILAS INFALIBLE PARA SEPARACIÓN SIMÉTRICA */
-        .form-row { display: flex; gap: 25px; margin-bottom: 20px; width: 100%; }
-        .form-col { flex: 1; min-width: 0; /* min-width 0 evita que los inputs rompan la columna */ }
-
-        .section-header { margin-top: 30px; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px; color: var(--icest-dark); font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-        .section-header i { color: var(--loreto-cyan); font-size: 18px; }
-
-        /* Cajas de Fotografía y Firma */
-        .capture-box { border: 2px dashed #cbd5e1; height: 220px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; background: white; cursor: pointer; position: relative; transition: 0.3s; }
-        .capture-box:hover { border-color: var(--loreto-cyan); background-color: #f0f9fa; }
-        .signature-line { position: absolute; bottom: 40px; width: 80%; border-bottom: 2px solid var(--icest-dark); }
-
-        /* Adaptación a Celulares */
-        @media (max-width: 768px) {
-            body { padding: 15px; }
-            .slide-card { padding: 25px 20px; }
-            .slide-title { font-size: 24px; }
-            .form-row { flex-direction: column; gap: 15px; margin-bottom: 15px; }
-        }
+        :root{--icest-blue:#005B9A;--icest-dark:#003f6b;--loreto-cyan:#81D0DC;--bg-light:#f8fafc;--text-main:#1e293b;--text-muted:#64748b}body{font-family:'Lato',sans-serif;color:var(--text-main);margin:0;padding:40px;display:flex;justify-content:center;background:transparent}h3{font-family:'Poppins';color:var(--icest-blue);margin-bottom:15px}.slide-card{background:white;border-radius:12px;padding:40px;box-shadow:0 15px 30px rgba(0,0,0,0.05);border-top:5px solid var(--icest-blue);width:100%;max-width:1100px}.slide-title{font-size:30px;font-family:'Poppins';margin-bottom:25px;border-bottom:2px solid var(--loreto-cyan);padding-bottom:10px;color:var(--icest-blue)}.form-control{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-family:'Lato';background-color:var(--bg-light);font-size:14px;box-sizing:border-box}.form-control:focus{border-color:var(--loreto-cyan);outline:none;background-color:white;box-shadow:0 0 0 3px rgba(129,208,220,0.2)}.form-label{display:block;font-weight:700;margin-bottom:6px;font-size:13px;color:var(--text-muted);text-align:left}.btn-primary{background-color:var(--icest-blue);color:white;border:none;padding:14px 28px;border-radius:8px;font-weight:700;font-family:'Poppins';cursor:pointer;transition:0.3s;margin-top:20px;width:100%;font-size:16px}.btn-primary:hover{background-color:var(--icest-dark);transform:translateY(-2px)}.btn-clear{background-color:#cbd5e1;color:var(--icest-dark);border:none;padding:8px 15px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:10px;transition:0.3s}.btn-clear:hover{background-color:#94a3b8}.form-row{display:flex;gap:25px;margin-bottom:20px;width:100%}.form-col{flex:1;min-width:0}.section-header{margin-top:30px;padding-bottom:8px;border-bottom:1px solid #e2e8f0;margin-bottom:20px;color:var(--icest-dark);font-size:16px;font-weight:700;display:flex;align-items:center;gap:10px}.section-header i{color:var(--loreto-cyan);font-size:18px}.capture-box{border:2px dashed #cbd5e1;height:220px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;background:white;cursor:pointer;position:relative;transition:0.3s;overflow:hidden}.capture-box:hover{border-color:var(--loreto-cyan);background-color:#f0f9fa}.signature-line{position:absolute;bottom:40px;width:80%;border-bottom:2px solid var(--icest-dark)}@media(max-width:768px){body{padding:15px}.slide-card{padding:25px 20px}.slide-title{font-size:24px}.form-row{flex-direction:column;gap:15px;margin-bottom:15px}}
     </style>
 </head>
 <body>
     <div class="slide-card">
         <h2 class="slide-title">Registro de Nuevo Ingreso</h2>
-        
         <form id="registroPaciente">
             <div class="section-header"><i class="fa-solid fa-user"></i> Datos Personales</div>
-            
             <div class="form-row">
-                <div class="form-col">
-                    <label class="form-label">Nombre Completo</label>
-                    <input type="text" class="form-control" placeholder="Nombre(s) y Apellidos">
-                </div>
+                <div class="form-col"><label class="form-label">Nombre Completo</label><input type="text" id="nombre" class="form-control" required></div>
             </div>
-            
             <div class="form-row">
-                <div class="form-col">
-                    <label class="form-label">CURP</label>
-                    <input type="text" class="form-control" placeholder="18 caracteres alfanuméricos">
-                </div>
+                <div class="form-col"><label class="form-label">CURP</label><input type="text" id="curp" class="form-control" required></div>
             </div>
-
             <div class="form-row">
-                <div class="form-col">
-                    <label class="form-label">Sexo</label>
-                    <select class="form-control">
-                        <option value="">Seleccione...</option>
-                        <option value="M">Masculino</option>
-                        <option value="F">Femenino</option>
-                    </select>
-                </div>
-                <div class="form-col">
-                    <label class="form-label">Fecha de Nacimiento</label>
-                    <input type="date" class="form-control">
-                </div>
+                <div class="form-col"><label class="form-label">Sexo</label><select id="sexo" class="form-control" required><option value="">Seleccione...</option><option value="M">Masculino</option><option value="F">Femenino</option></select></div>
+                <div class="form-col"><label class="form-label">Fecha de Nacimiento</label><input type="date" id="fechaNac" class="form-control" required></div>
             </div>
 
             <div class="section-header"><i class="fa-solid fa-house-medical"></i> Domicilio del Paciente</div>
-            
             <div class="form-row">
-                <div class="form-col">
-                    <label class="form-label">Calle y Números</label>
-                    <input type="text" class="form-control" placeholder="Nombre de la vialidad">
-                </div>
-                <div class="form-col">
-                    <label class="form-label">Número Exterior / Interior</label>
-                    <input type="text" class="form-control" placeholder="Ej. 123-A o S/N">
-                </div>
+                <div class="form-col"><label class="form-label">Calle y Números</label><input type="text" id="calle" class="form-control"></div>
+                <div class="form-col"><label class="form-label">Número Exterior / Interior</label><input type="text" id="numExt" class="form-control"></div>
             </div>
-
             <div class="form-row">
-                <div class="form-col">
-                    <label class="form-label">Colonia</label>
-                    <input type="text" class="form-control" placeholder="Nombre del asentamiento">
-                </div>
-                <div class="form-col">
-                    <label class="form-label">Delegación o Municipio</label>
-                    <input type="text" class="form-control" placeholder="Municipio">
-                </div>
+                <div class="form-col"><label class="form-label">Colonia</label><input type="text" id="colonia" class="form-control"></div>
+                <div class="form-col"><label class="form-label">Delegación o Municipio</label><input type="text" id="municipio" class="form-control"></div>
             </div>
-
             <div class="form-row">
-                <div class="form-col">
-                    <label class="form-label">Código Postal</label>
-                    <input type="number" class="form-control" placeholder="5 dígitos">
-                </div>
-                <div class="form-col">
-                    <label class="form-label">Estado</label>
-                    <select class="form-control">
-                        <option value="">Seleccione un estado...</option>
-                        <option value="Aguascalientes">Aguascalientes</option>
-                        <option value="Baja California">Baja California</option>
-                        <option value="Baja California Sur">Baja California Sur</option>
-                        <option value="Campeche">Campeche</option>
-                        <option value="Chiapas">Chiapas</option>
-                        <option value="Chihuahua">Chihuahua</option>
-                        <option value="Ciudad de México">Ciudad de México</option>
-                        <option value="Coahuila">Coahuila</option>
-                        <option value="Colima">Colima</option>
-                        <option value="Durango">Durango</option>
-                        <option value="Estado de México">Estado de México</option>
-                        <option value="Guanajuato">Guanajuato</option>
-                        <option value="Guerrero">Guerrero</option>
-                        <option value="Hidalgo">Hidalgo</option>
-                        <option value="Jalisco">Jalisco</option>
-                        <option value="Michoacán">Michoacán</option>
-                        <option value="Morelos">Morelos</option>
-                        <option value="Nayarit">Nayarit</option>
-                        <option value="Nuevo León">Nuevo León</option>
-                        <option value="Oaxaca">Oaxaca</option>
-                        <option value="Puebla">Puebla</option>
-                        <option value="Querétaro">Querétaro</option>
-                        <option value="Quintana Roo">Quintana Roo</option>
-                        <option value="San Luis Potosí">San Luis Potosí</option>
-                        <option value="Sinaloa">Sinaloa</option>
-                        <option value="Sonora">Sonora</option>
-                        <option value="Tabasco">Tabasco</option>
-                        <option value="Tamaulipas">Tamaulipas</option>
-                        <option value="Tlaxcala">Tlaxcala</option>
-                        <option value="Veracruz">Veracruz</option>
-                        <option value="Yucatán">Yucatán</option>
-                        <option value="Zacatecas">Zacatecas</option>
-                    </select>
-                </div>
+                <div class="form-col"><label class="form-label">Código Postal</label><input type="number" id="cp" class="form-control"></div>
+                <div class="form-col"><label class="form-label">Estado</label><select id="estado" class="form-control"><option value="">Seleccione un estado...</option><option value="Ciudad de México">Ciudad de México</option><option value="Nuevo León">Nuevo León</option><option value="Jalisco">Jalisco</option><option value="Tamaulipas">Tamaulipas</option></select></div>
             </div>
 
             <div class="section-header"><i class="fa-solid fa-fingerprint"></i> Biometría y Consentimiento</div>
-            
             <div class="form-row">
                 <div class="form-col" style="text-align: center; background: var(--bg-light); padding: 20px; border-radius: 12px;">
-                    <label class="form-label" style="text-align: center; margin-bottom: 10px;">Fotografía (Selfie)</label>
-                    <div class="capture-box">
+                    <label class="form-label" style="text-align: center;">Fotografía (Selfie)</label>
+                    <div class="capture-box" onclick="document.getElementById('selfieInput').click()">
+                        <img id="selfiePreview" style="display:none; width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:2;">
                         <i class="fa-solid fa-camera" style="font-size: 45px; color: var(--icest-blue); margin-bottom: 15px;"></i>
                         <span style="color: var(--text-muted); font-weight: 700;">Subir / Capturar Fotografía</span>
                     </div>
-                    <button type="button" class="btn-clear"><i class="fa-solid fa-trash-can"></i> Limpiar fotografía</button>
+                    <input type="file" id="selfieInput" accept="image/*" style="display:none;" onchange="previewImage(event, 'selfiePreview')">
+                    <button type="button" class="btn-clear" onclick="clearImage('selfieInput', 'selfiePreview')"><i class="fa-solid fa-trash-can"></i> Limpiar fotografía</button>
                 </div>
-
                 <div class="form-col" style="text-align: center; background: var(--bg-light); padding: 20px; border-radius: 12px;">
-                    <label class="form-label" style="text-align: center; margin-bottom: 10px;">Firma del Paciente</label>
-                    <div class="capture-box" style="border-style: solid; background-color: white;">
+                    <label class="form-label" style="text-align: center;">Firma del Paciente</label>
+                    <div class="capture-box" style="border-style: solid; background-color: white;" onclick="document.getElementById('firmaInput').click()">
+                        <img id="firmaPreview" style="display:none; width:100%; height:100%; object-fit:contain; position:absolute; top:0; left:0; z-index:2; background:white;">
                         <i class="fa-solid fa-pen-nib" style="position: absolute; top: 15px; right: 15px; font-size: 20px; color: #cbd5e1;"></i>
                         <div class="signature-line"></div>
                         <span style="position: absolute; bottom: 15px; font-size: 12px; color: var(--text-muted);">Firmar sobre la línea</span>
                     </div>
-                    <button type="button" class="btn-clear"><i class="fa-solid fa-eraser"></i> Limpiar firma</button>
+                    <input type="file" id="firmaInput" accept="image/*" style="display:none;" onchange="previewImage(event, 'firmaPreview')">
+                    <button type="button" class="btn-clear" onclick="clearImage('firmaInput', 'firmaPreview')"><i class="fa-solid fa-eraser"></i> Limpiar firma</button>
                 </div>
             </div>
-
             <div style="text-align: center; margin-top: 20px;">
-                <button type="submit" class="btn-primary">
-                    <i class="fa-solid fa-floppy-disk" style="margin-right: 8px;"></i> Guardar Registro y Generar ID
-                </button>
+                <button type="submit" id="btnGuardar" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar Registro y Generar ID</button>
             </div>
         </form>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBALDQWfTsBsoev0bNTEiatzGVkfrxEhB4",
+            authDomain: "icest-tesis.firebaseapp.com",
+            projectId: "icest-tesis",
+            storageBucket: "icest-tesis.firebasestorage.app",
+            messagingSenderId: "740005254003",
+            appId: "1:740005254003:web:abc24c84156d1f9e696b06"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        window.previewImage = function(event, previewId) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById(previewId);
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        };
+
+        window.clearImage = function(inputId, previewId) {
+            document.getElementById(inputId).value = "";
+            document.getElementById(previewId).src = "";
+            document.getElementById(previewId).style.display = "none";
+        };
+
+        document.getElementById('registroPaciente').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnGuardar');
+            btn.innerText = "Guardando en Firebase...";
+            btn.disabled = true;
+
+            try {
+                let selfieUrl = "";
+                let firmaUrl = "";
+                const selfieFile = document.getElementById('selfieInput').files[0];
+                const firmaFile = document.getElementById('firmaInput').files[0];
+
+                if(selfieFile) {
+                    const selfieRef = ref(storage, 'pacientes/selfies/' + Date.now() + '_' + selfieFile.name);
+                    await uploadBytes(selfieRef, selfieFile);
+                    selfieUrl = await getDownloadURL(selfieRef);
+                }
+                if(firmaFile) {
+                    const firmaRef = ref(storage, 'pacientes/firmas/' + Date.now() + '_' + firmaFile.name);
+                    await uploadBytes(firmaRef, firmaFile);
+                    firmaUrl = await getDownloadURL(firmaRef);
+                }
+
+                const docRef = await addDoc(collection(db, "pacientes"), {
+                    nombre: document.getElementById('nombre').value,
+                    curp: document.getElementById('curp').value,
+                    sexo: document.getElementById('sexo').value,
+                    fechaNac: document.getElementById('fechaNac').value,
+                    calle: document.getElementById('calle').value,
+                    numExt: document.getElementById('numExt').value,
+                    colonia: document.getElementById('colonia').value,
+                    municipio: document.getElementById('municipio').value,
+                    cp: document.getElementById('cp').value,
+                    estado: document.getElementById('estado').value,
+                    selfieUrl: selfieUrl,
+                    firmaUrl: firmaUrl,
+                    fechaRegistro: new Date().toISOString()
+                });
+
+                alert("Paciente guardado con éxito. ID Documento: " + docRef.id);
+                document.getElementById('registroPaciente').reset();
+                clearImage('selfieInput', 'selfiePreview');
+                clearImage('firmaInput', 'firmaPreview');
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Error al conectar con Firebase: " + error.message);
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar Registro y Generar ID';
+                btn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>
