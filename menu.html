@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA-Triage ICEST - Sistema Principal</title>
+    <title>IA-Triage ICEST - Portal Clínico</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,12 +12,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
+        /* PALETA DE COLORES ICEST & LORETO */
         :root {
             --icest-blue: #005B9A;
             --icest-dark: #003f6b;
             --loreto-cyan: #81D0DC;
-            --bg-light: #f1f5f9;
-            --text-main: #334155;
+            --bg-light: #f8fafc;
+            --bg-app: #e2e8f0;
+            --text-main: #1e293b;
             --text-muted: #64748b;
         }
 
@@ -25,7 +27,7 @@
 
         body {
             font-family: 'Lato', sans-serif;
-            background-color: var(--bg-light);
+            background-color: var(--bg-app);
             color: var(--text-main);
             display: flex;
             height: 100vh;
@@ -35,7 +37,7 @@
         h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); }
 
         /* ==========================================
-           MENÚ LATERAL IZQUIERDO
+           1. MENÚ LATERAL IZQUIERDO (SIDEBAR)
         ========================================== */
         .sidebar {
             width: 260px;
@@ -43,85 +45,64 @@
             color: white;
             display: flex;
             flex-direction: column;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
             z-index: 10;
         }
 
-        .sidebar-header {
+        .sidebar-brand {
             padding: 30px 20px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             text-align: center;
         }
 
-        .sidebar-header h2 {
-            color: white;
-            font-size: 22px;
-            font-weight: 700;
-        }
+        .sidebar-brand h2 { color: white; font-size: 24px; font-weight: 700; margin-bottom: 5px; }
+        .sidebar-brand span { color: var(--loreto-cyan); font-size: 13px; font-weight: 700; letter-spacing: 1.5px; }
 
-        .sidebar-header span {
-            color: var(--loreto-cyan);
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .nav-menu {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px 0;
-        }
+        .nav-menu { flex: 1; overflow-y: auto; padding: 20px 10px; }
 
         .nav-section-title {
-            padding: 10px 25px;
+            padding: 15px 15px 5px;
             font-size: 11px;
             text-transform: uppercase;
             color: var(--loreto-cyan);
             font-weight: 700;
             letter-spacing: 1px;
-            margin-top: 10px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 12px 25px;
-            color: rgba(255,255,255,0.8);
+            padding: 12px 15px;
+            color: rgba(255,255,255,0.7);
             text-decoration: none;
-            font-size: 15px;
+            font-size: 14px;
+            border-radius: 6px;
             transition: all 0.3s;
             cursor: pointer;
+            margin-bottom: 2px;
         }
 
-        .nav-link i {
-            width: 24px;
-            font-size: 16px;
-            color: var(--loreto-cyan);
-        }
-
-        .nav-link:hover {
-            background-color: rgba(255,255,255,0.05);
-            color: white;
-        }
-
+        .nav-link i { width: 25px; font-size: 16px; color: var(--loreto-cyan); text-align: center; margin-right: 10px; }
+        
+        .nav-link:hover { background-color: rgba(255,255,255,0.05); color: white; }
+        
         .nav-link.active {
             background-color: rgba(255,255,255,0.1);
             color: white;
-            border-left: 5px solid var(--loreto-cyan);
+            border-left: 4px solid var(--loreto-cyan);
             font-weight: 700;
         }
 
         /* ==========================================
-           ÁREA PRINCIPAL DE CONTENIDO
+           2. ÁREA PRINCIPAL Y TOPBAR
         ========================================== */
-        .main-content {
+        .main-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* BARRA SUPERIOR */
         .topbar {
             height: 70px;
             background-color: white;
@@ -133,129 +114,117 @@
             z-index: 5;
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--loreto-cyan);
-            color: var(--icest-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
+        .user-profile { display: flex; align-items: center; gap: 15px; }
+        
         .btn-logout {
             border: 2px solid var(--icest-blue);
             background: transparent;
             color: var(--icest-blue);
-            padding: 6px 15px;
+            padding: 6px 18px;
             border-radius: 20px;
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
             transition: 0.3s;
         }
+        .btn-logout:hover { background: var(--icest-blue); color: white; }
 
-        .btn-logout:hover {
-            background: var(--icest-blue);
-            color: white;
-        }
-
-        /* CONTENEDOR DE SECCIONES */
+        /* ==========================================
+           3. CONTENEDOR DE MÓDULOS (ESTILO PRESENTACIÓN)
+        ========================================== */
         .content-area {
             flex: 1;
             padding: 40px;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra las tarjetas grandes */
         }
 
         .app-module {
             display: none;
+            width: 100%;
+            max-width: 1200px; /* Ancho máximo para que se vea como slide */
             animation: fadeIn 0.4s ease-in-out;
         }
 
-        .app-module.active {
-            display: block;
-        }
+        .app-module.active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ==========================================
-           DISEÑO DE TARJETAS Y ELEMENTOS INTERNOS
-        ========================================== */
-        .card {
+        /* Tarjeta Principal (Estilo Slide) */
+        .slide-card {
             background: white;
             border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--icest-blue);
-            margin-bottom: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--icest-blue);
+            width: 100%;
         }
 
-        .module-title {
-            font-size: 28px;
-            margin-bottom: 25px;
+        .slide-title {
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 40px;
+            color: var(--icest-blue);
             border-bottom: 2px solid var(--loreto-cyan);
             padding-bottom: 10px;
-            display: inline-block;
+            width: 100%;
         }
 
-        /* Dashboard Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
+        /* ==========================================
+           4. LAYOUTS INTERNOS (COMO LA PRESENTACIÓN)
+        ========================================== */
+        /* Layout Números Grandes (Dashboard) */
+        .highlight-numbers-layout { display: flex; justify-content: space-between; gap: 40px; margin-bottom: 40px; }
+        .number-box { text-align: center; flex: 1; background: var(--bg-light); padding: 30px; border-radius: 12px; }
+        .number-box .number { font-size: 70px; font-weight: 700; color: var(--icest-blue); font-family: 'Poppins'; line-height: 1; margin-bottom: 10px; }
+        .number-box .label { font-weight: 700; font-size: 16px; color: var(--loreto-cyan); text-transform: uppercase; }
 
-        .stat-box {
-            text-align: center;
-            padding: 30px;
-            background: var(--bg-light);
-            border-radius: 12px;
-        }
-
-        .stat-number { font-size: 50px; font-family: 'Poppins'; font-weight: 700; color: var(--icest-blue); }
-        .stat-label { font-size: 16px; font-weight: 700; color: var(--loreto-cyan); text-transform: uppercase; }
+        /* Layout Dos Columnas */
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+        
+        /* Layout Tiles (Tarjetas con iconos) */
+        .tiled-content { display: flex; gap: 20px; width: 100%; }
+        .tile { background-color: var(--bg-light); border-radius: 12px; border-top: 4px solid var(--icest-blue); flex: 1; padding: 30px; text-align: center; }
+        .tile .icon { color: var(--loreto-cyan); font-size: 45px; margin-bottom: 20px; }
+        .tile h3 { font-size: 20px; margin-bottom: 10px; }
 
         /* Formularios y Botones Generales */
-        .form-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; color: var(--icest-dark); }
-        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: 'Lato'; margin-bottom: 20px; background-color: var(--bg-light); }
-        .form-control:focus { outline: none; border-color: var(--loreto-cyan); background-color: white; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; color: var(--text-muted); }
+        .form-control { width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Lato'; background-color: var(--bg-light); font-size: 15px; }
+        .form-control:focus { outline: none; border-color: var(--loreto-cyan); background-color: white; box-shadow: 0 0 0 3px rgba(129, 208, 220, 0.2); }
         
-        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .btn-primary:hover { background-color: var(--icest-dark); }
+        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; font-size: 15px; }
+        .btn-primary:hover { background-color: var(--icest-dark); transform: translateY(-2px); }
 
-        /* Tablas */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { background-color: var(--bg-light); color: var(--icest-blue); font-family: 'Poppins'; }
-        
-        /* Botones Especiales Proyecciones (Igual a la imagen solicitada) */
-        .btn-group-proyecciones { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .btn-proy { background-color: var(--icest-blue); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer; text-transform: uppercase; }
-        .btn-proy.accent { background-color: var(--loreto-cyan); color: var(--icest-dark); }
+        /* Tablas de Consultoría */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 18px 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: var(--icest-blue); color: white; font-family: 'Poppins'; font-size: 14px; font-weight: 600; }
+        tr:hover { background-color: var(--bg-light); }
+
+        /* Botones Especiales Proyecciones */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+        .btn-module { background-color: var(--icest-blue); color: white; border: none; padding: 20px; border-radius: 8px; font-weight: 700; font-size: 16px; text-transform: uppercase; cursor: pointer; text-align: center; transition: 0.3s; }
+        .btn-module:hover { opacity: 0.9; }
+        .btn-module.accent { background-color: var(--loreto-cyan); color: var(--icest-dark); }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <div class="sidebar-header">
+        <div class="sidebar-brand">
             <h2>IA-TRIAGE</h2>
             <span>SISTEMA ICEST</span>
         </div>
         <div class="nav-menu">
             <div class="nav-link active" onclick="cambiarModulo('inicio', this)">
-                <i class="fa-solid fa-chart-pie"></i> Dashboard
+                <i class="fa-solid fa-gauge"></i> Dashboard
             </div>
             
             <div class="nav-section-title">Pacientes</div>
@@ -266,7 +235,7 @@
                 <i class="fa-solid fa-file-medical"></i> Nuevo Estudio
             </div>
             <div class="nav-link" onclick="cambiarModulo('id-busqueda', this)">
-                <i class="fa-solid fa-magnifying-glass"></i> ID - Búsqueda
+                <i class="fa-solid fa-magnifying-glass"></i> ID Búsqueda
             </div>
             <div class="nav-link" onclick="cambiarModulo('mi-expediente', this)">
                 <i class="fa-solid fa-address-card"></i> Mi Expediente
@@ -288,14 +257,16 @@
         </div>
     </aside>
 
-    <main class="main-content">
+    <main class="main-wrapper">
         <header class="topbar">
             <div>
-                <h3 style="margin: 0; color: var(--text-main); font-size: 18px;">Portal de Educación Profesional</h3>
+                <h3 style="margin: 0; color: var(--icest-dark); font-size: 18px;">Portal de Educación Profesional</h3>
             </div>
             <div class="user-profile">
-                <span style="font-weight: 700; color: var(--icest-blue);">Usuario ICEST</span>
-                <div class="avatar">U</div>
+                <span style="font-weight: 700; color: var(--text-muted); font-size: 14px;">Usuario Activo</span>
+                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: var(--loreto-cyan); color: var(--icest-dark); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px;">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
                 <button class="btn-logout" onclick="cerrarSesion()">Salir</button>
             </div>
         </header>
@@ -303,238 +274,140 @@
         <div class="content-area">
             
             <section id="inicio" class="app-module active">
-                <h2 class="module-title">Dashboard Operativo</h2>
-                <div class="card">
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <div class="stat-number">1,245</div>
-                            <div class="stat-label">Estudios Totales</div>
+                <div class="slide-card">
+                    <h2 class="slide-title">Dashboard Operativo</h2>
+                    <div class="highlight-numbers-layout">
+                        <div class="number-box">
+                            <div class="number">1,245</div>
+                            <div class="label">Estudios Totales</div>
                         </div>
-                        <div class="stat-box">
-                            <div class="stat-number">850</div>
-                            <div class="stat-label">Pacientes Activos</div>
+                        <div class="number-box">
+                            <div class="number">850</div>
+                            <div class="label">Pacientes Registrados</div>
                         </div>
-                        <div class="stat-box">
-                            <div class="stat-number" style="color: #eab308;">320</div>
-                            <div class="stat-label" style="color: var(--text-muted);">Patologías Detectadas IA</div>
+                        <div class="number-box">
+                            <div class="number" style="color: #eab308;">320</div>
+                            <div class="label">Patologías IA</div>
                         </div>
+                    </div>
+                    
+                    <div style="background: var(--bg-light); padding: 30px; border-radius: 12px; border: 1px dashed #cbd5e1; text-align: center;">
+                        <i class="fa-solid fa-chart-line" style="font-size: 40px; color: var(--loreto-cyan); margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--icest-dark);">Rendimiento del Sistema</h3>
+                        <p style="color: var(--text-muted);">El sistema IA-Triage está monitorizando activamente la entrada de nuevos estudios.</p>
                     </div>
                 </div>
             </section>
 
             <section id="nuevo-ingreso" class="app-module">
-                <h2 class="module-title">Registro de Nuevo Ingreso</h2>
-                <div class="card">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="slide-card">
+                    <h2 class="slide-title">Registro de Nuevo Ingreso</h2>
+                    <div class="two-column">
                         <div>
-                            <label class="form-label">Nombre Completo</label>
-                            <input type="text" class="form-control" placeholder="Ej. Juan Pérez">
+                            <h3 style="margin-bottom: 20px;">Formulario de Admisión</h3>
+                            <div class="form-group">
+                                <label class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" placeholder="Ej. Juan Pérez Hernández">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CURP</label>
+                                <input type="text" class="form-control" placeholder="18 Caracteres alfanuméricos">
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div class="form-group">
+                                    <label class="form-label">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Sexo</label>
+                                    <select class="form-control">
+                                        <option>Seleccione...</option>
+                                        <option>Masculino</option>
+                                        <option>Femenino</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn-primary" style="width: 100%; margin-top: 10px;"><i class="fa-solid fa-id-card"></i> Generar ID ICEST</button>
                         </div>
-                        <div>
-                            <label class="form-label">CURP</label>
-                            <input type="text" class="form-control" placeholder="18 Caracteres">
-                        </div>
-                        <div>
-                            <label class="form-label">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control">
-                        </div>
-                        <div>
-                            <label class="form-label">Sexo</label>
-                            <select class="form-control">
-                                <option>Seleccione...</option>
-                                <option>Masculino</option>
-                                <option>Femenino</option>
-                            </select>
+                        <div style="background: var(--bg-light); padding: 40px; border-radius: 12px; border-top: 4px solid var(--loreto-cyan);">
+                            <h3 style="margin-bottom: 15px;">Captura Biométrica</h3>
+                            <p style="color: var(--text-muted); margin-bottom: 20px;">Adjunte la selfie del paciente para completar el expediente digital seguro.</p>
+                            <div style="border: 2px dashed #cbd5e1; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; cursor: pointer; background: white;">
+                                <i class="fa-solid fa-camera" style="font-size: 40px; color: var(--icest-blue); margin-bottom: 10px;"></i>
+                                <span style="color: var(--text-muted); font-weight: 700;">Subir Fotografía</span>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn-primary" style="margin-top: 15px;"><i class="fa-solid fa-id-card"></i> Generar ID ICEST</button>
                 </div>
             </section>
 
             <section id="nuevo-estudio" class="app-module">
-                <h2 class="module-title">Solicitud de Nuevo Estudio</h2>
-                <div class="card">
-                    <label class="form-label">Seleccione la Ruta de Evaluación IA</label>
-                    <select class="form-control" style="max-width: 400px;">
-                        <option>Ruta C (Extremidad Superior - Foco Fino)</option>
-                        <option>Ruta A (Extremidad Inferior)</option>
-                        <option>Ruta G (Cráneo y Columna)</option>
-                    </select>
-                    <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">El sistema ajustará automáticamente los parámetros de mAs y kV según la ruta seleccionada.</p>
-                    <button class="btn-primary"><i class="fa-solid fa-brain"></i> Procesar Solicitud con IA</button>
+                <div class="slide-card">
+                    <h2 class="slide-title">Solicitud de Nuevo Estudio</h2>
+                    <p style="font-size: 18px; color: var(--text-muted); margin-bottom: 30px;">Seleccione la región anatómica para que la IA ajuste los parámetros técnicos.</p>
+                    
+                    <div class="tiled-content">
+                        <div class="tile">
+                            <div class="icon"><i class="fa-solid fa-hand-dots"></i></div>
+                            <h3>Ruta C</h3>
+                            <p style="color: var(--text-muted); font-size: 14px; margin-top: 10px;">Extremidad Superior (Muñeca, Mano). Técnicas optimizadas para foco fino.</p>
+                            <button class="btn-primary" style="margin-top: 20px; width: 100%; font-size: 13px;">Seleccionar Ruta</button>
+                        </div>
+                        <div class="tile">
+                            <div class="icon"><i class="fa-solid fa-person-walking"></i></div>
+                            <h3>Ruta A</h3>
+                            <p style="color: var(--text-muted); font-size: 14px; margin-top: 10px;">Extremidad Inferior (Tobillo, Pie). Ajuste automático de mAs.</p>
+                            <button class="btn-primary" style="margin-top: 20px; width: 100%; font-size: 13px;">Seleccionar Ruta</button>
+                        </div>
+                        <div class="tile">
+                            <div class="icon"><i class="fa-solid fa-head-side-mask"></i></div>
+                            <h3>Ruta G</h3>
+                            <p style="color: var(--text-muted); font-size: 14px; margin-top: 10px;">Estudios de Cráneo y Columna. Protocolos de posicionamiento asistido.</p>
+                            <button class="btn-primary" style="margin-top: 20px; width: 100%; font-size: 13px;">Seleccionar Ruta</button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <section id="id-busqueda" class="app-module">
-                <h2 class="module-title">Búsqueda de Paciente</h2>
-                <div class="card" style="max-width: 600px;">
-                    <label class="form-label">Ingrese Folio ICEST o CURP</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" class="form-control" style="margin-bottom: 0;" placeholder="Ej. ICEST-1234">
-                        <button class="btn-primary"><i class="fa-solid fa-search"></i> Buscar</button>
+                <div class="slide-card">
+                    <h2 class="slide-title">Consulta de Registro</h2>
+                    <div class="two-column" style="align-items: center;">
+                        <div style="background: var(--bg-light); padding: 50px; border-radius: 20px; text-align: center; border: 2px dashed var(--icest-blue);">
+                            <i class="fa-solid fa-id-card-clip" style="font-size: 70px; color: var(--icest-blue); margin-bottom: 20px;"></i>
+                            <h3 style="margin-bottom: 15px; font-size: 24px;">ID - Búsqueda</h3>
+                            <p style="color: var(--text-muted); margin-bottom: 25px;">Localización instantánea de registros históricos.</p>
+                            
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" class="form-control" style="margin-bottom: 0;" placeholder="Ej. ICEST-115">
+                                <button class="btn-primary"><i class="fa-solid fa-search"></i> Buscar</button>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 20px; color: var(--icest-dark);">Instrucciones:</h3>
+                            <ul style="list-style: none; color: var(--text-muted); line-height: 2;">
+                                <li><i class="fa-solid fa-check" style="color: var(--loreto-cyan); margin-right: 10px;"></i> Ingrese el folio exacto proporcionado al paciente.</li>
+                                <li><i class="fa-solid fa-check" style="color: var(--loreto-cyan); margin-right: 10px;"></i> También puede buscar utilizando la CURP completa.</li>
+                                <li><i class="fa-solid fa-check" style="color: var(--loreto-cyan); margin-right: 10px;"></i> El sistema revelará el expediente si el estatus es activo.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="mi-expediente" class="app-module">
-                <h2 class="module-title">Mi Expediente Clínico</h2>
-                <div class="card">
-                    <div style="display: flex; align-items: center; gap: 30px;">
-                        <div style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--loreto-cyan); background: var(--bg-light); display: flex; align-items: center; justify-content: center;">
-                            <i class="fa-solid fa-user" style="font-size: 50px; color: var(--icest-blue);"></i>
+                <div class="slide-card">
+                    <h2 class="slide-title">Perfil del Paciente</h2>
+                    <div class="two-column" style="align-items: center;">
+                        <div style="text-align: center;">
+                            <div style="width: 220px; height: 220px; border-radius: 50%; border: 6px solid var(--icest-blue); margin: 0 auto 30px; background-color: var(--bg-light); display: flex; align-items: center; justify-content: center;">
+                                <i class="fa-solid fa-user" style="font-size: 90px; color: var(--loreto-cyan);"></i>
+                            </div>
+                            <h3>Juan Carlos Becerra</h3>
+                            <p style="color: var(--loreto-cyan); font-weight: 700; font-size: 18px; margin-top: 5px;">Paciente Activo</p>
                         </div>
                         <div>
-                            <h3 style="font-size: 24px; margin-bottom: 5px;">Paciente de Prueba</h3>
-                            <p style="color: var(--loreto-cyan); font-weight: bold;">Folio: ICEST-001</p>
-                            <p style="color: var(--text-muted); margin-top: 10px;">Estatus: Activo en el sistema de triaje.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="mis-estudios" class="app-module">
-                <h2 class="module-title">Historial de Estudios</h2>
-                <div class="card">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Estudio</th>
-                                <th>Diagnóstico IA</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>11/05/2026</td>
-                                <td>Muñeca AP</td>
-                                <td style="color: #eab308; font-weight: bold;">Análisis Pendiente</td>
-                                <td><button class="btn-primary" style="padding: 6px 12px; font-size: 12px;">Ver Placa</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="expedientes-rad" class="app-module">
-                <h2 class="module-title">Base de Datos de Expedientes</h2>
-                <div class="card">
-                    <div style="margin-bottom: 20px;">
-                        <input type="text" class="form-control" style="max-width: 300px; display: inline-block; margin-bottom: 0;" placeholder="Filtrar por nombre...">
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID ICEST</th>
-                                <th>Nombre Completo</th>
-                                <th>Último Ingreso</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>ICEST-123</td>
-                                <td>Moy Hernández</td>
-                                <td>10/05/2026</td>
-                            </tr>
-                            <tr>
-                                <td>ICEST-315</td>
-                                <td>Camila Domínguez</td>
-                                <td>09/05/2026</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="estudios-rad" class="app-module">
-                <h2 class="module-title">Panel de Estudios Radiológicos</h2>
-                <div class="card">
-                    <p style="color: var(--text-muted); margin-bottom: 20px;">Bandeja de entrada para revisión de placas con asistencia de Inteligencia Artificial.</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Prioridad</th>
-                                <th>Paciente</th>
-                                <th>Estudio Solicitado</th>
-                                <th>Carga Técnica</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span style="background-color: var(--icest-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">Alta</span></td>
-                                <td>ICEST-115</td>
-                                <td>Tórax PA</td>
-                                <td><button class="btn-primary" style="padding: 6px 12px; font-size: 12px; background-color: var(--loreto-cyan); color: var(--icest-dark);">Subir DICOM</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="proyecciones" class="app-module">
-                <h2 class="module-title">Carga de Proyecciones (CSV)</h2>
-                <div class="card">
-                    <div style="background-color: var(--bg-light); padding: 20px; border-radius: 8px; border: 1px dashed var(--icest-blue); margin-bottom: 30px;">
-                        <label class="form-label" style="color: var(--icest-blue);"><i class="fa-solid fa-file-csv"></i> Importar base de datos (Google Sheets/Excel)</label>
-                        <input type="file" class="form-control" accept=".csv" style="margin-bottom: 0;">
-                    </div>
-                    
-                    <h4 style="margin-bottom: 15px;">Multimedia de la Proyección Seleccionada</h4>
-                    
-                    <div class="btn-group-proyecciones">
-                        <label class="btn-proy">
-                            <i class="fa-solid fa-camera" style="margin-right: 8px;"></i> 1 TÉCNICA
-                            <input type="file" style="display: none;">
-                        </label>
-                        <label class="btn-proy">
-                            <i class="fa-solid fa-camera" style="margin-right: 8px;"></i> 2 TÉCNICA
-                            <input type="file" style="display: none;">
-                        </label>
-                        <label class="btn-proy accent">
-                            <i class="fa-solid fa-x-ray" style="margin-right: 8px;"></i> 1 RADIOGRAFÍA
-                            <input type="file" style="display: none;">
-                        </label>
-                        <label class="btn-proy accent">
-                            <i class="fa-solid fa-x-ray" style="margin-right: 8px;"></i> 2 RADIOGRAFÍA
-                            <input type="file" style="display: none;">
-                        </label>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 40px;">
-                        <button class="btn-primary" style="padding: 15px 40px; font-size: 16px;"><i class="fa-solid fa-cloud-arrow-up"></i> Guardar en Base de Datos</button>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-    </main>
-
-    <script>
-        function cambiarModulo(moduloId, elementoMenu) {
-            // 1. Ocultar todos los módulos
-            const modulos = document.querySelectorAll('.app-module');
-            modulos.forEach(mod => mod.classList.remove('active'));
-
-            // 2. Quitar el estado activo de todos los enlaces del menú
-            const enlaces = document.querySelectorAll('.nav-link');
-            enlaces.forEach(enlace => enlace.classList.remove('active'));
-
-            // 3. Mostrar el módulo seleccionado
-            document.getElementById(moduloId).classList.add('active');
-
-            // 4. Marcar como activo el enlace en el menú lateral
-            elementoMenu.classList.add('active');
-            
-            // Regresar el scroll hacia arriba
-            document.querySelector('.content-area').scrollTo(0, 0);
-        }
-
-        function cerrarSesion() {
-            if(confirm("¿Seguro que deseas salir del sistema?")) {
-                // Redirige de vuelta a tu index.html (la pantalla de login)
-                window.location.href = "index.html";
-            }
-        }
-    </script>
-</body>
-</html>
+                            <h3 style="margin-bottom: 20px;">Información Consolidada</h3>
+                            <div style="background: var(--bg-light); padding: 40px; border-radius: 12px; border-left: 5px solid var(--icest-blue);">
+                                <p style="margin-bottom: 15px; font-size: 18px;"><strong style="color: var(--icest-dark);">Folio Oficial:</strong> ICEST-123456</p>
+                                <p style="margin-bottom: 15px; font-size: 18px;"><strong style="color
