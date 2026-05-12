@@ -9,15 +9,15 @@
     
     <style>
         :root {
-            --icest-blue: #0073B2; /* Azul del fondo ICEST */
-            --icest-dark: #002D5A; /* Azul oscuro para textos */
-            --loreto-cyan: #81D0DC; /* Color de los iconos Loreto */
-            --input-bg: #E8F0FE; /* Fondo claro de los inputs */
+            --icest-blue-bg: #0076B6; /* Azul brillante del fondo */
+            --icest-dark: #002D5A;    /* Azul oscuro para botón y footer */
+            --loreto-cyan: #72C5D3;   /* Color cyan de los iconos */
+            --input-bg: #EAF0F6;      /* Fondo clarito de los inputs */
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--icest-blue);
+            background-color: var(--icest-blue-bg);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -25,7 +25,7 @@
         }
 
         /* ==========================================
-           ESTILOS DEL LOGIN (TIPO ICEST + LORETO)
+           CONTENEDOR CENTRAL Y TARJETA
         ========================================== */
         .login-wrapper {
             flex: 1;
@@ -37,86 +37,101 @@
 
         .login-card {
             background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
+            padding: 40px 35px;
+            border-radius: 15px;
             width: 100%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 380px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             text-align: center;
         }
 
         .login-title {
             color: var(--icest-dark);
-            font-weight: bold;
-            font-size: 28px;
+            font-weight: 800;
+            font-size: 26px;
             margin-top: 15px;
-            margin-bottom: 0;
+            margin-bottom: 2px;
         }
 
         .login-subtitle {
             color: #6c757d;
-            font-size: 15px;
+            font-size: 14px;
             margin-bottom: 30px;
         }
 
-        /* Estilo de Inputs tipo Loreto */
-        .input-group-text-custom {
-            background-color: var(--input-bg);
+        /* ==========================================
+           INPUTS ESTILO LORETO
+        ========================================== */
+        .form-label-custom {
+            color: var(--icest-dark);
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+        }
+
+        .input-group-custom {
             border: 1px solid #ced4da;
-            border-right: none;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: var(--input-bg);
+        }
+
+        .input-group-text-custom {
+            background-color: transparent;
+            border: none;
             color: var(--loreto-cyan);
+            padding-right: 5px;
         }
 
         .form-control-custom {
-            background-color: var(--input-bg);
-            border: 1px solid #ced4da;
-            border-left: none;
-        }
-        
-        .form-control-custom:focus {
-            background-color: white;
-            box-shadow: none;
-            border-color: var(--loreto-cyan);
+            background-color: transparent;
+            border: none;
+            box-shadow: none !important;
+            font-weight: 500;
+            color: #333;
         }
 
         .input-eye {
-            background-color: var(--input-bg);
-            border: 1px solid #ced4da;
-            border-left: none;
+            background-color: transparent;
+            border: none;
             color: var(--loreto-cyan);
             cursor: pointer;
         }
 
+        /* ==========================================
+           BOTÓN Y FOOTER
+        ========================================== */
         .btn-login {
             background-color: var(--icest-dark);
             color: white;
-            border-radius: 8px;
-            padding: 12px;
-            font-weight: bold;
-            font-size: 16px;
+            border-radius: 6px;
+            padding: 10px;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 0.5px;
             border: none;
             transition: 0.3s;
+            margin-top: 10px;
         }
 
         .btn-login:hover {
-            background-color: #004280;
+            background-color: #001f3f;
             color: white;
         }
 
-        /* ==========================================
-           ESTILOS DEL FOOTER Y NAVBAR
-        ========================================== */
         .footer-custom {
             background-color: var(--icest-dark);
             color: white;
             text-align: center;
-            padding: 15px 0;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 12px 0;
+            font-size: 11px;
+            font-weight: 700;
             letter-spacing: 1px;
         }
 
-        .navbar-custom { background-color: var(--loreto-cyan); }
+        /* Control de Vistas SPA */
         .app-section { display: none; }
         .app-section.active { display: block; animation: fadeIn 0.4s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -127,22 +142,23 @@
     <section id="login" class="app-section active">
         <div class="login-wrapper">
             <div class="card login-card">
-                <img src="https://www.icest.edu.mx/images/logo-icest.png" alt="ICEST Logo" style="max-width: 160px; margin: 0 auto;">
+                
+                <img src="https://www.icest.edu.mx/images/logo-icest.png" alt="ICEST Logo" style="max-width: 150px; margin: 0 auto;">
                 
                 <h1 class="login-title">Bienvenido</h1>
                 <p class="login-subtitle">Portal de Educación Profesional</p>
                 
-                <div class="mb-3 text-start">
-                    <label class="form-label small fw-bold" style="color: var(--icest-dark);">Usuario</label>
-                    <div class="input-group">
+                <div class="mb-3">
+                    <label class="form-label-custom">Usuario</label>
+                    <div class="input-group input-group-custom d-flex align-items-center">
                         <span class="input-group-text input-group-text-custom"><i class="fas fa-id-badge"></i></span>
-                        <input type="text" id="userId" class="form-control form-control-custom" placeholder="Ej. 123">
+                        <input type="text" id="userId" class="form-control form-control-custom" placeholder="Ej. OITM">
                     </div>
                 </div>
 
-                <div class="mb-4 text-start">
-                    <label class="form-label small fw-bold" style="color: var(--icest-dark);">Contraseña</label>
-                    <div class="input-group">
+                <div class="mb-4">
+                    <label class="form-label-custom">Contraseña</label>
+                    <div class="input-group input-group-custom d-flex align-items-center">
                         <span class="input-group-text input-group-text-custom"><i class="fas fa-lock"></i></span>
                         <input type="password" id="userPass" class="form-control form-control-custom" placeholder="•••••">
                         <span class="input-group-text input-eye" onclick="togglePassword()">
@@ -151,42 +167,35 @@
                     </div>
                 </div>
 
-                <button id="btnLogin" class="btn btn-login w-100" onclick="validarIngresoGAS()">Verificando...</button>
+                <button id="btnLogin" class="btn btn-login w-100" onclick="validarIngresoGAS()">INGRESAR</button>
             </div>
         </div>
     </section>
 
     <div id="sistemaInterno" style="display: none; flex: 1; background-color: #f4f7f6;">
-        <nav class="navbar navbar-expand-lg navbar-custom shadow-sm sticky-top">
+        <nav class="navbar navbar-expand-lg shadow-sm sticky-top" style="background-color: var(--loreto-cyan);">
             <div class="container-fluid">
-                <a class="navbar-brand text-white fw-bold" href="#"><i class="fas fa-brain me-2"></i> IA-TRIAGE</a>
+                <a class="navbar-brand text-white fw-bold" href="#"><i class="fas fa-microchip me-2"></i> IA-TRIAGE ICEST</a>
                 <div class="d-flex align-items-center ms-auto">
-                    <span id="userNameDisplay" class="text-white me-3 fw-bold"></span>
-                    <button class="btn btn-sm btn-outline-light rounded-pill" onclick="location.reload()">Salir</button>
+                    <span id="userNameDisplay" class="text-white me-3 fw-bold small"></span>
+                    <button class="btn btn-sm btn-light rounded-pill fw-bold" style="color: var(--icest-dark);" onclick="location.reload()">Salir</button>
                 </div>
             </div>
         </nav>
 
-        <div class="container mt-4">
-            <h3 style="color: var(--icest-dark);">Dashboard Principal</h3>
-            <div class="card p-4 mt-3 border-0 shadow-sm" style="border-top: 4px solid var(--loreto-cyan);">
-                <p>Sesión validada exitosamente desde Google Apps Script.</p>
-                <p><b>ID Activo:</b> <span id="activeUserId"></span></p>
-                </div>
+        <div class="container mt-5 text-center">
+            <h2 style="color: var(--icest-dark);">¡Acceso Concedido!</h2>
+            <p>ID de sesión activa: <strong id="activeUserId"></strong></p>
+            <p class="text-muted">La conexión con Google Apps Script fue exitosa.</p>
         </div>
     </div>
 
-    <footer class="footer-custom">
+    <footer class="footer-custom" id="mainFooter">
         © 2026 ICEST. TODOS LOS DERECHOS RESERVADOS.
     </footer>
 
     <script>
-        // Función para cambiar el estado del botón al cargar inicialmente
-        window.onload = function() {
-            document.getElementById('btnLogin').innerText = "INGRESAR";
-        };
-
-        // Función para Mostrar/Ocultar Contraseña (El Ojo)
+        // Función Mostrar/Ocultar Contraseña
         function togglePassword() {
             const passInput = document.getElementById('userPass');
             const icon = document.getElementById('toggleIcon');
@@ -202,7 +211,7 @@
             }
         }
 
-        // Validación Real con Google Apps Script (Fetch)
+        // Validación con API Google Apps Script
         async function validarIngresoGAS() {
             const username = document.getElementById('userId').value.trim();
             const password = document.getElementById('userPass').value.trim();
@@ -213,46 +222,39 @@
                 return;
             }
 
-            // Cambiar estado del botón
+            // Animación del botón
             btn.innerText = "Verificando...";
             btn.disabled = true;
 
-            // URL proporcionada de tu Script
             const urlGAS = "https://script.google.com/macros/s/AKfycbzKt5qEd2eXYqKt9hLlNNxN7_LEKJVmShW1mD6ogZrNDC02hqSQBZdTHrzd-i_HfKs/exec";
 
             try {
-                // Configuración de la petición POST. 
-                // NOTA: Usamos text/plain para evitar errores de CORS desde GitHub Pages
                 const respuesta = await fetch(urlGAS, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8'
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ username: username, password: password })
                 });
 
                 const resultado = await respuesta.json();
 
                 if (resultado.acceso === true) {
-                    // Si el script de Google dice "true", damos acceso
+                    // ÉXITO: Ocultar login, mostrar sistema
                     document.getElementById('login').style.display = 'none';
-                    document.body.style.backgroundColor = '#f4f7f6'; // Cambia el fondo a gris claro para la app
+                    document.getElementById('mainFooter').style.display = 'none'; // Ocultar footer si se desea
+                    document.body.style.backgroundColor = '#f4f7f6';
                     document.getElementById('sistemaInterno').style.display = 'block';
                     
-                    document.getElementById('userNameDisplay').innerText = "Usuario: " + username;
+                    document.getElementById('userNameDisplay').innerText = username;
                     document.getElementById('activeUserId').innerText = username;
                 } else {
-                    // Si dice "false", las credenciales no coinciden en el Excel
-                    alert("Credenciales incorrectas. Verifique los datos en su tabla.");
+                    // FALLO
+                    alert("Credenciales incorrectas. Verifique los datos.");
                     btn.innerText = "INGRESAR";
                     btn.disabled = false;
                 }
             } catch (error) {
-                console.error("Error en la conexión:", error);
-                alert("Hubo un error al conectar con la base de datos de Google Sheets.");
+                console.error("Error:", error);
+                alert("Error de red al contactar la base de datos.");
                 btn.innerText = "INGRESAR";
                 btn.disabled = false;
             }
