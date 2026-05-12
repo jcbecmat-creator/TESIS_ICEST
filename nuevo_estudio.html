@@ -2,85 +2,331 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root{--icest-blue:#005B9A;--icest-dark:#003f6b;--loreto-cyan:#81D0DC;--bg-light:#f8fafc;--text-main:#1e293b;--text-muted:#64748b}body{font-family:'Lato',sans-serif;color:var(--text-main);margin:0;padding:40px;display:flex;justify-content:center;background:transparent}h3{font-family:'Poppins';color:var(--icest-blue);margin-bottom:15px}.slide-card{background:white;border-radius:12px;padding:40px;box-shadow:0 15px 30px rgba(0,0,0,0.05);border-top:5px solid var(--icest-blue);width:100%;max-width:1100px}.slide-title{font-size:30px;font-family:'Poppins';margin-bottom:25px;border-bottom:2px solid var(--loreto-cyan);padding-bottom:10px;color:var(--icest-blue)}.form-control{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-family:'Lato';background-color:var(--bg-light);font-size:14px;box-sizing:border-box}.form-control:focus{border-color:var(--loreto-cyan);outline:none;background-color:white}.form-label{display:block;font-weight:700;margin-bottom:6px;font-size:13px;color:var(--text-muted);text-align:left}.btn-primary{background-color:var(--icest-blue);color:white;border:none;padding:14px 28px;border-radius:8px;font-weight:700;font-family:'Poppins';cursor:pointer;transition:0.3s;font-size:16px}.btn-primary:hover{background-color:var(--icest-dark)}.section-header{margin-top:30px;padding-bottom:8px;border-bottom:1px solid #e2e8f0;margin-bottom:20px;color:var(--icest-dark);font-size:16px;font-weight:700;display:flex;align-items:center;gap:10px}.section-header i{color:var(--loreto-cyan);font-size:18px}.form-row{display:flex;gap:20px;margin-bottom:15px;width:100%}.form-col{flex:1;min-width:0}.patient-card{display:none;background:#f0f9fa;border:1px solid var(--loreto-cyan);border-radius:12px;padding:20px;margin-top:20px}.patient-data-layout{display:flex;gap:30px;align-items:center}.patient-photo{width:100px;height:100px;border-radius:8px;border:3px solid var(--icest-blue);object-fit:cover}table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden}th,td{padding:12px 15px;text-align:left;border-bottom:1px solid #e2e8f0;font-size:14px}th{background-color:var(--icest-blue);color:white;font-family:'Poppins';font-weight:600}.pain-scale{width:100%;cursor:pointer;accent-color:var(--icest-blue)}.pain-display{font-size:24px;font-weight:bold;color:var(--icest-blue);text-align:center;margin-top:5px;font-family:'Poppins'}.ruta-ia{display:none;background:#f8fafc;border-left:5px solid var(--icest-blue);padding:25px;border-radius:8px;margin-top:20px}.ruta-ia.active{display:block}.ruta-title{font-family:'Poppins';color:var(--icest-dark);margin-bottom:15px;font-size:16px;display:flex;align-items:center;gap:10px}.ruta-title i{color:var(--loreto-cyan)}@media(max-width:768px){body{padding:15px}.slide-card{padding:25px 20px}.form-row{flex-direction:column;gap:15px}.patient-data-layout{flex-direction:column;text-align:center}}
+        :root { 
+            --icest-blue: #005B9A; 
+            --icest-dark: #003f6b; 
+            --loreto-cyan: #81D0DC; 
+            --bg-light: #f8fafc; 
+            --text-main: #1e293b; 
+            --text-muted: #64748b; 
+        }
+        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
+        h3 { font-family: 'Poppins'; color: var(--icest-blue); margin-bottom: 15px; }
+        
+        .slide-card { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
+        .slide-title { font-size: 30px; font-family: 'Poppins'; margin-bottom: 25px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        
+        /* Formularios y Botones */
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Lato'; background-color: var(--bg-light); font-size: 14px; box-sizing: border-box; }
+        .form-control:focus { border-color: var(--loreto-cyan); outline: none; background-color: white; box-shadow: 0 0 0 3px rgba(129, 208, 220, 0.2); }
+        .form-label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-muted); text-align: left; }
+        
+        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; font-size: 16px; }
+        .btn-primary:hover { background-color: var(--icest-dark); transform: translateY(-2px); }
+
+        /* Estructura de Filas Simétricas */
+        .section-header { margin-top: 30px; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px; color: var(--icest-dark); font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .section-header i { color: var(--loreto-cyan); font-size: 18px; }
+        
+        .form-row { display: flex; gap: 20px; margin-bottom: 15px; width: 100%; }
+        .form-col { flex: 1; min-width: 0; }
+
+        /* Tarjeta de Paciente */
+        .patient-card { display: none; background: #f0f9fa; border: 1px solid var(--loreto-cyan); border-radius: 12px; padding: 20px; margin-top: 20px; animation: fadeIn 0.5s ease; }
+        .patient-data-layout { display: flex; gap: 30px; align-items: center; }
+        .patient-photo { width: 100px; height: 100px; border-radius: 8px; border: 3px solid var(--icest-blue); object-fit: cover; }
+        
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th { background-color: var(--icest-blue); color: white; font-family: 'Poppins'; font-weight: 600; }
+        
+        /* Range Slider Dolor */
+        .pain-scale { width: 100%; cursor: pointer; accent-color: var(--icest-blue); }
+        .pain-display { font-size: 24px; font-weight: bold; color: var(--icest-blue); text-align: center; margin-top: 5px; font-family: 'Poppins'; }
+
+        /* Rutas IA (Ocultas por defecto) */
+        .ruta-ia { display: none; background: #f8fafc; border-left: 5px solid var(--icest-blue); padding: 25px; border-radius: 8px; margin-top: 20px; animation: fadeIn 0.4s; }
+        .ruta-ia.active { display: block; }
+        .ruta-title { font-family: 'Poppins'; color: var(--icest-dark); margin-bottom: 15px; font-size: 16px; display: flex; align-items: center; gap: 10px; font-weight: 700;}
+        .ruta-title i { color: var(--loreto-cyan); }
+        .logic-note { background-color: #e2e8f0; border-radius: 6px; padding: 10px; font-size: 12px; color: var(--text-muted); margin-top: 15px; font-style: italic; border-left: 3px solid var(--loreto-cyan); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .slide-card { padding: 25px 20px; }
+            .form-row { flex-direction: column; gap: 15px; }
+            .patient-data-layout { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
     <div class="slide-card">
         <h2 class="slide-title">Solicitud de Nuevo Estudio y Triaje IA</h2>
+        
         <div class="section-header"><i class="fa-solid fa-magnifying-glass"></i> 1. Identificación del Paciente</div>
         <div class="form-row">
-            <div class="form-col" style="flex: 3;"><input type="text" id="inputBusqueda" class="form-control" placeholder="Ingrese Folio ICEST o CURP..."></div>
-            <div class="form-col" style="flex: 1;"><button type="button" class="btn-primary" onclick="simularBusqueda()">Buscar</button></div>
+            <div class="form-col" style="flex: 3;">
+                <input type="text" id="inputBusqueda" class="form-control" placeholder="Ingrese Folio ICEST o CURP..." style="margin-bottom: 0;">
+            </div>
+            <div class="form-col" style="flex: 1;">
+                <button type="button" class="btn-primary" style="margin-top: 0; padding: 12px; width: 100%;" onclick="simularBusqueda()">Buscar</button>
+            </div>
         </div>
+
         <div id="tarjetaPaciente" class="patient-card">
             <div class="patient-data-layout">
                 <img src="https://i.ibb.co/C3wh0NmV/hq720.jpg" alt="Foto Paciente" class="patient-photo">
                 <div style="flex: 1; overflow-x: auto;">
-                    <table><thead><tr><th>Nombre Completo</th><th>CURP</th><th>Fecha de Nac.</th><th>Folio ICEST</th></tr></thead><tbody><tr><td><strong>Juan Carlos Becerra</strong></td><td>BEJU900101H</td><td>01/01/1990</td><td style="color: var(--icest-blue); font-weight: bold;">ICEST-123456</td></tr></tbody></table>
+                    <table>
+                        <thead>
+                            <tr><th>Nombre Completo</th><th>CURP</th><th>Fecha de Nac.</th><th>Folio ICEST</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Juan Carlos Becerra</strong></td>
+                                <td>BEJU900101H</td>
+                                <td>01/01/1990</td>
+                                <td style="color: var(--icest-blue); font-weight: bold;">ICEST-123456</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <div id="formularioTriaje" style="display: none;">
+
+        <form id="formularioTriaje" style="display: none;">
+            
             <div class="section-header"><i class="fa-solid fa-truck-medical"></i> 2. ¿Qué le pasó? (Mecanismo de Lesión)</div>
+            
             <div class="form-row">
                 <div class="form-col">
-                    <label class="form-label">¿Cómo se lastimó?</label>
-                    <select class="form-control"><option value="">Seleccione...</option><option>Me caí desde mi propia altura.</option><option>Accidente en vehículo</option></select>
-                </div>
-            </div>
-            <div class="form-row" style="align-items: center; background: var(--bg-light); padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                <div class="form-col" style="flex: 2;"><label class="form-label">Del 1 al 10, ¿qué tan fuerte es su dolor ahora mismo?</label><input type="range" min="1" max="10" value="5" class="pain-scale" oninput="document.getElementById('painValue').innerText = this.value"></div>
-                <div class="form-col" style="flex: 1;"><div class="pain-display">Nivel: <span id="painValue" style="color: #ef4444;">5</span></div></div>
-            </div>
-            <div class="form-row">
-                <div class="form-col"><label class="form-label">¿Siente que se le adormece, tiene hormigueo o perdió sensibilidad?</label><select class="form-control"><option>Sí</option><option>No</option></select></div>
-                <div class="form-col"><label class="form-label" style="color: #ef4444;">¿Nota deformidad evidente o el hueso rompió la piel?</label><select class="form-control" style="border-color: #ef4444;"><option>Sí (Código Rojo)</option><option>No</option></select></div>
-            </div>
-
-            <div class="section-header"><i class="fa-solid fa-child-reaching"></i> 3. ¿Dónde le duele? (Anatomía)</div>
-            <div class="form-row" style="align-items: center;">
-                <div class="form-col" style="flex: 1; text-align: center;"><i class="fa-solid fa-person" style="font-size: 100px; color: var(--loreto-cyan);"></i></div>
-                <div class="form-col" style="flex: 3;">
-                    <label class="form-label">Seleccione la zona principal del dolor:</label>
-                    <select class="form-control" id="selectorRuta" onchange="activarRutaIA()">
-                        <option value="ninguna">Seleccione una zona del cuerpo...</option>
-                        <option value="rutaA">Tobillo, Pie o Pierna</option>
-                        <option value="rutaB">Rodilla</option>
-                        <option value="rutaC">Muñeca, Mano o Codo</option>
+                    <label class="form-label">¿Cómo se lastimó? (Seleccione una opción):</label>
+                    <select class="form-control" required>
+                        <option value="">Seleccione una opción...</option>
+                        <option>Me caí desde mi propia altura.</option>
+                        <option>Me caí desde un lugar alto (escaleras, techo, etc.).</option>
+                        <option>Accidente en vehículo (auto, moto, bicicleta).</option>
+                        <option>Me golpearon directamente o me cayó un objeto pesado.</option>
+                        <option>Me torcí / Lesión haciendo deporte.</option>
                     </select>
                 </div>
             </div>
 
-            <div id="div-rutaA" class="ruta-ia"><div class="ruta-title"><i class="fa-solid fa-shoe-prints"></i> RUTA A: Reglas de Ottawa (Tobillo/Pie)</div><label class="form-label">9. ¿Puede dar 4 pasos seguidos sin ayuda?</label><select class="form-control"><option>Sí</option><option>No</option></select></div>
-            <div id="div-rutaB" class="ruta-ia"><div class="ruta-title"><i class="fa-solid fa-bone"></i> RUTA B: Reglas de Ottawa (Rodilla)</div><label class="form-label">9. ¿Puede doblar la rodilla hasta formar 90 grados?</label><select class="form-control"><option>Sí</option><option>No</option></select></div>
-            <div id="div-rutaC" class="ruta-ia"><div class="ruta-title"><i class="fa-solid fa-hand"></i> RUTA C: Extremidad Superior</div><label class="form-label">9. ¿Se cayó apoyando la mano extendida contra el piso?</label><select class="form-control"><option>Sí</option><option>No</option></select></div>
+            <div class="form-row" style="align-items: center; background: var(--bg-light); padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <div class="form-col" style="flex: 2;">
+                    <label class="form-label">Del 1 al 10, ¿qué tan fuerte es su dolor ahora mismo?</label>
+                    <input type="range" min="1" max="10" value="5" class="pain-scale" id="painSlider" oninput="document.getElementById('painValue').innerText = this.value">
+                </div>
+                <div class="form-col" style="flex: 1;">
+                    <div class="pain-display">Nivel: <span id="painValue" style="color: #ef4444;">5</span></div>
+                </div>
+            </div>
 
-            <div style="text-align: center; margin-top: 40px;"><button type="button" class="btn-primary" style="padding: 15px 40px; border-radius: 30px;"><i class="fa-solid fa-microchip"></i> Analizar Protocolo con IA</button></div>
-        </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <label class="form-label">¿Siente que se le adormece, tiene hormigueo o perdió la sensibilidad en la zona lastimada?</label>
+                    <select class="form-control" required><option value="">Seleccione...</option><option value="Si">Sí</option><option value="No">No</option></select>
+                </div>
+                <div class="form-col">
+                    <label class="form-label" style="color: #ef4444;">¿Nota alguna deformidad muy evidente o el hueso rompió la piel?</label>
+                    <select class="form-control" style="border-color: #ef4444;" required><option value="">Seleccione...</option><option value="Si">Sí (Código Rojo / Urgencia Inmediata)</option><option value="No">No</option></select>
+                </div>
+            </div>
+
+            <div class="section-header"><i class="fa-solid fa-child-reaching"></i> 3. ¿Dónde le duele? (Mapa del Cuerpo)</div>
+            
+            <div class="form-row" style="align-items: center;">
+                <div class="form-col" style="flex: 1; text-align: center;">
+                    <i class="fa-solid fa-person-walking" style="font-size: 100px; color: var(--loreto-cyan);"></i>
+                </div>
+                <div class="form-col" style="flex: 3;">
+                    <label class="form-label">Seleccione la zona principal del dolor para activar el protocolo IA:</label>
+                    <select class="form-control" id="selectorRuta" onchange="activarRutaIA()" required>
+                        <option value="ninguna">Seleccione una zona del cuerpo...</option>
+                        <option value="rutaA">Ruta A: Tobillo, Pie o Pierna</option>
+                        <option value="rutaB">Ruta B: Rodilla</option>
+                        <option value="rutaC">Ruta C: Muñeca, Mano o Codo</option>
+                        <option value="rutaD">Ruta D: Cuello / Columna Cervical</option>
+                        <option value="rutaE">Ruta E: Tórax y Costillas</option>
+                        <option value="rutaF">Ruta F: Cadera / Pelvis</option>
+                        <option value="rutaG">Ruta G: Cabeza / Cráneo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="div-rutaA" class="ruta-ia">
+                <div class="ruta-title"><i class="fa-solid fa-shoe-prints"></i> RUTA A: Tobillo, Pie o Pierna (Activa Reglas de Ottawa)</div>
+                <label class="form-label">9. Inmediatamente después de lastimarse y ahora mismo, ¿puede dar 4 pasos seguidos sin ayuda (aunque cojee un poco)?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">10. Toque los huesos que sobresalen a los lados de su tobillo (los maléolos). ¿Siente mucho dolor al presionarlos?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">11. Toque la parte externa de su pie (a la mitad, donde empieza el dedo pequeño). ¿Siente mucho dolor ahí?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">12. Toque la parte superior del empeine de su pie. ¿Hay dolor muy fuerte al presionar?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <div class="logic-note">Lógica de la IA: Si el paciente no puede caminar 4 pasos O tiene dolor a la palpación en las zonas indicadas, la IA ordena: Tobillo (AP, Lateral y AP de Mortaja) o Pie (AP, Oblicua y Lateral).</div>
+            </div>
+
+            <div id="div-rutaB" class="ruta-ia">
+                <div class="ruta-title"><i class="fa-solid fa-bone"></i> RUTA B: Rodilla</div>
+                <label class="form-label">9. ¿Puede doblar la rodilla hasta formar un ángulo de 90 grados (como si estuviera sentado)?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">10. ¿Puede dar 4 pasos seguidos sin ayuda?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">11. Al tocarse, ¿el dolor es únicamente en el "huesito" redondo del frente (la rótula) y en ninguna otra parte?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <div class="logic-note">Lógica de la IA: Si no puede doblarla, no puede caminar o tiene dolor aislado en rótula, ordena: Rodilla (AP y Lateral). Si el dolor es rotuliano, puede agregar: Rótula (Proyección Tangencial / Merchant).</div>
+            </div>
+
+            <div id="div-rutaC" class="ruta-ia">
+                <div class="ruta-title"><i class="fa-solid fa-hand-dots"></i> RUTA C: Muñeca, Mano o Codo</div>
+                <label class="form-label">9. ¿Se cayó apoyando la mano extendida contra el piso para detener el golpe?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">10. Toque la base de su dedo pulgar (una zona hundida llamada "tabaquera"). ¿Le duele mucho al presionar ahí?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">11. (Para codo) ¿Puede estirar su brazo por completo dejándolo totalmente recto?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <div class="logic-note">Lógica de la IA: Si cayó con mano extendida, solicita: Muñeca (PA y Lateral). Si duele la base del pulgar, la IA añade inteligentemente: Muñeca (PA axial con desviación cubital - Escafoides). Si no puede estirar el codo: Codo (AP y Lateral).</div>
+            </div>
+
+            <div id="div-rutaD" class="ruta-ia">
+                <div class="ruta-title"><i class="fa-solid fa-user-injured"></i> RUTA D: Cuello / Columna Cervical (Activa Criterios NEXUS)</div>
+                <label class="form-label">9. ¿Siente dolor exactamente en la línea media de la parte de atrás de su cuello (sobre los huesos)?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">10. ¿Después del golpe, sintió que perdió la fuerza en brazos o piernas?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">11. ¿El accidente fue a alta velocidad (choque en carretera, volcadura)?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <div class="logic-note">Lógica de la IA: Si cualquier respuesta es Sí, ordena: Columna Cervical (AP, Lateral y Odontoides), indicando al técnico la técnica de la base de datos: Hacer con collarín puesto.</div>
+            </div>
+
+            <div id="div-rutaE" class="ruta-ia">
+                <div class="ruta-title"><i class="fa-solid fa-lungs"></i> RUTA E: Tórax y Costillas</div>
+                <label class="form-label" style="color: #ef4444;">9. ¿Le falta el aire o tiene dificultad severa para respirar? (Bandera roja de neumotórax)</label>
+                <select class="form-control" style="border-color: #ef4444;"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">10. ¿El dolor es más fuerte en la parte de arriba del pecho, o en la parte baja de las costillas (cerca del estómago)?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Arriba</option><option>Abajo</option></select>
+                
+                <label class="form-label">11. ¿El dolor empeora muchísimo al meter aire profundo?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <div class="logic-note">Lógica de la IA: Basado en el manual de Bontrager que tabulamos, si el dolor es "Arriba", la IA ordenará Costillas por encima del diafragma (AP/PA y Oblicuas) en Inspiración. Si es "Abajo", ordenará Costillas por debajo del diafragma en Espiración.</div>
+            </div>
+
+            <div id="div-rutaF" class="ruta-ia">
+                <div class="ruta-title"><i class="fa-solid fa-wheelchair"></i> RUTA F: Cadera / Pelvis</div>
+                <label class="form-label">9. ¿Puede apoyar su peso sobre esa pierna?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">10. ¿Nota que la pierna lastimada se ve más corta que la otra o que el pie está girado hacia afuera de forma anormal?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <div class="logic-note">Lógica de la IA: Si hay acortamiento o rotación externa, la IA asume fractura de fémur proximal y ordena: Cadera / Pelvis (AP de Pelvis y Lateral de Cadera), pero cruzando el dato con el Capítulo 10 de Bontrager, la IA le dirá al técnico: Sugerencia: Usar proyección Axiolateral de Danelius-Miller (No mover la pierna del paciente).</div>
+            </div>
+
+            <div id="div-rutaG" class="ruta-ia">
+                <div class="ruta-title"><i class="fa-solid fa-head-side-virus"></i> RUTA G: Cabeza / Cráneo (Traumatismo Craneoencefálico)</div>
+                <label class="form-label">9. ¿Perdió el conocimiento (se desmayó) en algún momento inmediatamente después del golpe?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">10. ¿Ha vomitado dos o más veces desde que ocurrió el accidente?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">11. ¿Siente que no recuerda lo que pasó (amnesia) o se siente muy confundido y desorientado?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">12. ¿Ha notado salida de sangre o un líquido transparente (como agua) por los oídos o la nariz?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <label class="form-label">13. ¿Tiene o le están apareciendo moretones muy oscuros alrededor de ambos ojos (como mapache) o detrás de las orejas?</label>
+                <select class="form-control"><option value="">Seleccione...</option><option>Sí</option><option>No</option></select>
+                
+                <div class="logic-note">Lógica de la IA (El cerebro detrás de la interfaz): Si el paciente responde "Sí" a cualquiera de estas preguntas, estamos ante signos de alarma de daño neurológico o sospecha de fractura de la base del cráneo.</div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button type="submit" class="btn-primary" style="padding: 15px 40px; font-size: 18px; border-radius: 30px; width: auto;"><i class="fa-solid fa-microchip"></i> Analizar Protocolo con IA y Generar Orden</button>
+            </div>
+            
+        </form>
     </div>
-    
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-        const firebaseConfig = { apiKey: "AIzaSyBALDQWfTsBsoev0bNTEiatzGVkfrxEhB4", authDomain: "icest-tesis.firebaseapp.com", projectId: "icest-tesis", storageBucket: "icest-tesis.firebasestorage.app", messagingSenderId: "740005254003", appId: "1:740005254003:web:abc24c84156d1f9e696b06" };
+        
+        // Configuración Firebase
+        const firebaseConfig = { 
+            apiKey: "AIzaSyBALDQWfTsBsoev0bNTEiatzGVkfrxEhB4", 
+            authDomain: "icest-tesis.firebaseapp.com", 
+            projectId: "icest-tesis", 
+            storageBucket: "icest-tesis.firebasestorage.app", 
+            messagingSenderId: "740005254003", 
+            appId: "1:740005254003:web:abc24c84156d1f9e696b06" 
+        };
         const app = initializeApp(firebaseConfig);
         window.db = getFirestore(app);
-        
+
+        // 1. Mostrar datos del paciente
         window.simularBusqueda = function() {
-            if(document.getElementById('inputBusqueda').value.trim() !== "") {
+            const input = document.getElementById('inputBusqueda').value;
+            if(input.trim() !== "") {
                 document.getElementById('tarjetaPaciente').style.display = 'block';
                 document.getElementById('formularioTriaje').style.display = 'block';
+            } else {
+                alert("Por favor ingrese un Folio o CURP válido.");
             }
         };
+
+        // 2. Lógica del selector anatómico para mostrar/ocultar rutas IA
         window.activarRutaIA = function() {
-            document.querySelectorAll('.ruta-ia').forEach(ruta => ruta.classList.remove('active'));
-            const rutaSel = document.getElementById('selectorRuta').value;
-            if(rutaSel !== "ninguna") document.getElementById('div-' + rutaSel).classList.add('active');
+            // Ocultar todas las rutas primero
+            const rutas = document.querySelectorAll('.ruta-ia');
+            rutas.forEach(ruta => {
+                ruta.classList.remove('active');
+                // Quitar el "required" a los selects ocultos para permitir enviar el formulario
+                const selects = ruta.querySelectorAll('select');
+                selects.forEach(s => s.removeAttribute('required'));
+            });
+
+            // Obtener el valor del selector
+            const rutaSeleccionada = document.getElementById('selectorRuta').value;
+
+            // Mostrar la ruta correspondiente y hacer sus campos requeridos
+            if (rutaSeleccionada !== "ninguna") {
+                const rutaActiva = document.getElementById('div-' + rutaSeleccionada);
+                rutaActiva.classList.add('active');
+                const selectsActivos = rutaActiva.querySelectorAll('select');
+                selectsActivos.forEach(s => s.setAttribute('required', 'required'));
+            }
         };
+
+        // 3. Simulación de Envío
+        document.getElementById('formularioTriaje').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Protocolo IA analizado. Orden de estudio generada en la base de datos.");
+            // Aquí irá la lógica futura para guardar la orden en Firestore
+        });
     </script>
 </body>
 </html>
