@@ -1,15 +1,32 @@
-<section id="id-busqueda">
-    <h3 class="mb-4 text-secondary">Búsqueda de Paciente</h3>
-    <div class="card card-custom p-4">
-        <div class="input-group w-75 mx-auto mb-4">
-            <input type="text" class="form-control" placeholder="Ingrese ID (Ej. ICEST-115)...">
-            <button class="btn btn-theme"><i class="fas fa-search"></i> Buscar</button>
-        </div>
-        
-        <div id="vistaPreviaPaciente" class="text-center" style="display:none;">
-            <img src="foto.jpg" class="circulo-completo mb-2" style="width: 80px; height: 80px;">
-            <h5 style="color: var(--main-theme);">ICEST-115</h5>
-            <p class="text-muted">Paciente: María Aguilar<br>CURP: AGMA950101...</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
+        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
+        .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
+        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Lato'; background-color: var(--bg-light); }
+        .form-control:focus { border-color: var(--loreto-cyan); outline: none; background-color: white; }
+        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; }
+        .btn-primary:hover { background-color: var(--icest-dark); }
+    </style>
+</head>
+<body>
+    <div class="slide-card">
+        <h2 class="slide-title">Consulta de Registro</h2>
+        <div style="background: var(--bg-light); padding: 50px; border-radius: 20px; text-align: center; border: 2px dashed var(--icest-blue); max-width: 600px; margin: 0 auto;">
+            <i class="fa-solid fa-id-card-clip" style="font-size: 70px; color: var(--icest-blue); margin-bottom: 20px;"></i>
+            <h3 style="margin-bottom: 25px;">Búsqueda de Paciente</h3>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" class="form-control" style="margin-bottom: 0;" placeholder="Ingrese Folio ICEST o CURP...">
+                <button class="btn-primary"><i class="fa-solid fa-search"></i></button>
+            </div>
         </div>
     </div>
-</section>
+</body>
+</html>
