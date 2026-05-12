@@ -2,40 +2,50 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
         body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
+        h3 { font-family: 'Poppins'; color: var(--icest-blue); margin-bottom: 10px; }
         .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
-        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .slide-title { font-size: 32px; font-family: 'Poppins'; margin-bottom: 20px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
         .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; }
         .btn-primary:hover { background-color: var(--icest-dark); }
+        .tiled-content { display: flex; gap: 20px; }
+        .tile { background: var(--bg-light); padding: 30px; border-radius: 12px; flex: 1; text-align: center; border-top: 4px solid var(--icest-blue); }
+        
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .slide-card { padding: 25px 20px; }
+            .slide-title { font-size: 24px; }
+            .tiled-content { flex-direction: column; } /* Las tarjetas se ponen en columna */
+        }
     </style>
 </head>
 <body>
     <div class="slide-card">
         <h2 class="slide-title">Solicitud de Nuevo Estudio</h2>
         <p style="color: var(--text-muted); margin-bottom: 20px;">Seleccione la región anatómica para ajuste de parámetros IA.</p>
-        <div style="display: flex; gap: 20px;">
-            <div style="background: var(--bg-light); padding: 30px; border-radius: 12px; flex: 1; text-align: center; border-top: 4px solid var(--icest-blue);">
+        <div class="tiled-content">
+            <div class="tile">
                 <i class="fa-solid fa-hand-dots" style="font-size: 40px; color: var(--loreto-cyan); margin-bottom: 15px;"></i>
                 <h3>Ruta C</h3>
                 <p style="color: var(--text-muted); font-size: 14px;">Extremidad Superior</p>
             </div>
-            <div style="background: var(--bg-light); padding: 30px; border-radius: 12px; flex: 1; text-align: center; border-top: 4px solid var(--icest-blue);">
+            <div class="tile">
                 <i class="fa-solid fa-person-walking" style="font-size: 40px; color: var(--loreto-cyan); margin-bottom: 15px;"></i>
                 <h3>Ruta A</h3>
                 <p style="color: var(--text-muted); font-size: 14px;">Extremidad Inferior</p>
             </div>
-            <div style="background: var(--bg-light); padding: 30px; border-radius: 12px; flex: 1; text-align: center; border-top: 4px solid var(--icest-blue);">
+            <div class="tile">
                 <i class="fa-solid fa-head-side-mask" style="font-size: 40px; color: var(--loreto-cyan); margin-bottom: 15px;"></i>
                 <h3>Ruta G</h3>
                 <p style="color: var(--text-muted); font-size: 14px;">Cráneo y Columna</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 40px;"><button class="btn-primary"><i class="fa-solid fa-brain"></i> Procesar con IA</button></div>
+        <div style="text-align: center; margin-top: 30px;"><button class="btn-primary"><i class="fa-solid fa-brain"></i> Procesar con IA</button></div>
     </div>
 </body>
 </html>
