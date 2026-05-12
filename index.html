@@ -122,24 +122,37 @@
             btn.innerText = 'Verificando...';
             btn.disabled = true;
 
-            // URL proporcionada
             const urlGAS = "https://script.google.com/macros/s/AKfycbzKt5qEd2eXYqKt9hLlNNxN7_LEKJVmShW1mD6ogZrNDC02hqSQBZdTHrzd-i_HfKs/exec";
-            const urlConDatos = `${urlGAS}?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`;
+            
+            // MAGIA ANTI-CACHÉ: Agregamos la hora exacta en milisegundos para forzar una conexión nueva siempre
+            const urlConDatos = `${urlGAS}?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&nocache=${Date.now()}`;
 
             try {
-                // Fetch simple: Regresamos a la fórmula original que te dejó entrar sin problema
+                // Fetch simple, sin configuraciones extra que bloqueen el celular
                 const respuesta = await fetch(urlConDatos);
-                const datos = await respuesta.json();
+                
+                // Leemos como texto primero por seguridad
+                const texto = await respuesta.text();
 
-                if (datos.acceso === true) {
-                    window.location.href = 'menu.html';
-                } else {
-                    alert.innerText = "ID o contraseña incorrectos";
+                try {
+                    const datos = JSON.parse(texto);
+                    if (datos.acceso === true) {
+                        window.location.href = 'menu.html';
+                    } else {
+                        alert.innerText = "ID o contraseña incorrectos";
+                        alert.classList.remove('hidden');
+                        resetBtn();
+                    }
+                } catch (parseError) {
+                    // Si Google manda un error en HTML, lo atrapamos aquí en lugar de colapsar la red
+                    console.error("Google devolvió algo que no es JSON:", texto);
+                    alert.innerText = "Error en el servidor de Google. Intente nuevamente.";
                     alert.classList.remove('hidden');
                     resetBtn();
                 }
 
             } catch (error) {
+                // Si la red falla realmente
                 console.error("Detalle del error:", error);
                 alert.innerText = "Error de red. Verifique su conexión.";
                 alert.classList.remove('hidden');
