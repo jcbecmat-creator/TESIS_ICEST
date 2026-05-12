@@ -46,15 +46,39 @@
         
         <form id="registroPaciente">
             <div class="section-header"><i class="fa-solid fa-user"></i> Datos Personales</div>
+            
             <div class="form-row">
-                <div class="form-col"><label class="form-label">Nombre Completo</label><input type="text" id="nombre" class="form-control" placeholder="Nombre(s) y Apellidos" required></div>
+                <div class="form-col">
+                    <label class="form-label">Nombre(s)</label>
+                    <input type="text" id="nombre" class="form-control" placeholder="Ej. Juan Carlos" required>
+                </div>
+                <div class="form-col">
+                    <label class="form-label">Apellido Paterno</label>
+                    <input type="text" id="apellidoPaterno" class="form-control" placeholder="Ej. Pérez" required>
+                </div>
+                <div class="form-col">
+                    <label class="form-label">Apellido Materno</label>
+                    <input type="text" id="apellidoMaterno" class="form-control" placeholder="Ej. Hernández" required>
+                </div>
             </div>
+            
             <div class="form-row">
-                <div class="form-col"><label class="form-label">CURP</label><input type="text" id="curp" class="form-control" placeholder="18 caracteres alfanuméricos" required></div>
-            </div>
-            <div class="form-row">
-                <div class="form-col"><label class="form-label">Sexo</label><select id="sexo" class="form-control" required><option value="">Seleccione...</option><option value="M">Masculino</option><option value="F">Femenino</option></select></div>
-                <div class="form-col"><label class="form-label">Fecha de Nacimiento</label><input type="date" id="fechaNac" class="form-control" required></div>
+                <div class="form-col">
+                    <label class="form-label">CURP</label>
+                    <input type="text" id="curp" class="form-control" placeholder="18 caracteres" required>
+                </div>
+                <div class="form-col">
+                    <label class="form-label">Sexo</label>
+                    <select id="sexo" class="form-control" required>
+                        <option value="">Seleccione...</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                </div>
+                <div class="form-col">
+                    <label class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" id="fechaNac" class="form-control" required>
+                </div>
             </div>
 
             <div class="section-header"><i class="fa-solid fa-house-medical"></i> Domicilio del Paciente</div>
@@ -72,8 +96,8 @@
                     <label class="form-label">Estado</label>
                     <select id="estado" class="form-control">
                         <option value="">Seleccione un estado...</option>
-                        <option value="Aguascalientes">Aguascalientes</option><option value="Baja California">Baja California</option><option value="CDMX">Ciudad de México</option><option value="Jalisco">Jalisco</option><option value="Nuevo León">Nuevo León</option><option value="Tamaulipas">Tamaulipas</option>
-                        </select>
+                        <option value="Aguascalientes">Aguascalientes</option><option value="Baja California">Baja California</option><option value="Baja California Sur">Baja California Sur</option><option value="Campeche">Campeche</option><option value="Chiapas">Chiapas</option><option value="Chihuahua">Chihuahua</option><option value="Ciudad de México">Ciudad de México</option><option value="Coahuila">Coahuila</option><option value="Colima">Colima</option><option value="Durango">Durango</option><option value="Estado de México">Estado de México</option><option value="Guanajuato">Guanajuato</option><option value="Guerrero">Guerrero</option><option value="Hidalgo">Hidalgo</option><option value="Jalisco">Jalisco</option><option value="Michoacán">Michoacán</option><option value="Morelos">Morelos</option><option value="Nayarit">Nayarit</option><option value="Nuevo León">Nuevo León</option><option value="Oaxaca">Oaxaca</option><option value="Puebla">Puebla</option><option value="Querétaro">Querétaro</option><option value="Quintana Roo">Quintana Roo</option><option value="San Luis Potosí">San Luis Potosí</option><option value="Sinaloa">Sinaloa</option><option value="Sonora">Sonora</option><option value="Tabasco">Tabasco</option><option value="Tamaulipas">Tamaulipas</option><option value="Tlaxcala">Tlaxcala</option><option value="Veracruz">Veracruz</option><option value="Yucatán">Yucatán</option><option value="Zacatecas">Zacatecas</option>
+                    </select>
                 </div>
             </div>
 
@@ -134,7 +158,7 @@
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
 
-        // Configuración Firebase (La tuya exactamente)
+        // Configuración Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBALDQWfTsBsoev0bNTEiatzGVkfrxEhB4",
             authDomain: "icest-tesis.firebaseapp.com",
@@ -234,13 +258,12 @@
         let isDrawing = false;
         let hasSignature = false;
 
-        // Ajustar tamaño real del canvas
         function resizeCanvas() {
             const rect = sigCanvas.parentElement.getBoundingClientRect();
             sigCanvas.width = rect.width;
             sigCanvas.height = rect.height;
         }
-        setTimeout(resizeCanvas, 100); // Pequeño retraso para asegurar que cargó el DOM
+        setTimeout(resizeCanvas, 100); 
 
         function getPos(evt) {
             const rect = sigCanvas.getBoundingClientRect();
@@ -308,7 +331,6 @@
                 let selfieUrl = "";
                 let firmaUrl = "";
 
-                // 1. Verificar si hay foto tomada/subida
                 if (photoPreview.src && photoPreview.style.display !== 'none') {
                     const selfieBlob = dataURItoBlob(photoPreview.src);
                     const selfieRef = ref(storage, 'pacientes/selfies/' + Date.now() + '.png');
@@ -316,7 +338,6 @@
                     selfieUrl = await getDownloadURL(selfieRef);
                 }
 
-                // 2. Verificar si hay trazos de firma
                 if (hasSignature) {
                     const firmaBlob = dataURItoBlob(sigCanvas.toDataURL("image/png"));
                     const firmaRef = ref(storage, 'pacientes/firmas/' + Date.now() + '.png');
@@ -324,9 +345,11 @@
                     firmaUrl = await getDownloadURL(firmaRef);
                 }
 
-                // 3. Subir todos los datos de texto + URLs a Firestore
+                // Guardar Nombre Dividido en Firestore
                 const docRef = await addDoc(collection(db, "pacientes"), {
                     nombre: document.getElementById('nombre').value,
+                    apellidoPaterno: document.getElementById('apellidoPaterno').value,
+                    apellidoMaterno: document.getElementById('apellidoMaterno').value,
                     curp: document.getElementById('curp').value,
                     sexo: document.getElementById('sexo').value,
                     fechaNac: document.getElementById('fechaNac').value,
@@ -343,7 +366,6 @@
 
                 alert("Expediente creado. ID Oficial: " + docRef.id);
                 
-                // Reiniciar todo
                 document.getElementById('registroPaciente').reset();
                 limpiarFoto();
                 limpiarFirma();
