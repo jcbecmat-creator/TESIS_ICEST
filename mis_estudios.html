@@ -2,37 +2,47 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
         body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
         .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
-        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .slide-title { font-size: 32px; font-family: 'Poppins'; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .table-responsive { width: 100%; overflow-x: auto; } /* Tablas adaptables */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 600px; }
         th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { background-color: var(--icest-blue); color: white; font-family: 'Poppins'; }
+        th { background-color: var(--icest-blue); color: white; font-family: 'Poppins'; font-size: 14px; }
+        
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .slide-card { padding: 25px 20px; }
+            .slide-title { font-size: 24px; margin-bottom: 20px; }
+            th, td { padding: 12px 10px; font-size: 13px; }
+        }
     </style>
 </head>
 <body>
     <div class="slide-card">
         <h2 class="slide-title">Historial de Estudios</h2>
-        <table>
-            <thead><tr><th>Fecha</th><th>Estudio Realizado</th><th>Status IA</th><th>Diagnóstico</th></tr></thead>
-            <tbody>
-                <tr>
-                    <td>11/05/2026</td><td>Muñeca AP/Lateral</td>
-                    <td><span style="color: #eab308; font-weight: 700;">Pendiente</span></td>
-                    <td>En proceso de revisión IA</td>
-                </tr>
-                <tr>
-                    <td>02/03/2026</td><td>Tórax PA</td>
-                    <td><span style="color: #16a34a; font-weight: 700;">Completado</span></td>
-                    <td>Sin hallazgos patológicos</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead><tr><th>Fecha</th><th>Estudio Realizado</th><th>Status IA</th><th>Diagnóstico</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td>11/05/2026</td><td>Muñeca AP/Lateral</td>
+                        <td><span style="color: #eab308; font-weight: 700;">Pendiente</span></td>
+                        <td>En proceso de revisión IA</td>
+                    </tr>
+                    <tr>
+                        <td>02/03/2026</td><td>Tórax PA</td>
+                        <td><span style="color: #16a34a; font-weight: 700;">Completado</span></td>
+                        <td>Sin hallazgos patológicos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
