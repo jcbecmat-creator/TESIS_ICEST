@@ -2,17 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
         body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
+        h3 { font-family: 'Poppins'; color: var(--icest-blue); margin-bottom: 15px; }
         .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
-        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
-        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-family: 'Lato'; background-color: var(--bg-light); }
+        .slide-title { font-size: 32px; font-family: 'Poppins'; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-family: 'Lato'; background-color: var(--bg-light); max-width: 400px; margin: 0 auto; }
         .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; }
         .btn-primary:hover { background-color: var(--icest-dark); }
+        .btn-grid { display: flex; gap: 20px; }
+        .btn-module { flex: 1; padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer; font-size: 14px; }
+        .bg-blue { background-color: var(--icest-blue); color: white; }
+        .bg-cyan { background-color: var(--loreto-cyan); color: var(--icest-dark); }
+        
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .slide-card { padding: 25px 20px; }
+            .slide-title { font-size: 24px; margin-bottom: 20px; }
+            .btn-grid { flex-direction: column; gap: 15px; } /* Botones apilados en celular */
+            .form-control { max-width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -21,16 +34,18 @@
         <div style="background: var(--bg-light); padding: 30px; border-radius: 12px; border: 2px dashed var(--loreto-cyan); text-align: center; margin-bottom: 30px;">
             <i class="fa-solid fa-file-csv" style="font-size: 50px; color: var(--icest-blue); margin-bottom: 15px;"></i>
             <h3>1. Carga de Datos Estructurados</h3>
-            <input type="file" class="form-control" accept=".csv" style="max-width: 400px; margin: 0 auto;">
+            <input type="file" class="form-control" accept=".csv">
         </div>
         <h3 style="text-align: center; margin-bottom: 20px;">2. Asignación Multimedia</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <label style="background-color: var(--icest-blue); color: white; padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer;"><i class="fa-solid fa-camera"></i> 1 TÉCNICA<input type="file" style="display: none;"></label>
-            <label style="background-color: var(--icest-blue); color: white; padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer;"><i class="fa-solid fa-camera"></i> 2 TÉCNICA<input type="file" style="display: none;"></label>
-            <label style="background-color: var(--loreto-cyan); color: var(--icest-dark); padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer;"><i class="fa-solid fa-x-ray"></i> 1 RADIOGRAFÍA<input type="file" style="display: none;"></label>
-            <label style="background-color: var(--loreto-cyan); color: var(--icest-dark); padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer;"><i class="fa-solid fa-x-ray"></i> 2 RADIOGRAFÍA<input type="file" style="display: none;"></label>
+        <div class="btn-grid">
+            <label class="btn-module bg-blue"><i class="fa-solid fa-camera"></i> 1 TÉCNICA<input type="file" style="display: none;"></label>
+            <label class="btn-module bg-blue"><i class="fa-solid fa-camera"></i> 2 TÉCNICA<input type="file" style="display: none;"></label>
+            <label class="btn-module bg-cyan"><i class="fa-solid fa-x-ray"></i> 1 RADIOGRAFÍA<input type="file" style="display: none;"></label>
+            <label class="btn-module bg-cyan"><i class="fa-solid fa-x-ray"></i> 2 RADIOGRAFÍA<input type="file" style="display: none;"></label>
         </div>
-        <div style="text-align: center; margin-top: 40px;"><button class="btn-primary" style="padding: 15px 50px; font-size: 18px;"><i class="fa-solid fa-cloud-arrow-up"></i> Guardar en Base de Datos</button></div>
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn-primary" style="width: 100%; max-width: 300px;"><i class="fa-solid fa-cloud-arrow-up"></i> Guardar en Base de Datos</button>
+        </div>
     </div>
 </body>
 </html>
