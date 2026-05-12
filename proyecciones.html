@@ -1,18 +1,131 @@
-<section id="proyecciones">
-    <h3 class="mb-4 text-secondary">Carga de Proyecciones (Bontrager)</h3>
+<section id="proyecciones" class="app-section">
+    <h3 class="mb-4 text-secondary">Carga de Proyecciones (CSV)</h3>
     <div class="card card-custom p-4">
-        <form>
-            <div class="mb-3">
-                <label>Archivo CSV de Datos</label>
-                <input type="file" class="form-control" accept=".csv">
+        
+        <div class="p-3 mb-4 rounded" style="background-color: var(--bg-light); border: 1px dashed var(--main-theme);">
+            <label class="fw-bold mb-2" style="color: var(--text-dark);">Seleccione el archivo CSV de la base de datos:</label>
+            <input type="file" id="csvProyecciones" class="form-control" accept=".csv" onchange="leerCSVPuro()">
+        </div>
+
+        <div id="contenedorTablaProyecciones" style="display: none;">
+            <h5 class="text-secondary mb-3">Vista Previa de Datos</h5>
+            
+            <div class="table-responsive mb-4">
+                <table class="table table-hover align-middle border" id="tablaDatosCSV">
+                    <thead style="background-color: var(--main-theme); color: white;">
+                        <tr id="cabeceraTabla">
+                            </tr>
+                    </thead>
+                    <tbody id="cuerpoTabla">
+                        </tbody>
+                </table>
             </div>
-            <div class="row g-3 mb-4">
-                <div class="col-md-6"><label>Imagen Técnica 1</label><input type="file" class="form-control"></div>
-                <div class="col-md-6"><label>Imagen Técnica 2 (Opcional)</label><input type="file" class="form-control"></div>
-                <div class="col-md-6"><label>Imagen Radiográfica 1</label><input type="file" class="form-control"></div>
-                <div class="col-md-6"><label>Imagen Radiográfica 2 (Opcional)</label><input type="file" class="form-control"></div>
+
+            <h5 class="text-secondary mb-3 text-center">Cargar Imágenes para la Proyección</h5>
+            <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+                
+                <label class="btn btn-theme px-4 py-2" style="cursor: pointer;">
+                    <i class="fas fa-camera me-2"></i> 1 técnica
+                    <input type="file" id="btnTecnica1" accept="image/*" style="display: none;" onchange="marcarCarga('btnTecnica1')">
+                </label>
+
+                <label class="btn btn-theme px-4 py-2" style="cursor: pointer;">
+                    <i class="fas fa-camera me-2"></i> 2 técnica
+                    <input type="file" id="btnTecnica2" accept="image/*" style="display: none;" onchange="marcarCarga('btnTecnica2')">
+                </label>
+
+                <label class="btn btn-theme px-4 py-2" style="cursor: pointer;">
+                    <i class="fas fa-x-ray me-2"></i> 1 radiografía
+                    <input type="file" id="btnRx1" accept="image/*" style="display: none;" onchange="marcarCarga('btnRx1')">
+                </label>
+
+                <label class="btn btn-theme px-4 py-2" style="cursor: pointer;">
+                    <i class="fas fa-x-ray me-2"></i> 2 radiografía
+                    <input type="file" id="btnRx2" accept="image/*" style="display: none;" onchange="marcarCarga('btnRx2')">
+                </label>
+                
             </div>
-            <button type="button" class="btn btn-theme w-100">Cargar Nueva Proyección</button>
-        </form>
+
+            <div class="text-center mt-5">
+                <button class="btn btn-secondary rounded-pill px-5 py-2" style="background-color: #f8f9fa; color: #81D0DC; border: 2px solid #81D0DC; font-weight: bold;" onclick="guardarProyeccionCompleta()">
+                    <i class="fas fa-cloud-upload-alt me-2"></i> Guardar Proyección y Multimedia en el Sistema
+                </button>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function leerCSVPuro() {
+            const input = document.getElementById('csvProyecciones');
+            const file = input.files[0];
+            
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function(evento) {
+                const contenido = evento.target.result;
+                // Separar por saltos de línea e ignorar líneas vacías
+                const lineas = contenido.split('\n').filter(linea => linea.trim() !== '');
+                
+                if (lineas.length === 0) return;
+
+                // Limpiar tabla previa por si el usuario carga otro archivo
+                const cabecera = document.getElementById('cabeceraTabla');
+                const cuerpo = document.getElementById('cuerpoTabla');
+                cabecera.innerHTML = '';
+                cuerpo.innerHTML = '';
+
+                // 1. Extraer encabezados (Primera línea del CSV)
+                const titulos = lineas[0].split(',');
+                titulos.forEach(titulo => {
+                    const th = document.createElement('th');
+                    th.textContent = titulo.replace(/"/g, '').trim(); // Limpiar comillas
+                    cabecera.appendChild(th);
+                });
+
+                // 2. Extraer datos (Solo mostramos hasta 4 líneas visualmente para no saturar la pantalla)
+                const limiteVisualizacion = Math.min(lineas.length, 5); 
+                
+                for (let i = 1; i < limiteVisualizacion; i++) {
+                    const columnas = lineas[i].split(',');
+                    const tr = document.createElement('tr');
+                    
+                    columnas.forEach(col => {
+                        const td = document.createElement('td');
+                        td.textContent = col.replace(/"/g, '').trim();
+                        tr.appendChild(td);
+                    });
+                    cuerpo.appendChild(tr);
+                }
+
+                // Mostrar todo el contenedor (Tabla + Botones de imágenes que estaban ocultos)
+                document.getElementById('contenedorTablaProyecciones').style.display = 'block';
+            };
+
+            // Leer el archivo localmente como texto UTF-8 para soportar acentos
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        // Función para dar retroalimentación visual al radiólogo cuando selecciona una imagen
+        function marcarCarga(inputId) {
+            const inputElement = document.getElementById(inputId);
+            if(inputElement.files && inputElement.files[0]) {
+                const nombreArchivo = inputElement.files[0].name;
+                console.log(`Imagen adjuntada en ${inputId}: ${nombreArchivo}`);
+                // Opcional: Podrías cambiar el texto del botón aquí para mostrar el nombre de la foto
+                // inputElement.parentElement.innerHTML += ` <span class="badge bg-light text-dark mx-1">Cargada</span>`;
+            }
+        }
+
+        // Función que se dispara al dar clic en el botón final
+        function guardarProyeccionCompleta() {
+            // Aquí agregarías la lógica para mandar los datos y las 4 imágenes a tu base
+            alert("Proyección y multimedia listas para guardarse en la base de datos.");
+            
+            // Limpiar la vista para la siguiente carga
+            document.getElementById('csvProyecciones').value = '';
+            document.getElementById('contenedorTablaProyecciones').style.display = 'none';
+        }
+    </script>
 </section>
