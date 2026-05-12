@@ -1,10 +1,35 @@
-<section id="mi-expediente">
-    <h3 class="mb-4 text-secondary">Mi Expediente</h3>
-    <div class="card card-custom p-4 text-center">
-        <img src="foto.jpg" class="circulo-completo mx-auto mb-3" style="width: 100px; height: 100px;" alt="Selfie">
-        <h4 style="color: var(--main-theme);">María Aguilar</h4>
-        <p><b>ID:</b> ICEST-115 | <b>CURP:</b> AGMA950101...</p>
-        <p><b>Dirección:</b> Calle Conocida #123, Centro.</p>
-        <p><b>Sexo:</b> Femenino</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
+        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
+        .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
+        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    </style>
+</head>
+<body>
+    <div class="slide-card">
+        <h2 class="slide-title">Perfil del Paciente</h2>
+        <div class="two-column" style="align-items: center;">
+            <div style="text-align: center;">
+                <div style="width: 200px; height: 200px; border-radius: 50%; border: 6px solid var(--icest-blue); margin: 0 auto 20px; background-color: var(--bg-light); display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-user" style="font-size: 80px; color: var(--loreto-cyan);"></i>
+                </div>
+                <h3>Juan Carlos Becerra</h3>
+                <p style="color: var(--loreto-cyan); font-weight: 700;">Paciente Activo</p>
+            </div>
+            <div style="background: var(--bg-light); padding: 40px; border-radius: 12px; border-left: 5px solid var(--icest-blue);">
+                <p style="margin-bottom: 15px; font-size: 18px;"><strong>Folio Oficial:</strong> ICEST-123456</p>
+                <p style="margin-bottom: 15px; font-size: 18px;"><strong>CURP:</strong> BEJU900101H</p>
+                <p style="font-size: 18px;"><strong>Privilegios:</strong> Radiología</p>
+            </div>
+        </div>
     </div>
-</section>
+</body>
+</html>
