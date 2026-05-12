@@ -1,46 +1,130 @@
-<style>
-    :root {
-        --main-theme: #81D0DC;
-        --main-hover: #6ebcc8;
-        --bg-light: #f8f9fa;
-    }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-light); }
-    .navbar-custom { background-color: var(--main-theme); }
-    .navbar-custom .navbar-brand, .navbar-custom .nav-link { color: white !important; font-weight: 500; }
-    .btn-theme { background-color: var(--main-theme); color: white; border: none; border-radius: 25px; padding: 8px 20px; }
-    .btn-theme:hover { background-color: var(--main-hover); color: white; }
-    .circulo-completo { border-radius: 50%; width: 45px; height: 45px; object-fit: cover; border: 2px solid var(--main-theme); }
-    .card-custom { border: none; border-top: 4px solid var(--main-theme); box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-radius: 12px; }
-</style>
-
-<nav class="navbar navbar-expand-lg navbar-custom shadow-sm sticky-top">
+<nav class="navbar navbar-expand-lg navbar-custom shadow-sm sticky-top" id="main-nav" style="background-color: #81D0DC; display: none;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><i class="fas fa-x-ray circulo-completo bg-white text-center" style="color:#81D0DC; line-height: 40px;"></i> ICEST-Triage</a>
+        <a class="navbar-brand text-white fw-bold" href="#" onclick="navegar('inicio')">
+            <i class="fas fa-microchip me-2"></i> IA-TRIAGE
+        </a>
         <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" onclick="navegar('inicio')">Inicio</a>
+                </li>
+
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Pacientes</a>
+                    <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Pacientes</a>
                     <ul class="dropdown-menu border-0 shadow">
-                        <li><a class="dropdown-item" href="#nuevo-ingreso">Nuevo Ingreso</a></li>
-                        <li><a class="dropdown-item" href="#nuevo-estudio">Nuevo Estudio</a></li>
-                        <li><a class="dropdown-item" href="#id-busqueda">ID - Búsqueda</a></li>
-                        <li><a class="dropdown-item" href="#mi-expediente">Mi Expediente</a></li>
-                        <li><a class="dropdown-item" href="#mis-estudios">Mis Estudios</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="navegar('nuevo-ingreso')">Nuevo Ingreso</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="navegar('nuevo-estudio')">Nuevo Estudio</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="navegar('id-busqueda')">ID - Búsqueda</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="navegar('mi-expediente')">Mi Expediente</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="navegar('mis-estudios')">Mis Estudios</a></li>
                     </ul>
                 </li>
+
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Radiólogos</a>
+                    <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Radiólogos</a>
                     <ul class="dropdown-menu border-0 shadow">
-                        <li><a class="dropdown-item" href="#expedientes-rad">Expedientes</a></li>
-                        <li><a class="dropdown-item" href="#estudios-rad">Estudios</a></li>
-                        <li><a class="dropdown-item" href="#proyecciones">Proyecciones (CSV)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="navegar('expedientes')">Expedientes</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="navegar('estudios')">Estudios</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="navegar('proyecciones')">Proyecciones (CSV)</a></li>
                     </ul>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item me-3 text-white small d-none d-md-block">
+                    <span id="fecha-actual"></span>
+                </li>
+                <li class="nav-item">
+                    <a href="#" onclick="navegar('mi-expediente')">
+                        <img src="https://via.placeholder.com/40" class="circulo-completo" id="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+                    </a>
+                </li>
+                <li class="nav-item ms-3">
+                    <button class="btn btn-sm btn-outline-light rounded-pill" onclick="cerrarSesion()">Salir</button>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<section id="login" class="app-section active">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="card card-custom p-5 text-center shadow" style="max-width: 400px; width: 100%; border-top: 5px solid #81D0DC;">
+            <i class="fas fa-user-shield fa-3x mb-3" style="color: #81D0DC;"></i>
+            <h4 class="mb-4">Acceso al Sistema</h4>
+            <input type="text" id="user-id" class="form-control mb-3" placeholder="Ingrese su ID (Ej. ICEST-1)">
+            <button class="btn btn-theme w-100 py-2" onclick="iniciarSesion()" style="background-color: #81D0DC; color: white; border: none; border-radius: 25px;">Ingresar</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    /**
+     * Función Maestra de Navegación
+     * Controla la visibilidad de los 11 códigos creados
+     */
+    function navegar(seccionId) {
+        // Ocultar todas las secciones de la aplicación
+        const secciones = document.querySelectorAll('.app-section');
+        secciones.forEach(sec => {
+            sec.style.display = 'none';
+            sec.classList.remove('active');
+        });
+
+        // Mostrar la sección seleccionada
+        const destino = document.getElementById(seccionId);
+        if (destino) {
+            destino.style.display = 'block';
+            destino.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Cerrar el menú desplegable en dispositivos móviles tras clic
+        const navbarCollapse = document.getElementById('navbarNav');
+        if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+            const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+            bsCollapse.hide();
+        }
+    }
+
+    /**
+     * Lógica de Inicio de Sesión
+     */
+    function iniciarSesion() {
+        const id = document.getElementById('user-id').value;
+        if (id.trim() !== "") {
+            // Activar Menú y ocultar Login
+            document.getElementById('main-nav').style.display = 'block';
+            navegar('inicio');
+            alert("Bienvenido al sistema de triaje ICEST.");
+        } else {
+            alert("Por favor ingrese un ID válido.");
+        }
+    }
+
+    /**
+     * Lógica de Cierre de Sesión
+     */
+    function cerrarSesion() {
+        if(confirm("¿Desea finalizar su sesión actual?")) {
+            document.getElementById('main-nav').style.display = 'none';
+            document.getElementById('user-id').value = '';
+            navegar('login');
+        }
+    }
+
+    /**
+     * Inicialización de Fecha Actual (Formato Mexicano)
+     */
+    function mostrarFecha() {
+        const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const hoy = new Date().toLocaleDateString('es-MX', opciones);
+        document.getElementById('fecha-actual').innerText = hoy;
+    }
+
+    // Ejecutar al cargar la página
+    window.onload = mostrarFecha;
+</script>
