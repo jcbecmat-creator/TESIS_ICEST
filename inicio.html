@@ -5,13 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
-        :root{--icest-blue:#005B9A;--icest-dark:#003f6b;--loreto-cyan:#81D0DC;--bg-light:#f8fafc;--text-main:#1e293b;--text-muted:#64748b}body{font-family:'Lato',sans-serif;color:var(--text-main);margin:0;padding:40px;display:flex;justify-content:center;background:transparent}.slide-card{background:white;border-radius:12px;padding:50px;box-shadow:0 15px 30px rgba(0,0,0,0.05);border-top:5px solid var(--icest-blue);width:100%;max-width:1100px}.slide-title{font-size:32px;font-family:'Poppins';margin-bottom:30px;border-bottom:2px solid var(--loreto-cyan);padding-bottom:10px;color:var(--icest-blue)}.highlight-numbers-layout{display:flex;gap:30px;margin-bottom:40px}.number-box{flex:1;text-align:center;background:var(--bg-light);padding:30px;border-radius:12px}.number-box .number{font-size:70px;font-weight:700;color:var(--icest-blue);font-family:'Poppins';line-height:1}.number-box .label{font-weight:700;font-size:16px;color:var(--loreto-cyan);margin-top:10px}@media(max-width:768px){body{padding:15px}.slide-card{padding:25px 20px}.slide-title{font-size:24px;margin-bottom:20px}.highlight-numbers-layout{flex-direction:column;gap:15px}.number-box .number{font-size:48px}}
+        :root { 
+            --icest-blue: #005B9A; 
+            --icest-dark: #003f6b; 
+            --loreto-cyan: #81D0DC; 
+            --bg-light: #f8fafc; 
+            --text-main: #1e293b; 
+            --text-muted: #64748b; 
+        }
+        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
+        
+        .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
+        .slide-title { font-size: 32px; font-family: 'Poppins'; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        
+        /* Layout de Números */
+        .highlight-numbers-layout { display: flex; gap: 30px; margin-bottom: 40px; }
+        .number-box { flex: 1; text-align: center; background: var(--bg-light); padding: 30px; border-radius: 12px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        .number-box .number { font-size: 60px; font-weight: 700; color: var(--icest-blue); font-family: 'Poppins'; line-height: 1; }
+        .number-box .label { font-weight: 700; font-size: 15px; color: var(--loreto-cyan); margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Cuadrícula de Gráficas */
+        .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 20px; }
+        .chart-container { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+        .chart-title { font-family: 'Poppins'; font-size: 16px; color: var(--icest-dark); margin-bottom: 15px; text-align: center; font-weight: 600; }
+        .canvas-wrapper { position: relative; height: 250px; width: 100%; }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .slide-card { padding: 25px 20px; }
+            .slide-title { font-size: 24px; margin-bottom: 20px; }
+            .highlight-numbers-layout { flex-direction: column; gap: 15px; }
+            .number-box .number { font-size: 48px; }
+            .charts-grid { grid-template-columns: 1fr; gap: 20px; } /* Se apilan en celular */
+        }
     </style>
 </head>
 <body>
     <div class="slide-card">
         <h2 class="slide-title">Dashboard Operativo</h2>
+        
         <div class="highlight-numbers-layout">
             <div class="number-box">
                 <div class="number">1,245</div>
@@ -26,11 +62,144 @@
                 <div class="label">Patologías IA</div>
             </div>
         </div>
+
+        <div class="charts-grid">
+            
+            <div class="chart-container">
+                <div class="chart-title"><i class="fa-solid fa-chart-line" style="color: var(--loreto-cyan);"></i> Flujo de Estudios (Últimos 6 meses)</div>
+                <div class="canvas-wrapper">
+                    <canvas id="chartFlujo"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title"><i class="fa-solid fa-child-reaching" style="color: var(--loreto-cyan);"></i> Distribución por Rutas IA</div>
+                <div class="canvas-wrapper">
+                    <canvas id="chartRutas"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title"><i class="fa-solid fa-x-ray" style="color: var(--loreto-cyan);"></i> Patologías Detectadas vs Descartadas</div>
+                <div class="canvas-wrapper">
+                    <canvas id="chartPatologias"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title"><i class="fa-solid fa-stopwatch" style="color: var(--loreto-cyan);"></i> Eficiencia de Triaje (Tiempo en min)</div>
+                <div class="canvas-wrapper">
+                    <canvas id="chartTiempos"></canvas>
+                </div>
+            </div>
+
+        </div>
     </div>
+
+    <script>
+        // Colores institucionales para las gráficas
+        const icestBlue = '#005B9A';
+        const loretoCyan = '#81D0DC';
+        const icestDark = '#003f6b';
+        const warningYellow = '#eab308';
+        const lightGray = '#e2e8f0';
+
+        // Opciones generales para que sean responsivas
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { font: { family: 'Lato' } } } }
+        };
+
+        // 1. Gráfica de Flujo (Líneas)
+        new Chart(document.getElementById('chartFlujo'), {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Estudios Realizados',
+                    data: [120, 190, 210, 250, 220, 310],
+                    borderColor: icestBlue,
+                    backgroundColor: 'rgba(0, 91, 154, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4, // Curva suave
+                    fill: true
+                }]
+            },
+            options: commonOptions
+        });
+
+        // 2. Gráfica de Rutas IA (Dona)
+        new Chart(document.getElementById('chartRutas'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Ruta A (Ext. Inf)', 'Ruta C (Ext. Sup)', 'Ruta G (Cráneo)', 'Otras'],
+                datasets: [{
+                    data: [45, 30, 15, 10],
+                    backgroundColor: [icestBlue, loretoCyan, icestDark, lightGray],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: 'right', labels: { font: { family: 'Lato' } } } },
+                cutout: '65%' // Grosor de la dona
+            }
+        });
+
+        // 3. Gráfica de Patologías (Barras)
+        new Chart(document.getElementById('chartPatologias'), {
+            type: 'bar',
+            data: {
+                labels: ['Fracturas', 'Fisuras', 'Luxación', 'Tej. Blando', 'Sano'],
+                datasets: [{
+                    label: 'Casos Detectados',
+                    data: [45, 25, 15, 60, 175],
+                    backgroundColor: loretoCyan,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } }, // Ocultamos la leyenda para más espacio
+                scales: { y: { beginAtZero: true, grid: { color: lightGray } }, x: { grid: { display: false } } }
+            }
+        });
+
+        // 4. Gráfica de Tiempos (Barra Horizontal / Progreso)
+        new Chart(document.getElementById('chartTiempos'), {
+            type: 'line',
+            data: {
+                labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                datasets: [{
+                    label: 'Tiempo promedio de atención',
+                    data: [25, 20, 15, 8], // Reducción de tiempo gracias a la IA
+                    borderColor: warningYellow,
+                    backgroundColor: 'rgba(234, 179, 8, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    stepped: false
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutos' } } }
+            }
+        });
+    </script>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
-        const app = initializeApp({ apiKey: "AIzaSyBALDQWfTsBsoev0bNTEiatzGVkfrxEhB4", authDomain: "icest-tesis.firebaseapp.com", projectId: "icest-tesis", storageBucket: "icest-tesis.firebasestorage.app", messagingSenderId: "740005254003", appId: "1:740005254003:web:abc24c84156d1f9e696b06" });
+        const app = initializeApp({ 
+            apiKey: "AIzaSyBALDQWfTsBsoev0bNTEiatzGVkfrxEhB4", 
+            authDomain: "icest-tesis.firebaseapp.com", 
+            projectId: "icest-tesis", 
+            storageBucket: "icest-tesis.firebasestorage.app", 
+            messagingSenderId: "740005254003", 
+            appId: "1:740005254003:web:abc24c84156d1f9e696b06" 
+        });
         window.db = getFirestore(app);
     </script>
 </body>
