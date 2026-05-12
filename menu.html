@@ -1,130 +1,540 @@
-<nav class="navbar navbar-expand-lg navbar-custom shadow-sm sticky-top" id="main-nav" style="background-color: #81D0DC; display: none;">
-    <div class="container-fluid">
-        <a class="navbar-brand text-white fw-bold" href="#" onclick="navegar('inicio')">
-            <i class="fas fa-microchip me-2"></i> IA-TRIAGE
-        </a>
-        <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#" onclick="navegar('inicio')">Inicio</a>
-                </li>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA-Triage ICEST - Sistema Principal</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --icest-blue: #005B9A;
+            --icest-dark: #003f6b;
+            --loreto-cyan: #81D0DC;
+            --bg-light: #f1f5f9;
+            --text-main: #334155;
+            --text-muted: #64748b;
+        }
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Pacientes</a>
-                    <ul class="dropdown-menu border-0 shadow">
-                        <li><a class="dropdown-item" href="#" onclick="navegar('nuevo-ingreso')">Nuevo Ingreso</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="navegar('nuevo-estudio')">Nuevo Estudio</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="navegar('id-busqueda')">ID - Búsqueda</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="navegar('mi-expediente')">Mi Expediente</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="navegar('mis-estudios')">Mis Estudios</a></li>
-                    </ul>
-                </li>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Radiólogos</a>
-                    <ul class="dropdown-menu border-0 shadow">
-                        <li><a class="dropdown-item" href="#" onclick="navegar('expedientes')">Expedientes</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="navegar('estudios')">Estudios</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="navegar('proyecciones')">Proyecciones (CSV)</a></li>
-                    </ul>
-                </li>
-            </ul>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item me-3 text-white small d-none d-md-block">
-                    <span id="fecha-actual"></span>
-                </li>
-                <li class="nav-item">
-                    <a href="#" onclick="navegar('mi-expediente')">
-                        <img src="https://via.placeholder.com/40" class="circulo-completo" id="user-avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
-                    </a>
-                </li>
-                <li class="nav-item ms-3">
-                    <button class="btn btn-sm btn-outline-light rounded-pill" onclick="cerrarSesion()">Salir</button>
-                </li>
-            </ul>
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); }
+
+        /* ==========================================
+           MENÚ LATERAL IZQUIERDO
+        ========================================== */
+        .sidebar {
+            width: 260px;
+            background-color: var(--icest-blue);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-header h2 {
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .sidebar-header span {
+            color: var(--loreto-cyan);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .nav-section-title {
+            padding: 10px 25px;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--loreto-cyan);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link i {
+            width: 24px;
+            font-size: 16px;
+            color: var(--loreto-cyan);
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .nav-link.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border-left: 5px solid var(--loreto-cyan);
+            font-weight: 700;
+        }
+
+        /* ==========================================
+           ÁREA PRINCIPAL DE CONTENIDO
+        ========================================== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* BARRA SUPERIOR */
+        .topbar {
+            height: 70px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            z-index: 5;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--loreto-cyan);
+            color: var(--icest-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .btn-logout {
+            border: 2px solid var(--icest-blue);
+            background: transparent;
+            color: var(--icest-blue);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: var(--icest-blue);
+            color: white;
+        }
+
+        /* CONTENEDOR DE SECCIONES */
+        .content-area {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .app-module {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .app-module.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================
+           DISEÑO DE TARJETAS Y ELEMENTOS INTERNOS
+        ========================================== */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--icest-blue);
+            margin-bottom: 30px;
+        }
+
+        .module-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--loreto-cyan);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+            background: var(--bg-light);
+            border-radius: 12px;
+        }
+
+        .stat-number { font-size: 50px; font-family: 'Poppins'; font-weight: 700; color: var(--icest-blue); }
+        .stat-label { font-size: 16px; font-weight: 700; color: var(--loreto-cyan); text-transform: uppercase; }
+
+        /* Formularios y Botones Generales */
+        .form-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; color: var(--icest-dark); }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: 'Lato'; margin-bottom: 20px; background-color: var(--bg-light); }
+        .form-control:focus { outline: none; border-color: var(--loreto-cyan); background-color: white; }
+        
+        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-primary:hover { background-color: var(--icest-dark); }
+
+        /* Tablas */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: var(--bg-light); color: var(--icest-blue); font-family: 'Poppins'; }
+        
+        /* Botones Especiales Proyecciones (Igual a la imagen solicitada) */
+        .btn-group-proyecciones { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .btn-proy { background-color: var(--icest-blue); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer; text-transform: uppercase; }
+        .btn-proy.accent { background-color: var(--loreto-cyan); color: var(--icest-dark); }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>IA-TRIAGE</h2>
+            <span>SISTEMA ICEST</span>
         </div>
-    </div>
-</nav>
+        <div class="nav-menu">
+            <div class="nav-link active" onclick="cambiarModulo('inicio', this)">
+                <i class="fa-solid fa-chart-pie"></i> Dashboard
+            </div>
+            
+            <div class="nav-section-title">Pacientes</div>
+            <div class="nav-link" onclick="cambiarModulo('nuevo-ingreso', this)">
+                <i class="fa-solid fa-user-plus"></i> Nuevo Ingreso
+            </div>
+            <div class="nav-link" onclick="cambiarModulo('nuevo-estudio', this)">
+                <i class="fa-solid fa-file-medical"></i> Nuevo Estudio
+            </div>
+            <div class="nav-link" onclick="cambiarModulo('id-busqueda', this)">
+                <i class="fa-solid fa-magnifying-glass"></i> ID - Búsqueda
+            </div>
+            <div class="nav-link" onclick="cambiarModulo('mi-expediente', this)">
+                <i class="fa-solid fa-address-card"></i> Mi Expediente
+            </div>
+            <div class="nav-link" onclick="cambiarModulo('mis-estudios', this)">
+                <i class="fa-solid fa-book-medical"></i> Mis Estudios
+            </div>
 
-<section id="login" class="app-section active">
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="card card-custom p-5 text-center shadow" style="max-width: 400px; width: 100%; border-top: 5px solid #81D0DC;">
-            <i class="fas fa-user-shield fa-3x mb-3" style="color: #81D0DC;"></i>
-            <h4 class="mb-4">Acceso al Sistema</h4>
-            <input type="text" id="user-id" class="form-control mb-3" placeholder="Ingrese su ID (Ej. ICEST-1)">
-            <button class="btn btn-theme w-100 py-2" onclick="iniciarSesion()" style="background-color: #81D0DC; color: white; border: none; border-radius: 25px;">Ingresar</button>
+            <div class="nav-section-title">Radiólogos</div>
+            <div class="nav-link" onclick="cambiarModulo('expedientes-rad', this)">
+                <i class="fa-solid fa-database"></i> Expedientes
+            </div>
+            <div class="nav-link" onclick="cambiarModulo('estudios-rad', this)">
+                <i class="fa-solid fa-x-ray"></i> Estudios Rad
+            </div>
+            <div class="nav-link" onclick="cambiarModulo('proyecciones', this)">
+                <i class="fa-solid fa-file-import"></i> Proyecciones (CSV)
+            </div>
         </div>
-    </div>
-</section>
+    </aside>
 
-<script>
-    /**
-     * Función Maestra de Navegación
-     * Controla la visibilidad de los 11 códigos creados
-     */
-    function navegar(seccionId) {
-        // Ocultar todas las secciones de la aplicación
-        const secciones = document.querySelectorAll('.app-section');
-        secciones.forEach(sec => {
-            sec.style.display = 'none';
-            sec.classList.remove('active');
-        });
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h3 style="margin: 0; color: var(--text-main); font-size: 18px;">Portal de Educación Profesional</h3>
+            </div>
+            <div class="user-profile">
+                <span style="font-weight: 700; color: var(--icest-blue);">Usuario ICEST</span>
+                <div class="avatar">U</div>
+                <button class="btn-logout" onclick="cerrarSesion()">Salir</button>
+            </div>
+        </header>
 
-        // Mostrar la sección seleccionada
-        const destino = document.getElementById(seccionId);
-        if (destino) {
-            destino.style.display = 'block';
-            destino.classList.add('active');
-            window.scrollTo(0, 0);
+        <div class="content-area">
+            
+            <section id="inicio" class="app-module active">
+                <h2 class="module-title">Dashboard Operativo</h2>
+                <div class="card">
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-number">1,245</div>
+                            <div class="stat-label">Estudios Totales</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">850</div>
+                            <div class="stat-label">Pacientes Activos</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: #eab308;">320</div>
+                            <div class="stat-label" style="color: var(--text-muted);">Patologías Detectadas IA</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="nuevo-ingreso" class="app-module">
+                <h2 class="module-title">Registro de Nuevo Ingreso</h2>
+                <div class="card">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <label class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" placeholder="Ej. Juan Pérez">
+                        </div>
+                        <div>
+                            <label class="form-label">CURP</label>
+                            <input type="text" class="form-control" placeholder="18 Caracteres">
+                        </div>
+                        <div>
+                            <label class="form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div>
+                            <label class="form-label">Sexo</label>
+                            <select class="form-control">
+                                <option>Seleccione...</option>
+                                <option>Masculino</option>
+                                <option>Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-primary" style="margin-top: 15px;"><i class="fa-solid fa-id-card"></i> Generar ID ICEST</button>
+                </div>
+            </section>
+
+            <section id="nuevo-estudio" class="app-module">
+                <h2 class="module-title">Solicitud de Nuevo Estudio</h2>
+                <div class="card">
+                    <label class="form-label">Seleccione la Ruta de Evaluación IA</label>
+                    <select class="form-control" style="max-width: 400px;">
+                        <option>Ruta C (Extremidad Superior - Foco Fino)</option>
+                        <option>Ruta A (Extremidad Inferior)</option>
+                        <option>Ruta G (Cráneo y Columna)</option>
+                    </select>
+                    <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">El sistema ajustará automáticamente los parámetros de mAs y kV según la ruta seleccionada.</p>
+                    <button class="btn-primary"><i class="fa-solid fa-brain"></i> Procesar Solicitud con IA</button>
+                </div>
+            </section>
+
+            <section id="id-busqueda" class="app-module">
+                <h2 class="module-title">Búsqueda de Paciente</h2>
+                <div class="card" style="max-width: 600px;">
+                    <label class="form-label">Ingrese Folio ICEST o CURP</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" class="form-control" style="margin-bottom: 0;" placeholder="Ej. ICEST-1234">
+                        <button class="btn-primary"><i class="fa-solid fa-search"></i> Buscar</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mi-expediente" class="app-module">
+                <h2 class="module-title">Mi Expediente Clínico</h2>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 30px;">
+                        <div style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--loreto-cyan); background: var(--bg-light); display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-user" style="font-size: 50px; color: var(--icest-blue);"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 24px; margin-bottom: 5px;">Paciente de Prueba</h3>
+                            <p style="color: var(--loreto-cyan); font-weight: bold;">Folio: ICEST-001</p>
+                            <p style="color: var(--text-muted); margin-top: 10px;">Estatus: Activo en el sistema de triaje.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mis-estudios" class="app-module">
+                <h2 class="module-title">Historial de Estudios</h2>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Estudio</th>
+                                <th>Diagnóstico IA</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>11/05/2026</td>
+                                <td>Muñeca AP</td>
+                                <td style="color: #eab308; font-weight: bold;">Análisis Pendiente</td>
+                                <td><button class="btn-primary" style="padding: 6px 12px; font-size: 12px;">Ver Placa</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="expedientes-rad" class="app-module">
+                <h2 class="module-title">Base de Datos de Expedientes</h2>
+                <div class="card">
+                    <div style="margin-bottom: 20px;">
+                        <input type="text" class="form-control" style="max-width: 300px; display: inline-block; margin-bottom: 0;" placeholder="Filtrar por nombre...">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID ICEST</th>
+                                <th>Nombre Completo</th>
+                                <th>Último Ingreso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ICEST-123</td>
+                                <td>Moy Hernández</td>
+                                <td>10/05/2026</td>
+                            </tr>
+                            <tr>
+                                <td>ICEST-315</td>
+                                <td>Camila Domínguez</td>
+                                <td>09/05/2026</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="estudios-rad" class="app-module">
+                <h2 class="module-title">Panel de Estudios Radiológicos</h2>
+                <div class="card">
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Bandeja de entrada para revisión de placas con asistencia de Inteligencia Artificial.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prioridad</th>
+                                <th>Paciente</th>
+                                <th>Estudio Solicitado</th>
+                                <th>Carga Técnica</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span style="background-color: var(--icest-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">Alta</span></td>
+                                <td>ICEST-115</td>
+                                <td>Tórax PA</td>
+                                <td><button class="btn-primary" style="padding: 6px 12px; font-size: 12px; background-color: var(--loreto-cyan); color: var(--icest-dark);">Subir DICOM</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="proyecciones" class="app-module">
+                <h2 class="module-title">Carga de Proyecciones (CSV)</h2>
+                <div class="card">
+                    <div style="background-color: var(--bg-light); padding: 20px; border-radius: 8px; border: 1px dashed var(--icest-blue); margin-bottom: 30px;">
+                        <label class="form-label" style="color: var(--icest-blue);"><i class="fa-solid fa-file-csv"></i> Importar base de datos (Google Sheets/Excel)</label>
+                        <input type="file" class="form-control" accept=".csv" style="margin-bottom: 0;">
+                    </div>
+                    
+                    <h4 style="margin-bottom: 15px;">Multimedia de la Proyección Seleccionada</h4>
+                    
+                    <div class="btn-group-proyecciones">
+                        <label class="btn-proy">
+                            <i class="fa-solid fa-camera" style="margin-right: 8px;"></i> 1 TÉCNICA
+                            <input type="file" style="display: none;">
+                        </label>
+                        <label class="btn-proy">
+                            <i class="fa-solid fa-camera" style="margin-right: 8px;"></i> 2 TÉCNICA
+                            <input type="file" style="display: none;">
+                        </label>
+                        <label class="btn-proy accent">
+                            <i class="fa-solid fa-x-ray" style="margin-right: 8px;"></i> 1 RADIOGRAFÍA
+                            <input type="file" style="display: none;">
+                        </label>
+                        <label class="btn-proy accent">
+                            <i class="fa-solid fa-x-ray" style="margin-right: 8px;"></i> 2 RADIOGRAFÍA
+                            <input type="file" style="display: none;">
+                        </label>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button class="btn-primary" style="padding: 15px 40px; font-size: 16px;"><i class="fa-solid fa-cloud-arrow-up"></i> Guardar en Base de Datos</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        function cambiarModulo(moduloId, elementoMenu) {
+            // 1. Ocultar todos los módulos
+            const modulos = document.querySelectorAll('.app-module');
+            modulos.forEach(mod => mod.classList.remove('active'));
+
+            // 2. Quitar el estado activo de todos los enlaces del menú
+            const enlaces = document.querySelectorAll('.nav-link');
+            enlaces.forEach(enlace => enlace.classList.remove('active'));
+
+            // 3. Mostrar el módulo seleccionado
+            document.getElementById(moduloId).classList.add('active');
+
+            // 4. Marcar como activo el enlace en el menú lateral
+            elementoMenu.classList.add('active');
+            
+            // Regresar el scroll hacia arriba
+            document.querySelector('.content-area').scrollTo(0, 0);
         }
 
-        // Cerrar el menú desplegable en dispositivos móviles tras clic
-        const navbarCollapse = document.getElementById('navbarNav');
-        if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-            const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
-            bsCollapse.hide();
+        function cerrarSesion() {
+            if(confirm("¿Seguro que deseas salir del sistema?")) {
+                // Redirige de vuelta a tu index.html (la pantalla de login)
+                window.location.href = "index.html";
+            }
         }
-    }
-
-    /**
-     * Lógica de Inicio de Sesión
-     */
-    function iniciarSesion() {
-        const id = document.getElementById('user-id').value;
-        if (id.trim() !== "") {
-            // Activar Menú y ocultar Login
-            document.getElementById('main-nav').style.display = 'block';
-            navegar('inicio');
-            alert("Bienvenido al sistema de triaje ICEST.");
-        } else {
-            alert("Por favor ingrese un ID válido.");
-        }
-    }
-
-    /**
-     * Lógica de Cierre de Sesión
-     */
-    function cerrarSesion() {
-        if(confirm("¿Desea finalizar su sesión actual?")) {
-            document.getElementById('main-nav').style.display = 'none';
-            document.getElementById('user-id').value = '';
-            navegar('login');
-        }
-    }
-
-    /**
-     * Inicialización de Fecha Actual (Formato Mexicano)
-     */
-    function mostrarFecha() {
-        const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const hoy = new Date().toLocaleDateString('es-MX', opciones);
-        document.getElementById('fecha-actual').innerText = hoy;
-    }
-
-    // Ejecutar al cargar la página
-    window.onload = mostrarFecha;
-</script>
+    </script>
+</body>
+</html>
