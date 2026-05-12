@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Portal Educativo - ICES</title>
+    <title>Portal Educativo - ICEST</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
@@ -114,48 +114,48 @@
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const alert = document.getElementById('alertMessage');
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
+            
+            // Usamos trim() para asegurar que no haya espacios en blanco accidentales
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
 
             alert.classList.add('hidden');
             btn.innerText = 'Verificando...';
             btn.disabled = true;
 
-            // =========================================================================
-            // URL DE TU WEB APP DE GOOGLE APPS SCRIPT (Copiada de tu imagen 5)
-            // =========================================================================
+            // URL proporcionada de tu Web App
             const urlGAS = "https://script.google.com/macros/s/AKfycbzKt5qEd2eXYqKt9hLlNNxN7_LEKJVmShW1mD6ogZrNDC02hqSQBZdTHrzd-i_HfKs/exec";
 
             try {
-                // Hacemos la petición tipo POST usando fetch en lugar de google.script.run
+                // Configuramos fetch para evitar bloqueos CORS enviando texto plano
                 const respuesta = await fetch(urlGAS, {
                     method: 'POST',
                     headers: {
-                        // Importante usar text/plain para evitar errores de bloqueo (CORS) en GitHub
                         'Content-Type': 'text/plain;charset=utf-8'
                     },
                     body: JSON.stringify({
                         username: user,
                         password: pass
-                    })
+                    }),
+                    redirect: 'follow' // Instrucción clave para que siga el enrutamiento interno de Google
                 });
 
-                const resultado = await respuesta.json();
+                // Leemos la respuesta de Google
+                const datos = await respuesta.json();
 
-                if (resultado.acceso === true) {
-                    // ÉXITO: Si la hoja de cálculo responde true, redireccionamos a tu menú
-                    // Cambia "menu.html" por el nombre exacto de tu archivo principal en GitHub
-                    window.location.href = 'menu.html'; 
+                if (datos.acceso === true) {
+                    // ÉXITO: Redireccionamos a tu archivo de menú en GitHub
+                    window.location.href = 'menu.html';
                 } else {
-                    // ERROR: Contraseña incorrecta
+                    // ERROR: Credenciales no válidas
                     alert.innerText = "ID o contraseña incorrectos";
                     alert.classList.remove('hidden');
                     resetBtn();
                 }
 
             } catch (error) {
-                // Si algo falla con la conexión
-                console.error("Error en la petición:", error);
+                // FALLO DE RED O CORS
+                console.error("Detalle del error:", error);
                 alert.innerText = "Error de conexión. Intente nuevamente.";
                 alert.classList.remove('hidden');
                 resetBtn();
