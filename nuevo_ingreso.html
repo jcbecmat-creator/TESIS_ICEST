@@ -16,31 +16,42 @@
         }
         body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
         h3 { font-family: 'Poppins'; color: var(--icest-blue); margin-bottom: 15px; }
+        
         .slide-card { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
         .slide-title { font-size: 30px; font-family: 'Poppins'; margin-bottom: 25px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
         
-        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px; font-family: 'Lato'; background-color: var(--bg-light); font-size: 14px; }
-        .form-control:focus { border-color: var(--loreto-cyan); outline: none; background-color: white; }
-        .form-label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 13px; color: var(--text-muted); }
+        /* Controles de Formulario */
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Lato'; background-color: var(--bg-light); font-size: 14px; }
+        .form-control:focus { border-color: var(--loreto-cyan); outline: none; background-color: white; box-shadow: 0 0 0 3px rgba(129, 208, 220, 0.2); }
+        .form-label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-muted); text-align: left; }
         
-        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        /* Botón Principal */
+        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; margin-top: 20px; width: 100%; font-size: 16px; }
         .btn-primary:hover { background-color: var(--icest-dark); transform: translateY(-2px); }
         
-        /* Sistema de Grillas */
-        .grid-row { display: flex; gap: 20px; flex-wrap: wrap; }
-        .col-12 { flex: 0 0 100%; }
-        .col-6 { flex: 1; min-width: 250px; }
-        .col-4 { flex: 1; min-width: 180px; }
+        /* Botones Secundarios (Limpiar) */
+        .btn-clear { background-color: #cbd5e1; color: var(--icest-dark); border: none; padding: 8px 15px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-clear:hover { background-color: #94a3b8; }
 
-        .section-header { margin-top: 20px; padding-bottom: 5px; border-bottom: 1px solid #e2e8f0; margin-bottom: 15px; color: var(--icest-dark); font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-        .section-header i { color: var(--loreto-cyan); }
+        /* SISTEMA DE CUADRÍCULA ESTRICTO (Para separar perfectamente las columnas) */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px; }
+        .full-width { grid-column: span 2; }
 
+        .section-header { margin-top: 25px; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px; color: var(--icest-dark); font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .section-header i { color: var(--loreto-cyan); font-size: 18px; }
+
+        /* Cajas de Fotografía y Firma */
+        .capture-box { border: 2px dashed #cbd5e1; height: 220px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; background: white; cursor: pointer; position: relative; transition: 0.3s; }
+        .capture-box:hover { border-color: var(--loreto-cyan); background-color: #f0f9fa; }
+        .signature-line { position: absolute; bottom: 40px; width: 80%; border-bottom: 2px solid var(--icest-dark); }
+
+        /* Adaptación a Celulares */
         @media (max-width: 768px) {
             body { padding: 15px; }
             .slide-card { padding: 25px 20px; }
             .slide-title { font-size: 24px; }
-            .grid-row { flex-direction: column; gap: 0; }
-            .col-6, .col-4 { min-width: 100%; }
+            .form-grid { grid-template-columns: 1fr; gap: 15px; } /* En celular se pone todo a 1 columna */
+            .full-width { grid-column: span 1; }
         }
     </style>
 </head>
@@ -51,31 +62,26 @@
         <form id="registroPaciente">
             <div class="section-header"><i class="fa-solid fa-user"></i> Datos Personales</div>
             
-            <div class="grid-row">
-                <div class="col-12">
+            <div class="form-grid">
+                <div class="full-width">
                     <label class="form-label">Nombre Completo</label>
                     <input type="text" class="form-control" placeholder="Nombre(s) y Apellidos">
                 </div>
-            </div>
-
-            <div class="grid-row">
-                <div class="col-12">
+                
+                <div class="full-width">
                     <label class="form-label">CURP</label>
                     <input type="text" class="form-control" placeholder="18 caracteres alfanuméricos">
                 </div>
-            </div>
 
-            <div class="grid-row">
-                <div class="col-6">
+                <div>
                     <label class="form-label">Sexo</label>
                     <select class="form-control">
                         <option value="">Seleccione...</option>
                         <option value="M">Masculino</option>
                         <option value="F">Femenino</option>
-                        <option value="O">Otro</option>
                     </select>
                 </div>
-                <div class="col-6">
+                <div>
                     <label class="form-label">Fecha de Nacimiento</label>
                     <input type="date" class="form-control">
                 </div>
@@ -83,34 +89,30 @@
 
             <div class="section-header"><i class="fa-solid fa-house-medical"></i> Domicilio del Paciente</div>
             
-            <div class="grid-row">
-                <div class="col-6">
+            <div class="form-grid">
+                <div>
                     <label class="form-label">Calle y Números</label>
                     <input type="text" class="form-control" placeholder="Nombre de la vialidad">
                 </div>
-                <div class="col-6">
-                    <label class="form-label">Número Exterior</label>
+                <div>
+                    <label class="form-label">Número Exterior / Interior</label>
                     <input type="text" class="form-control" placeholder="Ej. 123-A o S/N">
                 </div>
-            </div>
 
-            <div class="grid-row">
-                <div class="col-6">
+                <div>
                     <label class="form-label">Colonia</label>
                     <input type="text" class="form-control" placeholder="Nombre del asentamiento">
                 </div>
-                <div class="col-6">
+                <div>
                     <label class="form-label">Delegación o Municipio</label>
                     <input type="text" class="form-control" placeholder="Municipio">
                 </div>
-            </div>
 
-            <div class="grid-row">
-                <div class="col-6">
+                <div>
                     <label class="form-label">Código Postal</label>
                     <input type="number" class="form-control" placeholder="5 dígitos">
                 </div>
-                <div class="col-6">
+                <div>
                     <label class="form-label">Estado</label>
                     <select class="form-control">
                         <option value="">Seleccione un estado...</option>
@@ -150,9 +152,32 @@
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
+            <div class="section-header"><i class="fa-solid fa-fingerprint"></i> Biometría y Consentimiento</div>
+            
+            <div class="form-grid">
+                <div style="text-align: center; background: var(--bg-light); padding: 20px; border-radius: 12px;">
+                    <label class="form-label" style="text-align: center; margin-bottom: 10px;">Fotografía (Selfie)</label>
+                    <div class="capture-box">
+                        <i class="fa-solid fa-camera" style="font-size: 45px; color: var(--icest-blue); margin-bottom: 15px;"></i>
+                        <span style="color: var(--text-muted); font-weight: 700;">Subir / Capturar Fotografía</span>
+                    </div>
+                    <button type="button" class="btn-clear"><i class="fa-solid fa-trash-can"></i> Limpiar fotografía</button>
+                </div>
+
+                <div style="text-align: center; background: var(--bg-light); padding: 20px; border-radius: 12px;">
+                    <label class="form-label" style="text-align: center; margin-bottom: 10px;">Firma del Paciente</label>
+                    <div class="capture-box" style="border-style: solid; background-color: white;">
+                        <i class="fa-solid fa-pen-nib" style="position: absolute; top: 15px; right: 15px; font-size: 20px; color: #cbd5e1;"></i>
+                        <div class="signature-line"></div>
+                        <span style="position: absolute; bottom: 15px; font-size: 12px; color: var(--text-muted);">Firmar sobre la línea</span>
+                    </div>
+                    <button type="button" class="btn-clear"><i class="fa-solid fa-eraser"></i> Limpiar firma</button>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
                 <button type="submit" class="btn-primary">
-                    <i class="fa-solid fa-floppy-disk"></i> Guardar Registro y Generar ID
+                    <i class="fa-solid fa-floppy-disk" style="margin-right: 8px;"></i> Guardar Registro y Generar ID
                 </button>
             </div>
         </form>
