@@ -17,11 +17,15 @@
         body { font-family: 'Lato', sans-serif; display: flex; height: 100vh; overflow: hidden; background-color: var(--bg-app); }
         
         /* SIDEBAR IZQUIERDO */
-        .sidebar { width: 260px; background-color: var(--icest-blue); color: white; display: flex; flex-direction: column; box-shadow: 4px 0 20px rgba(0,0,0,0.15); z-index: 10; }
-        .sidebar-brand { padding: 30px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        .sidebar-brand h2 { font-family: 'Poppins'; font-size: 24px; font-weight: 700; margin-bottom: 5px; }
+        .sidebar { width: 260px; background-color: var(--icest-blue); color: white; display: flex; flex-direction: column; box-shadow: 4px 0 20px rgba(0,0,0,0.15); z-index: 20; transition: transform 0.3s ease; }
+        .sidebar-brand { padding: 30px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar-brand-text { flex: 1; }
+        .sidebar-brand h2 { font-family: 'Poppins'; font-size: 24px; font-weight: 700; margin-bottom: 5px; color: white; }
         .sidebar-brand span { color: var(--loreto-cyan); font-size: 13px; font-weight: 700; letter-spacing: 1.5px; }
         
+        /* Botón cerrar menú (solo en móvil) */
+        .close-menu-btn { display: none; background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+
         .nav-menu { flex: 1; overflow-y: auto; padding: 20px 10px; }
         .nav-section-title { padding: 15px 15px 5px; font-size: 11px; text-transform: uppercase; color: var(--loreto-cyan); font-weight: 700; }
         .nav-link { display: flex; align-items: center; padding: 12px 15px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; border-radius: 6px; cursor: pointer; margin-bottom: 2px; transition: 0.3s; }
@@ -30,18 +34,43 @@
         .nav-link.active { background-color: rgba(255,255,255,0.1); color: white; border-left: 4px solid var(--loreto-cyan); font-weight: 700; }
 
         /* AREA PRINCIPAL */
-        .main-wrapper { flex: 1; display: flex; flex-direction: column; }
+        .main-wrapper { flex: 1; display: flex; flex-direction: column; width: 100%; }
         .topbar { height: 70px; background-color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; padding: 0 40px; z-index: 5; }
-        .btn-logout { border: 2px solid var(--icest-blue); background: transparent; color: var(--icest-blue); padding: 6px 18px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        
+        .menu-toggle-btn { display: none; background: none; border: none; font-size: 24px; color: var(--icest-blue); cursor: pointer; margin-right: 15px; }
+        .topbar-left { display: flex; align-items: center; }
+
+        .btn-logout { border: 2px solid var(--icest-blue); background: transparent; color: var(--icest-blue); padding: 6px 18px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 13px; }
         .btn-logout:hover { background: var(--icest-blue); color: white; }
+
+        /* Fondo oscuro al abrir menú en celular */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 15; }
+
+        /* ==========================================
+           RESPONSIVIDAD (CELULARES)
+        ========================================== */
+        @media (max-width: 768px) {
+            .sidebar { position: fixed; height: 100%; transform: translateX(-100%); } /* Oculto por defecto */
+            .sidebar.open { transform: translateX(0); } /* Mostrar clase open */
+            .close-menu-btn { display: block; }
+            .menu-toggle-btn { display: block; }
+            .topbar { padding: 0 20px; }
+            .overlay.open { display: block; }
+            .hide-mobile { display: none; } /* Oculta textos largos en topbar */
+        }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
+    <div class="overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-brand">
-            <h2>IA-TRIAGE</h2>
-            <span>SISTEMA ICEST</span>
+            <div class="sidebar-brand-text">
+                <h2>IA-TRIAGE</h2>
+                <span>SISTEMA ICEST</span>
+            </div>
+            <button class="close-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="nav-menu">
             <div class="nav-link active" onclick="cargarPagina('inicio.html', this)"><i class="fa-solid fa-gauge"></i> Dashboard</div>
@@ -62,9 +91,12 @@
 
     <main class="main-wrapper">
         <header class="topbar">
-            <h3 style="color: #003f6b; font-family: 'Poppins'; margin:0; font-size: 18px;">Portal de Educación Profesional</h3>
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+                <h3 style="color: #003f6b; font-family: 'Poppins'; margin:0; font-size: 16px;">Portal <span class="hide-mobile">de Educación Profesional</span></h3>
+            </div>
             <div style="display: flex; align-items: center; gap: 15px;">
-                <span style="font-weight: 700; color: #64748b; font-size: 14px;">Usuario Activo</span>
+                <span class="hide-mobile" style="font-weight: 700; color: #64748b; font-size: 13px;">Usuario Activo</span>
                 <button class="btn-logout" onclick="window.location.href='index.html'">Salir</button>
             </div>
         </header>
@@ -73,13 +105,21 @@
     </main>
 
     <script>
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('menuOverlay').classList.toggle('open');
+        }
+
         function cargarPagina(archivo, elemento) {
-            // Cambia el archivo que se muestra en el centro
             document.getElementById('marcoPrincipal').src = archivo;
             
-            // Actualiza la barra lateral para mostrar cuál está activo
             document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
             elemento.classList.add('active');
+
+            // Cierra el menú automáticamente en celular al hacer clic en una opción
+            if (window.innerWidth <= 768) {
+                toggleMenu();
+            }
         }
     </script>
 </body>
