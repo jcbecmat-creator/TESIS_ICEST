@@ -127,34 +127,19 @@
             const urlConDatos = `${urlGAS}?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`;
 
             try {
-                // Fetch fortificado con redirect: 'follow'
-                const respuesta = await fetch(urlConDatos, {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
+                // Fetch simple: Regresamos a la fórmula original que te dejó entrar sin problema
+                const respuesta = await fetch(urlConDatos);
+                const datos = await respuesta.json();
 
-                // Leemos como texto primero para evitar fallos si Google devuelve HTML
-                const texto = await respuesta.text();
-
-                try {
-                    const datos = JSON.parse(texto);
-                    if (datos.acceso === true) {
-                        window.location.href = 'menu.html';
-                    } else {
-                        alert.innerText = "ID o contraseña incorrectos";
-                        alert.classList.remove('hidden');
-                        resetBtn();
-                    }
-                } catch (parseError) {
-                    // Si llega aquí, Google Apps Script no devolvió un JSON.
-                    console.error("Respuesta inesperada de Google:", texto);
-                    alert.innerText = "Error en servidor. Revise configuración en Google.";
+                if (datos.acceso === true) {
+                    window.location.href = 'menu.html';
+                } else {
+                    alert.innerText = "ID o contraseña incorrectos";
                     alert.classList.remove('hidden');
                     resetBtn();
                 }
 
             } catch (error) {
-                // Falla de red (micro-corte, navegador bloqueando CORS, etc)
                 console.error("Detalle del error:", error);
                 alert.innerText = "Error de red. Verifique su conexión.";
                 alert.classList.remove('hidden');
