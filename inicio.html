@@ -6,23 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root { --icest-blue: #005B9A; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
-        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
-        .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
-        .slide-title { font-size: 32px; font-family: 'Poppins'; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
-        .highlight-numbers-layout { display: flex; gap: 30px; margin-bottom: 40px; }
-        .number-box { flex: 1; text-align: center; background: var(--bg-light); padding: 30px; border-radius: 12px; }
-        .number-box .number { font-size: 70px; font-weight: 700; color: var(--icest-blue); font-family: 'Poppins'; line-height: 1; }
-        .number-box .label { font-weight: 700; font-size: 16px; color: var(--loreto-cyan); margin-top: 10px; }
-        
-        /* MAGIA PARA CELULARES */
-        @media (max-width: 768px) {
-            body { padding: 15px; }
-            .slide-card { padding: 25px 20px; }
-            .slide-title { font-size: 24px; margin-bottom: 20px; }
-            .highlight-numbers-layout { flex-direction: column; gap: 15px; }
-            .number-box .number { font-size: 48px; }
-        }
+        :root{--icest-blue:#005B9A;--icest-dark:#003f6b;--loreto-cyan:#81D0DC;--bg-light:#f8fafc;--text-main:#1e293b;--text-muted:#64748b}body{font-family:'Lato',sans-serif;color:var(--text-main);margin:0;padding:40px;display:flex;justify-content:center;background:transparent}.slide-card{background:white;border-radius:12px;padding:50px;box-shadow:0 15px 30px rgba(0,0,0,0.05);border-top:5px solid var(--icest-blue);width:100%;max-width:1100px}.slide-title{font-size:32px;font-family:'Poppins';margin-bottom:30px;border-bottom:2px solid var(--loreto-cyan);padding-bottom:10px;color:var(--icest-blue)}.highlight-numbers-layout{display:flex;gap:30px;margin-bottom:40px}.number-box{flex:1;text-align:center;background:var(--bg-light);padding:30px;border-radius:12px}.number-box .number{font-size:70px;font-weight:700;color:var(--icest-blue);font-family:'Poppins';line-height:1}.number-box .label{font-weight:700;font-size:16px;color:var(--loreto-cyan);margin-top:10px}@media(max-width:768px){body{padding:15px}.slide-card{padding:25px 20px}.slide-title{font-size:24px;margin-bottom:20px}.highlight-numbers-layout{flex-direction:column;gap:15px}.number-box .number{font-size:48px}}
     </style>
 </head>
 <body>
@@ -43,5 +27,11 @@
             </div>
         </div>
     </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        const app = initializeApp({ apiKey: "AIzaSyBALDQWfTsBsoev0bNTEiatzGVkfrxEhB4", authDomain: "icest-tesis.firebaseapp.com", projectId: "icest-tesis", storageBucket: "icest-tesis.firebasestorage.app", messagingSenderId: "740005254003", appId: "1:740005254003:web:abc24c84156d1f9e696b06" });
+        window.db = getFirestore(app);
+    </script>
 </body>
 </html>
