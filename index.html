@@ -3,197 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema IA-Triage | ICEST</title>
+    <title>Portal Educativo - ICEST</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --tema-principal: #81D0DC;
-            --tema-hover: #6cbcc8;
-            --fondo-gris: #f4f7f6;
+            --icest-blue: #0073B2; /* Azul del fondo ICEST */
+            --icest-dark: #002D5A; /* Azul oscuro para textos */
+            --loreto-cyan: #81D0DC; /* Color de los iconos Loreto */
+            --input-bg: #E8F0FE; /* Fondo claro de los inputs */
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--fondo-gris);
+            background-color: var(--icest-blue);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
         }
 
-        /* Login Estilo Loreto */
+        /* ==========================================
+           ESTILOS DEL LOGIN (TIPO ICEST + LORETO)
+        ========================================== */
+        .login-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
         .login-card {
-            max-width: 400px;
-            width: 90%;
-            border: none;
-            border-top: 6px solid var(--tema-principal);
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        /* Botón Mostrar Contraseña */
-        .input-group-text {
             background: white;
-            cursor: pointer;
+            padding: 40px 30px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .login-title {
+            color: var(--icest-dark);
+            font-weight: bold;
+            font-size: 28px;
+            margin-top: 15px;
+            margin-bottom: 0;
+        }
+
+        .login-subtitle {
+            color: #6c757d;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo de Inputs tipo Loreto */
+        .input-group-text-custom {
+            background-color: var(--input-bg);
+            border: 1px solid #ced4da;
+            border-right: none;
+            color: var(--loreto-cyan);
+        }
+
+        .form-control-custom {
+            background-color: var(--input-bg);
+            border: 1px solid #ced4da;
             border-left: none;
-            color: var(--tema-principal);
+        }
+        
+        .form-control-custom:focus {
+            background-color: white;
+            box-shadow: none;
+            border-color: var(--loreto-cyan);
         }
 
-        /* Navegación y Sidebar */
-        .navbar-custom {
-            background-color: var(--tema-principal);
-            color: white;
+        .input-eye {
+            background-color: var(--input-bg);
+            border: 1px solid #ced4da;
+            border-left: none;
+            color: var(--loreto-cyan);
+            cursor: pointer;
         }
 
-        .btn-theme {
-            background-color: var(--tema-principal);
+        .btn-login {
+            background-color: var(--icest-dark);
             color: white;
-            border-radius: 25px;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 16px;
             border: none;
-            padding: 8px 25px;
             transition: 0.3s;
         }
 
-        .btn-theme:hover {
-            background-color: var(--tema-hover);
+        .btn-login:hover {
+            background-color: #004280;
             color: white;
         }
 
-        /* Círculo Completo para Fotos */
-        .circulo-completo {
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            object-fit: cover;
-            border: 2px solid white;
+        /* ==========================================
+           ESTILOS DEL FOOTER Y NAVBAR
+        ========================================== */
+        .footer-custom {
+            background-color: var(--icest-dark);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        .app-section {
-            display: none;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        .active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .navbar-custom { background-color: var(--loreto-cyan); }
+        .app-section { display: none; }
+        .app-section.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <section id="login" class="app-section active">
-        <div class="d-flex justify-content-center align-items-center vh-100">
-            <div class="card login-card p-4">
-                <div class="text-center mb-4">
-                    <i class="fas fa-shield-virus fa-3x" style="color: var(--tema-principal);"></i>
-                    <h4 class="mt-3 fw-bold">Acceso Seguro ICEST</h4>
-                    <p class="text-muted small">Ingrese sus credenciales de expediente</p>
-                </div>
+        <div class="login-wrapper">
+            <div class="card login-card">
+                <img src="https://www.icest.edu.mx/images/logo-icest.png" alt="ICEST Logo" style="max-width: 160px; margin: 0 auto;">
                 
-                <div class="mb-3">
-                    <label class="form-label small fw-bold">ID de Usuario</label>
+                <h1 class="login-title">Bienvenido</h1>
+                <p class="login-subtitle">Portal de Educación Profesional</p>
+                
+                <div class="mb-3 text-start">
+                    <label class="form-label small fw-bold" style="color: var(--icest-dark);">Usuario</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
-                        <input type="text" id="userId" class="form-control" placeholder="ICEST-1">
+                        <span class="input-group-text input-group-text-custom"><i class="fas fa-id-badge"></i></span>
+                        <input type="text" id="userId" class="form-control form-control-custom" placeholder="Ej. 123">
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label class="form-label small fw-bold">Contraseña</label>
+                <div class="mb-4 text-start">
+                    <label class="form-label small fw-bold" style="color: var(--icest-dark);">Contraseña</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" id="userPass" class="form-control" placeholder="••••••••">
-                        <span class="input-group-text" onclick="togglePassword()">
+                        <span class="input-group-text input-group-text-custom"><i class="fas fa-lock"></i></span>
+                        <input type="password" id="userPass" class="form-control form-control-custom" placeholder="•••••">
+                        <span class="input-group-text input-eye" onclick="togglePassword()">
                             <i class="fas fa-eye" id="toggleIcon"></i>
                         </span>
                     </div>
                 </div>
 
-                <button class="btn btn-theme w-100 fw-bold" onclick="validarIngreso()">INGRESAR</button>
+                <button id="btnLogin" class="btn btn-login w-100" onclick="validarIngresoGAS()">Verificando...</button>
             </div>
         </div>
     </section>
 
-    <nav id="mainNav" class="navbar navbar-expand-lg navbar-custom shadow-sm sticky-top" style="display: none;">
-        <div class="container-fluid">
-            <a class="navbar-brand text-white fw-bold" href="#" onclick="navegar('inicio')">
-                <i class="fas fa-brain me-2"></i> IA-TRIAGE
-            </a>
-            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link text-white" href="#" onclick="navegar('inicio')">Inicio</a></li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Pacientes</a>
-                        <ul class="dropdown-menu shadow border-0">
-                            <li><a class="dropdown-item" href="#" onclick="navegar('nuevo-ingreso')">Nuevo Ingreso</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="navegar('nuevo-estudio')">Nuevo Estudio</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="navegar('id-busqueda')">ID - Búsqueda</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="navegar('mi-expediente')">Mi Expediente</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="navegar('mis-estudios')">Mis Estudios</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Radiólogos</a>
-                        <ul class="dropdown-menu shadow border-0">
-                            <li><a class="dropdown-item" href="#" onclick="navegar('expedientes-rad')">Expedientes</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="navegar('estudios-rad')">Estudios</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="navegar('proyecciones')">Proyecciones (CSV)</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <span id="userNameDisplay" class="text-white me-3 small d-none d-md-block"></span>
-                    <img src="https://via.placeholder.com/40" class="circulo-completo border-2" alt="Perfil">
-                    <button class="btn btn-sm btn-outline-light ms-3 rounded-pill" onclick="logout()">Salir</button>
+    <div id="sistemaInterno" style="display: none; flex: 1; background-color: #f4f7f6;">
+        <nav class="navbar navbar-expand-lg navbar-custom shadow-sm sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white fw-bold" href="#"><i class="fas fa-brain me-2"></i> IA-TRIAGE</a>
+                <div class="d-flex align-items-center ms-auto">
+                    <span id="userNameDisplay" class="text-white me-3 fw-bold"></span>
+                    <button class="btn btn-sm btn-outline-light rounded-pill" onclick="location.reload()">Salir</button>
                 </div>
             </div>
+        </nav>
+
+        <div class="container mt-4">
+            <h3 style="color: var(--icest-dark);">Dashboard Principal</h3>
+            <div class="card p-4 mt-3 border-0 shadow-sm" style="border-top: 4px solid var(--loreto-cyan);">
+                <p>Sesión validada exitosamente desde Google Apps Script.</p>
+                <p><b>ID Activo:</b> <span id="activeUserId"></span></p>
+                </div>
         </div>
-    </nav>
+    </div>
 
-    <div class="container mt-4" id="appContent" style="display: none;">
-        
-        <section id="inicio" class="app-section">
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <div class="card p-4 border-0 shadow-sm text-center">
-                        <h2 style="color: var(--tema-principal);">196</h2>
-                        <p class="mb-0 text-muted">Estudios en Base</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card p-4 border-0 shadow-sm text-center">
-                        <h2 class="text-warning">8</h2>
-                        <p class="mb-0 text-muted">Pendientes por IA</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card p-4 border-0 shadow-sm text-center">
-                        <h2 style="color: var(--tema-principal);">ID Activo</h2>
-                        <p id="activeUserId" class="mb-0 fw-bold"></p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <footer class="footer-custom">
+        © 2026 ICEST. TODOS LOS DERECHOS RESERVADOS.
+    </footer>
 
-        </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
-        // Base de Datos de Usuarios (Basada en tus imágenes)
-        const usuariosRegistrados = [
-            { id: "ICEST-1", nombre: "Juan Perez", pass: "12345" },
-            { id: "ICEST-2", nombre: "Maria Aguilar", pass: "radiografia2026" },
-            { id: "ICEST-3", nombre: "Carlos Sanchez", pass: "icest2024" },
-            { id: "ICEST-4", nombre: "Ana Lopez", pass: "anita123" }
-        ];
+        // Función para cambiar el estado del botón al cargar inicialmente
+        window.onload = function() {
+            document.getElementById('btnLogin').innerText = "INGRESAR";
+        };
 
-        // Función para Mostrar/Ocultar Contraseña
+        // Función para Mostrar/Ocultar Contraseña (El Ojo)
         function togglePassword() {
             const passInput = document.getElementById('userPass');
             const icon = document.getElementById('toggleIcon');
@@ -209,37 +202,59 @@
             }
         }
 
-        // Función de Validación Real
-        function validarIngreso() {
-            const idInput = document.getElementById('userId').value.trim();
-            const passInput = document.getElementById('userPass').value.trim();
+        // Validación Real con Google Apps Script (Fetch)
+        async function validarIngresoGAS() {
+            const username = document.getElementById('userId').value.trim();
+            const password = document.getElementById('userPass').value.trim();
+            const btn = document.getElementById('btnLogin');
 
-            const usuario = usuariosRegistrados.find(u => u.id === idInput && u.pass === passInput);
-
-            if (usuario) {
-                // Éxito: No redireccionamos a YouTube, activamos la App
-                document.getElementById('login').classList.remove('active');
-                document.getElementById('mainNav').style.display = 'block';
-                document.getElementById('appContent').style.display = 'block';
-                document.getElementById('inicio').classList.add('active');
-                
-                document.getElementById('userNameDisplay').innerText = usuario.nombre;
-                document.getElementById('activeUserId').innerText = usuario.id;
-            } else {
-                alert("Credenciales incorrectas. Verifique su ID y Contraseña.");
+            if (!username || !password) {
+                alert("Por favor, ingrese su usuario y contraseña.");
+                return;
             }
-        }
 
-        // Navegación SPA
-        function navegar(seccionId) {
-            const secciones = document.querySelectorAll('.app-section');
-            secciones.forEach(s => s.classList.remove('active'));
-            document.getElementById(seccionId).classList.add('active');
-        }
+            // Cambiar estado del botón
+            btn.innerText = "Verificando...";
+            btn.disabled = true;
 
-        function logout() {
-            if(confirm("¿Desea cerrar la sesión?")) {
-                location.reload(); // Recarga para limpiar estado
+            // URL proporcionada de tu Script
+            const urlGAS = "https://script.google.com/macros/s/AKfycbzKt5qEd2eXYqKt9hLlNNxN7_LEKJVmShW1mD6ogZrNDC02hqSQBZdTHrzd-i_HfKs/exec";
+
+            try {
+                // Configuración de la petición POST. 
+                // NOTA: Usamos text/plain para evitar errores de CORS desde GitHub Pages
+                const respuesta = await fetch(urlGAS, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                const resultado = await respuesta.json();
+
+                if (resultado.acceso === true) {
+                    // Si el script de Google dice "true", damos acceso
+                    document.getElementById('login').style.display = 'none';
+                    document.body.style.backgroundColor = '#f4f7f6'; // Cambia el fondo a gris claro para la app
+                    document.getElementById('sistemaInterno').style.display = 'block';
+                    
+                    document.getElementById('userNameDisplay').innerText = "Usuario: " + username;
+                    document.getElementById('activeUserId').innerText = username;
+                } else {
+                    // Si dice "false", las credenciales no coinciden en el Excel
+                    alert("Credenciales incorrectas. Verifique los datos en su tabla.");
+                    btn.innerText = "INGRESAR";
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Error en la conexión:", error);
+                alert("Hubo un error al conectar con la base de datos de Google Sheets.");
+                btn.innerText = "INGRESAR";
+                btn.disabled = false;
             }
         }
     </script>
