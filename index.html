@@ -122,16 +122,20 @@
             btn.innerText = 'Verificando...';
             btn.disabled = true;
 
+            // URL proporcionada
             const urlGAS = "https://script.google.com/macros/s/AKfycbzKt5qEd2eXYqKt9hLlNNxN7_LEKJVmShW1mD6ogZrNDC02hqSQBZdTHrzd-i_HfKs/exec";
-            
-            // MAGIA ANTI-CACHÉ: Agregamos la hora exacta en milisegundos para forzar una conexión nueva siempre
-            const urlConDatos = `${urlGAS}?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&nocache=${Date.now()}`;
 
             try {
-                // Fetch simple, sin configuraciones extra que bloqueen el celular
-                const respuesta = await fetch(urlConDatos);
-                
-                // Leemos como texto primero por seguridad
+                // SOLUCIÓN: Cambiamos a POST y enviamos el JSON que tu Apps Script está esperando
+                const respuesta = await fetch(urlGAS, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: user,
+                        password: pass
+                    })
+                });
+
+                // Leemos la respuesta como texto
                 const texto = await respuesta.text();
 
                 try {
@@ -144,15 +148,13 @@
                         resetBtn();
                     }
                 } catch (parseError) {
-                    // Si Google manda un error en HTML, lo atrapamos aquí en lugar de colapsar la red
-                    console.error("Google devolvió algo que no es JSON:", texto);
-                    alert.innerText = "Error en el servidor de Google. Intente nuevamente.";
+                    console.error("Respuesta inesperada del servidor:", texto);
+                    alert.innerText = "Error en el servidor. Intente nuevamente.";
                     alert.classList.remove('hidden');
                     resetBtn();
                 }
 
             } catch (error) {
-                // Si la red falla realmente
                 console.error("Detalle del error:", error);
                 alert.innerText = "Error de red. Verifique su conexión.";
                 alert.classList.remove('hidden');
