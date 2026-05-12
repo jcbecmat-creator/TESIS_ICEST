@@ -23,7 +23,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #007bc4; /* Color de fondo según imagen 1 */
+            background-color: #007bc4;
             margin: 0;
             display: flex;
             align-items: center;
@@ -110,7 +110,7 @@
             }
         }
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const alert = document.getElementById('alertMessage');
@@ -122,29 +122,45 @@
             btn.disabled = true;
 
             // =========================================================================
-            // LEYENDA: EXPLICACIÓN DE LA URL
-            // Si este archivo Index.html está DENTRO de Google Apps Script,
-            // no necesitas pegar la URL aquí, el comando 'google.script.run' 
-            // ya sabe a dónde ir automáticamente.
+            // URL DE TU WEB APP DE GOOGLE APPS SCRIPT (Copiada de tu imagen 5)
             // =========================================================================
+            const urlGAS = "https://script.google.com/macros/s/AKfycbzKt5qEd2eXYqKt9hLlNNxN7_LEKJVmShW1mD6ogZrNDC02hqSQBZdTHrzd-i_HfKs/exec";
 
-            google.script.run
-                .withSuccessHandler(function(acceso) {
-                    if (acceso) {
-                        // LA URL FUE ACTUALIZADA AQUÍ
-                        window.top.location.href = 'https://script.google.com/macros/s/AKfycbzKt5qEd2eXYqKt9hLlNNxN7_LEKJVmShW1mD6ogZrNDC02hqSQBZdTHrzd-i_HfKs/exec'; 
-                    } else {
-                        alert.classList.remove('hidden');
-                        resetBtn();
-                    }
-                })
-                .withFailureHandler(function() {
-                    alert.innerText = "Error técnico. Revisa la consola o permisos.";
+            try {
+                // Hacemos la petición tipo POST usando fetch en lugar de google.script.run
+                const respuesta = await fetch(urlGAS, {
+                    method: 'POST',
+                    headers: {
+                        // Importante usar text/plain para evitar errores de bloqueo (CORS) en GitHub
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        username: user,
+                        password: pass
+                    })
+                });
+
+                const resultado = await respuesta.json();
+
+                if (resultado.acceso === true) {
+                    // ÉXITO: Si la hoja de cálculo responde true, redireccionamos a tu menú
+                    // Cambia "menu.html" por el nombre exacto de tu archivo principal en GitHub
+                    window.location.href = 'menu.html'; 
+                } else {
+                    // ERROR: Contraseña incorrecta
+                    alert.innerText = "ID o contraseña incorrectos";
                     alert.classList.remove('hidden');
                     resetBtn();
-                })
-                .verificarCredenciales(user, pass);
-                
+                }
+
+            } catch (error) {
+                // Si algo falla con la conexión
+                console.error("Error en la petición:", error);
+                alert.innerText = "Error de conexión. Intente nuevamente.";
+                alert.classList.remove('hidden');
+                resetBtn();
+            }
+
             function resetBtn() {
                 btn.innerText = 'Iniciar Sesión';
                 btn.disabled = false;
