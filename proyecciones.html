@@ -1,131 +1,36 @@
-<section id="proyecciones" class="app-section">
-    <h3 class="mb-4 text-secondary">Carga de Proyecciones (CSV)</h3>
-    <div class="card card-custom p-4">
-        
-        <div class="p-3 mb-4 rounded" style="background-color: var(--bg-light); border: 1px dashed var(--main-theme);">
-            <label class="fw-bold mb-2" style="color: var(--text-dark);">Seleccione el archivo CSV de la base de datos:</label>
-            <input type="file" id="csvProyecciones" class="form-control" accept=".csv" onchange="leerCSVPuro()">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
+        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
+        .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
+        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-family: 'Lato'; background-color: var(--bg-light); }
+        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; }
+        .btn-primary:hover { background-color: var(--icest-dark); }
+    </style>
+</head>
+<body>
+    <div class="slide-card">
+        <h2 class="slide-title">Módulo de Proyecciones (CSV)</h2>
+        <div style="background: var(--bg-light); padding: 30px; border-radius: 12px; border: 2px dashed var(--loreto-cyan); text-align: center; margin-bottom: 30px;">
+            <i class="fa-solid fa-file-csv" style="font-size: 50px; color: var(--icest-blue); margin-bottom: 15px;"></i>
+            <h3>1. Carga de Datos Estructurados</h3>
+            <input type="file" class="form-control" accept=".csv" style="max-width: 400px; margin: 0 auto;">
         </div>
-
-        <div id="contenedorTablaProyecciones" style="display: none;">
-            <h5 class="text-secondary mb-3">Vista Previa de Datos</h5>
-            
-            <div class="table-responsive mb-4">
-                <table class="table table-hover align-middle border" id="tablaDatosCSV">
-                    <thead style="background-color: var(--main-theme); color: white;">
-                        <tr id="cabeceraTabla">
-                            </tr>
-                    </thead>
-                    <tbody id="cuerpoTabla">
-                        </tbody>
-                </table>
-            </div>
-
-            <h5 class="text-secondary mb-3 text-center">Cargar Imágenes para la Proyección</h5>
-            <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
-                
-                <label class="btn btn-theme px-4 py-2" style="cursor: pointer;">
-                    <i class="fas fa-camera me-2"></i> 1 técnica
-                    <input type="file" id="btnTecnica1" accept="image/*" style="display: none;" onchange="marcarCarga('btnTecnica1')">
-                </label>
-
-                <label class="btn btn-theme px-4 py-2" style="cursor: pointer;">
-                    <i class="fas fa-camera me-2"></i> 2 técnica
-                    <input type="file" id="btnTecnica2" accept="image/*" style="display: none;" onchange="marcarCarga('btnTecnica2')">
-                </label>
-
-                <label class="btn btn-theme px-4 py-2" style="cursor: pointer;">
-                    <i class="fas fa-x-ray me-2"></i> 1 radiografía
-                    <input type="file" id="btnRx1" accept="image/*" style="display: none;" onchange="marcarCarga('btnRx1')">
-                </label>
-
-                <label class="btn btn-theme px-4 py-2" style="cursor: pointer;">
-                    <i class="fas fa-x-ray me-2"></i> 2 radiografía
-                    <input type="file" id="btnRx2" accept="image/*" style="display: none;" onchange="marcarCarga('btnRx2')">
-                </label>
-                
-            </div>
-
-            <div class="text-center mt-5">
-                <button class="btn btn-secondary rounded-pill px-5 py-2" style="background-color: #f8f9fa; color: #81D0DC; border: 2px solid #81D0DC; font-weight: bold;" onclick="guardarProyeccionCompleta()">
-                    <i class="fas fa-cloud-upload-alt me-2"></i> Guardar Proyección y Multimedia en el Sistema
-                </button>
-            </div>
+        <h3 style="text-align: center; margin-bottom: 20px;">2. Asignación Multimedia</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <label style="background-color: var(--icest-blue); color: white; padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer;"><i class="fa-solid fa-camera"></i> 1 TÉCNICA<input type="file" style="display: none;"></label>
+            <label style="background-color: var(--icest-blue); color: white; padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer;"><i class="fa-solid fa-camera"></i> 2 TÉCNICA<input type="file" style="display: none;"></label>
+            <label style="background-color: var(--loreto-cyan); color: var(--icest-dark); padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer;"><i class="fa-solid fa-x-ray"></i> 1 RADIOGRAFÍA<input type="file" style="display: none;"></label>
+            <label style="background-color: var(--loreto-cyan); color: var(--icest-dark); padding: 20px; border-radius: 8px; font-weight: 700; text-align: center; cursor: pointer;"><i class="fa-solid fa-x-ray"></i> 2 RADIOGRAFÍA<input type="file" style="display: none;"></label>
         </div>
+        <div style="text-align: center; margin-top: 40px;"><button class="btn-primary" style="padding: 15px 50px; font-size: 18px;"><i class="fa-solid fa-cloud-arrow-up"></i> Guardar en Base de Datos</button></div>
     </div>
-
-    <script>
-        function leerCSVPuro() {
-            const input = document.getElementById('csvProyecciones');
-            const file = input.files[0];
-            
-            if (!file) return;
-
-            const reader = new FileReader();
-
-            reader.onload = function(evento) {
-                const contenido = evento.target.result;
-                // Separar por saltos de línea e ignorar líneas vacías
-                const lineas = contenido.split('\n').filter(linea => linea.trim() !== '');
-                
-                if (lineas.length === 0) return;
-
-                // Limpiar tabla previa por si el usuario carga otro archivo
-                const cabecera = document.getElementById('cabeceraTabla');
-                const cuerpo = document.getElementById('cuerpoTabla');
-                cabecera.innerHTML = '';
-                cuerpo.innerHTML = '';
-
-                // 1. Extraer encabezados (Primera línea del CSV)
-                const titulos = lineas[0].split(',');
-                titulos.forEach(titulo => {
-                    const th = document.createElement('th');
-                    th.textContent = titulo.replace(/"/g, '').trim(); // Limpiar comillas
-                    cabecera.appendChild(th);
-                });
-
-                // 2. Extraer datos (Solo mostramos hasta 4 líneas visualmente para no saturar la pantalla)
-                const limiteVisualizacion = Math.min(lineas.length, 5); 
-                
-                for (let i = 1; i < limiteVisualizacion; i++) {
-                    const columnas = lineas[i].split(',');
-                    const tr = document.createElement('tr');
-                    
-                    columnas.forEach(col => {
-                        const td = document.createElement('td');
-                        td.textContent = col.replace(/"/g, '').trim();
-                        tr.appendChild(td);
-                    });
-                    cuerpo.appendChild(tr);
-                }
-
-                // Mostrar todo el contenedor (Tabla + Botones de imágenes que estaban ocultos)
-                document.getElementById('contenedorTablaProyecciones').style.display = 'block';
-            };
-
-            // Leer el archivo localmente como texto UTF-8 para soportar acentos
-            reader.readAsText(file, 'UTF-8');
-        }
-
-        // Función para dar retroalimentación visual al radiólogo cuando selecciona una imagen
-        function marcarCarga(inputId) {
-            const inputElement = document.getElementById(inputId);
-            if(inputElement.files && inputElement.files[0]) {
-                const nombreArchivo = inputElement.files[0].name;
-                console.log(`Imagen adjuntada en ${inputId}: ${nombreArchivo}`);
-                // Opcional: Podrías cambiar el texto del botón aquí para mostrar el nombre de la foto
-                // inputElement.parentElement.innerHTML += ` <span class="badge bg-light text-dark mx-1">Cargada</span>`;
-            }
-        }
-
-        // Función que se dispara al dar clic en el botón final
-        function guardarProyeccionCompleta() {
-            // Aquí agregarías la lógica para mandar los datos y las 4 imágenes a tu base
-            alert("Proyección y multimedia listas para guardarse en la base de datos.");
-            
-            // Limpiar la vista para la siguiente carga
-            document.getElementById('csvProyecciones').value = '';
-            document.getElementById('contenedorTablaProyecciones').style.display = 'none';
-        }
-    </script>
-</section>
+</body>
+</html>
