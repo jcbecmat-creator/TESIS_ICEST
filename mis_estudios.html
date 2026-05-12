@@ -1,35 +1,38 @@
-<section id="mis-estudios">
-    <h3 class="mb-4 text-secondary">Mis Estudios</h3>
-    <div class="card card-custom p-4">
-        <div class="input-group w-50 mb-4">
-            <span class="input-group-text bg-white"><i class="fas fa-fingerprint" style="color: var(--main-theme);"></i></span>
-            <input type="text" class="form-control" placeholder="Identifíquese con su ID">
-            <button class="btn btn-theme">Ver Mis Estudios</button>
-        </div>
-        
-        <table class="table align-middle">
-            <thead style="background-color: var(--main-theme); color: white;">
-                <tr>
-                    <th>Fecha (Descendente)</th>
-                    <th>Estudio</th>
-                    <th>Estado IA</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
+        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
+        .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
+        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: var(--icest-blue); color: white; font-family: 'Poppins'; }
+    </style>
+</head>
+<body>
+    <div class="slide-card">
+        <h2 class="slide-title">Historial de Estudios</h2>
+        <table>
+            <thead><tr><th>Fecha</th><th>Estudio Realizado</th><th>Status IA</th><th>Diagnóstico</th></tr></thead>
             <tbody>
                 <tr>
-                    <td>11/05/2026</td>
-                    <td>Muñeca (PA y Lateral)</td>
-                    <td><span class="badge bg-warning text-dark">Pendiente Placa</span></td>
-                    <td><button class="btn btn-sm btn-outline-secondary rounded-pill">Subir Placa</button></td>
+                    <td>11/05/2026</td><td>Muñeca AP/Lateral</td>
+                    <td><span style="color: #eab308; font-weight: 700;">Pendiente</span></td>
+                    <td>En proceso de revisión IA</td>
                 </tr>
                 <tr>
-                    <td>01/02/2026</td>
-                    <td>Tórax PA</td>
-                    <td><span class="badge" style="background-color: var(--main-theme);">Con Diagnóstico</span></td>
-                    <td><button class="btn btn-sm btn-theme">Ver Resultado</button></td>
+                    <td>02/03/2026</td><td>Tórax PA</td>
+                    <td><span style="color: #16a34a; font-weight: 700;">Completado</span></td>
+                    <td>Sin hallazgos patológicos</td>
                 </tr>
             </tbody>
         </table>
     </div>
-</section>
+</body>
+</html>
