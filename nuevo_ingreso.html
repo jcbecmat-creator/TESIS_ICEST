@@ -1,53 +1,45 @@
-<section id="nuevo-ingreso">
-    <h3 class="mb-4 text-secondary">Registro de Nuevo Paciente</h3>
-    <div class="card card-custom p-4">
-        <form id="formNuevoIngreso">
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label>Nombre Completo</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="col-md-3">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" class="form-control" required>
-                </div>
-                <div class="col-md-3">
-                    <label>Sexo</label>
-                    <select class="form-select" id="selectSexo">
-                        <option value="M">Masculino</option>
-                        <option value="F">Femenino</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label>CURP</label>
-                    <input type="text" class="form-control text-uppercase" required>
-                </div>
-                <div class="col-md-6">
-                    <label>Dirección</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="col-md-6" id="divEmbarazo" style="display:none;">
-                    <label>¿Posibilidad de Embarazo?</label>
-                    <select class="form-select">
-                        <option>No</option>
-                        <option>Sí</option>
-                        <option>No estoy segura</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label>Selfie del Paciente</label>
-                    <input type="file" class="form-control" accept="image/*" required>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --icest-blue: #005B9A; --icest-dark: #003f6b; --loreto-cyan: #81D0DC; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #64748b; }
+        body { font-family: 'Lato', sans-serif; color: var(--text-main); margin: 0; padding: 40px; display: flex; justify-content: center; background: transparent; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--icest-blue); margin-bottom: 15px; }
+        .slide-card { background: white; border-radius: 12px; padding: 50px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--icest-blue); width: 100%; max-width: 1100px; }
+        .slide-title { font-size: 32px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid var(--loreto-cyan); padding-bottom: 10px; color: var(--icest-blue); }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; font-family: 'Lato'; background-color: var(--bg-light); }
+        .form-control:focus { border-color: var(--loreto-cyan); outline: none; background-color: white; }
+        .form-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; color: var(--text-muted); }
+        .btn-primary { background-color: var(--icest-blue); color: white; border: none; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-family: 'Poppins'; cursor: pointer; transition: 0.3s; }
+        .btn-primary:hover { background-color: var(--icest-dark); }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    </style>
+</head>
+<body>
+    <div class="slide-card">
+        <h2 class="slide-title">Registro de Nuevo Ingreso</h2>
+        <div class="two-column">
+            <div>
+                <h3>Formulario de Admisión</h3>
+                <label class="form-label">Nombre Completo</label>
+                <input type="text" class="form-control" placeholder="Ej. Juan Pérez">
+                <label class="form-label">CURP</label>
+                <input type="text" class="form-control" placeholder="18 Caracteres">
+                <label class="form-label">Sexo</label>
+                <select class="form-control"><option>Seleccione...</option><option>Masculino</option><option>Femenino</option></select>
+                <button class="btn-primary" style="width: 100%;"><i class="fa-solid fa-id-card"></i> Generar ID ICEST</button>
+            </div>
+            <div style="background: var(--bg-light); padding: 40px; border-radius: 12px; text-align: center;">
+                <h3>Captura Biométrica</h3>
+                <div style="border: 2px dashed #cbd5e1; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; cursor: pointer; background: white; margin-top: 20px;">
+                    <i class="fa-solid fa-camera" style="font-size: 40px; color: var(--icest-blue); margin-bottom: 10px;"></i>
+                    <span style="color: var(--text-muted); font-weight: 700;">Subir Selfie</span>
                 </div>
             </div>
-            <div class="mt-4 text-center">
-                <button type="button" class="btn btn-theme" onclick="generarFolio()"><i class="fas fa-id-card"></i> Generar ID</button>
-            </div>
-        </form>
-
-        <div id="resultadoID" class="text-center mt-4" style="display:none;">
-            <h4 class="text-secondary">Su ID asignado es:</h4>
-            <h1 style="color: var(--main-theme); font-weight: bold;" id="displayNuevoID">ICEST-00000</h1>
-            <button class="btn btn-theme mt-2" onclick="irANuevoEstudio()">Ir a Nuevo Estudio</button>
         </div>
     </div>
-</section>
+</body>
+</html>
